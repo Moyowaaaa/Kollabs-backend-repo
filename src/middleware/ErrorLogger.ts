@@ -8,6 +8,7 @@ const ErrorLogger = (
   next: NextFunction
 ) => {
   res.status(error.status || 500).json(error.message || `Server error`);
+  next();
 };
 
 export default ErrorLogger;
