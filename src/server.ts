@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./db/db";
 import cors from "cors";
-import type { Express } from "express";
+import type { Express, Request, Response } from "express";
 
 import ErrorLogger from "./middleware/ErrorLogger";
 import httpLogger from "./lib/log/morgan.log";
@@ -41,14 +41,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(ErrorLogger);
 
-// app.get("/",);
+app.get("/", (req: Request, res: Response) => {
+  res.status(200).json({
+    status: "OK",
+    port: port,
+    pid: process.pid,
+    uptime: process.uptime(),
+  });
+});
 
 console.log("Starting server...");
 
 const port = process.env.PORT || 8081;
 
 app.listen(port, async () => {
-  console.log(`App running on port ${port}.....`);
+  logger.info(`App running on port ${port}.....`);
   try {
     await connectDB();
   } catch (error) {
