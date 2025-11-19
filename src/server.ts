@@ -54,14 +54,12 @@ console.log("Starting server...");
 
 const port = process.env.PORT || 8081;
 
-app.listen(port, async () => {
+app.listen(port, () => {
   logger.info(`App running on port ${port}.....`);
-  try {
-    await connectDB();
-  } catch (error) {
-    console.error("Database connection failed. Exiting...");
+  void connectDB().catch((error: unknown) => {
+    console.error("Database connection failed. Exiting...", error);
     process.exit(1);
-  }
+  });
 });
 
 process.on("uncaughtException", (err: Error) => {
@@ -69,6 +67,9 @@ process.on("uncaughtException", (err: Error) => {
   process.exit(1);
 });
 
-process.on("unhandledRejection", (reason: unknown, promise: Promise<any>) => {
-  console.error("Unhandled rejection at:", promise, "reason:", reason);
-});
+process.on(
+  "unhandledRejection",
+  (reason: unknown, promise: Promise<unknown>) => {
+    console.error("Unhandled rejection at:", promise, "reason:", reason);
+  }
+);

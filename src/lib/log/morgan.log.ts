@@ -1,7 +1,7 @@
-import morgan from "morgan";
+import morgan, { type StreamOptions } from "morgan";
 import logger from "./winston.log";
 
-(logger as any).stream = {
+const stream: StreamOptions = {
   write: (message: string) => {
     logger.info(message.trim());
   },
@@ -9,7 +9,7 @@ import logger from "./winston.log";
 
 const httpLogger = morgan(
   ":method :url :status :response-time ms - :res [content-length]",
-  { stream: (logger as any).stream }
+  { stream }
 );
 
 export default httpLogger;
