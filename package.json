@@ -4,14 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-       "test": "echo \"No tests yet\" && exit 0",
-    "dev": "nodemon --exec ts-node src/server.ts"
+    "test": "echo \"No tests yet\" && exit 0",
+    "dev": "nodemon --exec ts-node src/server.ts",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" --max-warnings=0",
+    "lint:fix": "npm run lint -- --fix",
+    "check:any": "eslint \"src/**/*.{ts,tsx}\" --rule \"@typescript-eslint/no-explicit-any:error\"",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-   "@types/express": "^5.0.3",
+    "@types/express": "^5.0.3",
     "@types/multer": "^2.0.0",
     "bcrpyt": "^2.0.0",
     "bcrypt": "^6.0.0",
@@ -28,14 +32,19 @@
     "nodemon": "^3.1.10",
     "validator": "^13.15.15",
     "winston": "^3.18.3"
-    
   },
   "devDependencies": {
-     "@types/cors": "^2.8.19",
+    "@types/cors": "^2.8.19",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/morgan": "^1.9.10",
     "@types/validator": "^13.15.2",
+    "@typescript-eslint/eslint-plugin": "^8.47.0",
+    "@typescript-eslint/parser": "^8.47.0",
+    "eslint": "^9.39.1",
+    "eslint-plugin-unused-imports": "^4.3.0",
+    "husky": "^9.1.7",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.47.0"
   }
 }
