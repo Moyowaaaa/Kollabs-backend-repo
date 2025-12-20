@@ -8,7 +8,7 @@ const stream: StreamOptions = {
 };
 
 const httpLogger = morgan(
-  ":method :url :status :response-time ms - :res [content-length]",
+  ":method :url :status :response-time ms - :res[content-length]",
   { stream }
 );
 
