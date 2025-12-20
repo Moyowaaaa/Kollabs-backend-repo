@@ -20,6 +20,8 @@ const app: Express = express();
 const allowedOrigins: string[] = [
   "http://localhost:3000",
   "http://localhost:3001",
+  "https://www.koneticus.com/",
+  "https://www.koneticus.com",
 ];
 
 app.use(
