@@ -9,6 +9,9 @@ import httpLogger from "./lib/log/morgan.log";
 import logger from "./lib/log/winston.log";
 
 // Routes
+import waitlistRoutes from "./routes/waitlist/index";
+
+//
 
 dotenv.config();
 
@@ -51,6 +54,9 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 console.log("Starting server...");
+
+//v1 routes
+app.use("/v1/api", waitlistRoutes);
 
 const port = process.env.PORT || 8081;
 
