@@ -126,12 +126,19 @@ const sendEmail = async (options: EmailOptions): Promise<void> => {
     subject: options.subject,
   });
 
-  await resend.emails.send({
+  const response = await resend.emails.send({
     from: fromEmail,
     to: options.to,
     subject: options.subject,
     html,
   });
+
+  console.log("Resend response:", JSON.stringify(response, null, 2));
+
+  // Check for errors in response
+  if (response.error) {
+    throw new Error(`Resend error: ${response.error.message}`);
+  }
 };
 
 export const sendWaitlistConfirmation = async (
