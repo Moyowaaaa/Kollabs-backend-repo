@@ -22,13 +22,10 @@ export const registerForWaitlist = async (
 
     await WaitlisterModel.create(req.body);
 
-    // Send confirmation email
-    try {
-      await sendWaitlistConfirmation(email);
-    } catch (emailError) {
-      // Log email error but don't fail the registration
+    // Send confirmation email (fire-and-forget, don't block response)
+    sendWaitlistConfirmation(email).catch((emailError) => {
       console.error("Failed to send confirmation email:", emailError);
-    }
+    });
 
     res.status(201).json({ message: "User added to waitlist" });
   } catch (err) {

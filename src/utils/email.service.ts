@@ -16,18 +16,17 @@ interface EmailOptions {
 // Zoho Mail SMTP configuration
 const createTransporter = () => {
   const host = process.env.SMTP_HOST || "smtp.zoho.com";
-  const port = Number(process.env.SMTP_PORT) || 465;
+  // Use port 587 (TLS/STARTTLS) - works better on cloud platforms like Render
+  const port = Number(process.env.SMTP_PORT) || 587;
   const user = process.env.SMTP_USER;
   const pass = process.env.SMTP_PASS;
 
-  // Debug logging (remove in production)
+  // Debug logging
   console.log("SMTP Config:", {
     host,
     port,
     user,
     passLength: pass?.length,
-    passFirstChar: pass?.[0],
-    passLastChar: pass?.[pass.length - 1],
   });
 
   // Validate credentials exist
@@ -42,11 +41,15 @@ const createTransporter = () => {
   return nodemailer.createTransport({
     host,
     port,
-    secure: true, // Zoho uses SSL on port 465
+    secure: port === 465, // true for 465, false for 587
     auth: {
       user,
       pass,
     },
+    // Add timeouts to prevent hanging
+    connectionTimeout: 10000, // 10 seconds
+    greetingTimeout: 10000,
+    socketTimeout: 10000,
   });
 };
 
