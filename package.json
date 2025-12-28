@@ -9,7 +9,7 @@
     "lint": "eslint \"src/**/*.{ts,tsx}\" --max-warnings=0",
     "lint:fix": "npm run lint -- --fix",
     "check:any": "eslint \"src/**/*.{ts,tsx}\" --rule \"@typescript-eslint/no-explicit-any:error\"",
-    "prepare": "husky",
+    "prepare": "husky || true",
     "build": "tsc",
     "start": "node dist/server.js"
   },
