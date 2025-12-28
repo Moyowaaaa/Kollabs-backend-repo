@@ -5,10 +5,15 @@ const ErrorLogger = (
   error: IError,
   req: Request,
   res: Response,
-  next: NextFunction
+  _next: NextFunction
 ) => {
-  res.status(error.status || 500).json(error.message || `Server error`);
-  next();
+  // Don't try to send a response if headers already sent
+  if (res.headersSent) {
+    return;
+  }
+  res
+    .status(error.status || 500)
+    .json({ message: error.message || "Server error" });
 };
 
 export default ErrorLogger;

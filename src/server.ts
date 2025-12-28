@@ -20,6 +20,8 @@ const app: Express = express();
 const allowedOrigins: string[] = [
   "http://localhost:3000",
   "http://localhost:3001",
+  "https://www.koneticus.com/",
+  "https://www.koneticus.com",
 ];
 
 app.use(
@@ -57,6 +59,26 @@ console.log("Starting server...");
 
 //v1 routes
 app.use("/v1/api", waitlistRoutes);
+
+// Email template preview (development only)
+app.get("/preview/email", async (req: Request, res: Response) => {
+  try {
+    const ejs = await import("ejs");
+    const path = await import("path");
+    const templatePath = path.join(
+      process.cwd(),
+      "templates",
+      "waitlist-confirmation.ejs"
+    );
+    const html = await ejs.renderFile(templatePath, {
+      email: "test@example.com",
+    });
+    res.send(html);
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    res.status(500).send(`Error rendering template: ${errorMessage}`);
+  }
+});
 
 const port = process.env.PORT || 8081;
 
