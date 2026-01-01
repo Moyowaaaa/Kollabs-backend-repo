@@ -6,11 +6,12 @@ import {
   registerForWaitlist,
 } from "../../controllers/waitlist.controller";
 import verifyAuthentication from "../../middleware/authMiddleware";
+import { waitlistLimiter } from "../../middleware/rateLimiter";
 
 const router = express.Router() as Router;
 
-//register for waitlist
-router.post("/waitlist", registerForWaitlist);
+//register for waitlist (public, but rate limited)
+router.post("/waitlist", waitlistLimiter, registerForWaitlist);
 
 router.use(verifyAuthentication as express.RequestHandler);
 

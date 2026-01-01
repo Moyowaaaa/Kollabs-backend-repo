@@ -6,12 +6,12 @@ import { IError } from "../interfaces/error.interface";
 import { sendWaitlistConfirmation } from "../utils/email.service";
 
 export const registerForWaitlist = async (
-  req: Request<IWaitlisterInterface>,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const email = (req.body as IWaitlisterInterface).email;
+    const { email } = req.body as IWaitlisterInterface;
 
     const isExisting = await WaitlisterModel.findOne({ email });
     if (isExisting) {
