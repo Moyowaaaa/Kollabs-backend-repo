@@ -4,7 +4,7 @@ import {
   deleteWaitlister,
   getWaitlisters,
   registerForWaitlist,
-} from "../../controllers/waitlist.controller";
+} from "./waitlist.controller";
 import verifyAuthentication from "../../middleware/authMiddleware";
 import { waitlistLimiter } from "../../middleware/rateLimiter";
 

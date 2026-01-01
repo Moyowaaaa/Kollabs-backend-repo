@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { IUserAuth, IUserAuthModel } from "../interfaces/user.auth.interface";
+import { IUserAuth, IUserAuthModel } from "./auth.interface";
 import validator from "validator";
 import bcrypt from "bcryptjs";
 
@@ -16,7 +16,6 @@ const usersSchema = new Schema<IUserAuth>({
 });
 
 //signup user
-
 usersSchema.statics.signUpUser = async function (
   this: mongoose.Model<IUserAuth>,
   email: string,

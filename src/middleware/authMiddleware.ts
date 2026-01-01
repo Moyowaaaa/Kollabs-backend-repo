@@ -3,8 +3,8 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import {
   AuthenticatedRequest,
   IUserAuth,
-} from "../interfaces/user.auth.interface";
-import userAuthModel from "../models/user.auth.model";
+  userAuthModel,
+} from "../modules/auth";
 
 export interface jwtToken extends JwtPayload {
   _id: string;

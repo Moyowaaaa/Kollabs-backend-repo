@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { IWaitlisterInterface } from "../interfaces/waitlister.interface";
+import { IWaitlisterInterface } from "./waitlist.interface";
 
 const waitlistersSchema = new Schema<IWaitlisterInterface>({
   email: {

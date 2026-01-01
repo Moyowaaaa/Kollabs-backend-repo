@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
-import userAuthModel from "../models/user.auth.model";
-import { createAuthToken } from "../utils/createAuthToken";
-import { IChangePassword } from "../interfaces/user.auth.interface";
+import userAuthModel from "./auth.model";
+import { createAuthToken } from "../../utils/createAuthToken";
+import { IChangePassword } from "./auth.interface";
 
 //signup
 export const signUpUser = async (req: Request, res: Response) => {

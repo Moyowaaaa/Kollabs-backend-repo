@@ -1,9 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { IWaitlisterInterface } from "../interfaces/waitlister.interface";
-
-import WaitlisterModel from "../models/waitlist.model";
-import { IError } from "../interfaces/error.interface";
-import { sendWaitlistConfirmation } from "../utils/email.service";
+import { IWaitlisterInterface } from "./waitlist.interface";
+import WaitlisterModel from "./waitlist.model";
+import { IError } from "../../interfaces/error.interface";
+import { sendWaitlistConfirmation } from "../../utils/email.service";
 
 export const registerForWaitlist = async (
   req: Request,

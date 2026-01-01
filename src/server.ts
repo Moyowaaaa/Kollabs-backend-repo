@@ -8,9 +8,9 @@ import ErrorLogger from "./middleware/ErrorLogger";
 import httpLogger from "./lib/log/morgan.log";
 import logger from "./lib/log/winston.log";
 
-// Routes
-import waitlistRoutes from "./routes/waitlist/index";
-import authRoutes from "./routes/auth/index";
+// Module routes
+import { waitlistRoutes } from "./modules/waitlist";
+import { authRoutes } from "./modules/auth";
 
 //
 

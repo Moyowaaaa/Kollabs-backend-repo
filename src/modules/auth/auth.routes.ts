@@ -1,9 +1,5 @@
 import express, { Router } from "express";
-import {
-  changePassword,
-  loginUser,
-  signUpUser,
-} from "../../controllers/user.auth.controller";
+import { changePassword, loginUser, signUpUser } from "./auth.controller";
 import { authLimiter } from "../../middleware/rateLimiter";
 
 const router = express.Router() as Router;
