@@ -12,7 +12,17 @@ export interface AuthenticatedRequest extends Request {
 }
 
 export interface IUserAuthModel extends Model<IUserAuth> {
-  changePassword(email: string, newPassword: string): Promise<IUserAuth>;
+  changePassword(
+    email: string,
+    newPassword: string,
+    comparePassword: string
+  ): Promise<IUserAuth>;
   signUpUser(email: string, password: string): Promise<IUserAuth>;
   loginUser(email: string, password: string): Promise<IUserAuth>;
+}
+
+export interface IChangePassword {
+  email: string;
+  newPassword: string;
+  comparePassword: string;
 }

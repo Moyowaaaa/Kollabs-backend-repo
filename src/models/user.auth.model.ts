@@ -74,14 +74,33 @@ usersSchema.statics.loginUser = async function (
 usersSchema.statics.changePassword = async function (
   this: mongoose.Model<IUserAuth>,
   email: string,
-  newPassword: string
+  newPassword: string,
+  currentPassword: string
 ) {
   if (!email) {
     throw new Error("Please enter an email");
   }
+
+  if (!currentPassword) {
+    throw new Error("Please enter your current password");
+  }
+
+  if (!newPassword) {
+    throw new Error("Please enter a new password");
+  }
+
   const user = await this.findOne({ email });
   if (!user) {
     throw new Error("We couldn't find a user with that email");
+  }
+
+  // Verify current password is correct
+  const isCurrentPasswordValid = await bcrypt.compare(
+    currentPassword,
+    user.password
+  );
+  if (!isCurrentPasswordValid) {
+    throw new Error("Current password is incorrect");
   }
 
   // Check if new password is the same as current password
