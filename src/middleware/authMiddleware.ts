@@ -3,8 +3,8 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import {
   AuthenticatedRequest,
   IUserAuth,
-  userAuthModel,
-} from "../modules/auth";
+} from "../modules/auth/auth.interface";
+import userAuthModel from "../modules/auth/auth.model";
 
 export interface jwtToken extends JwtPayload {
   _id: string;
@@ -41,8 +41,7 @@ const verifyAuthentication = async (
     req.user = user as IUserAuth;
     next();
   } catch (error) {
-    console.log(error);
-    res.status(401).json({ message: "Request not authorized" });
+    res.status(401).json({ message: "Request not authorized", error });
     return;
   }
 };

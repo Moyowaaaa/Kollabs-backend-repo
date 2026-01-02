@@ -10,15 +10,19 @@ import { waitlistLimiter } from "../../middleware/rateLimiter";
 
 const router = express.Router() as Router;
 
-//register for waitlist (public, but rate limited)
+// Public route - register for waitlist (rate limited)
 router.post("/waitlist", waitlistLimiter, registerForWaitlist);
 
-router.use(verifyAuthentication as express.RequestHandler);
-
-//get waitlisters
-router.get("/waitlist", getWaitlisters);
-
-//delete waitlister
-router.delete("/waitlist/:id", deleteWaitlister);
+// Protected routes - require authentication
+router.get(
+  "/waitlist",
+  verifyAuthentication as express.RequestHandler,
+  getWaitlisters
+);
+router.delete(
+  "/waitlist/:id",
+  verifyAuthentication as express.RequestHandler,
+  deleteWaitlister
+);
 
 export default router;

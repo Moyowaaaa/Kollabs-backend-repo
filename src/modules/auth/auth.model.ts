@@ -13,6 +13,11 @@ const usersSchema = new Schema<IUserAuth>({
     type: String,
     required: true,
   },
+  userProfile: {
+    type: Schema.Types.ObjectId,
+    ref: "UserProfile",
+    required: false,
+  },
 });
 
 //signup user

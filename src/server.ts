@@ -11,6 +11,7 @@ import logger from "./lib/log/winston.log";
 // Module routes
 import { waitlistRoutes } from "./modules/waitlist";
 import { authRoutes } from "./modules/auth";
+import { userRoutes } from "./modules/user";
 
 //
 
@@ -61,6 +62,7 @@ console.log("Starting server...");
 //v1 routes
 app.use("/v1/api", waitlistRoutes);
 app.use("/v1/api/auth", authRoutes);
+app.use("/v1/api/user", userRoutes);
 
 // Email template preview (development only)
 app.get("/preview/email", async (req: Request, res: Response) => {

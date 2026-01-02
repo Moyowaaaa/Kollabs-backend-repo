@@ -1,10 +1,12 @@
 import type { Request } from "express";
-import { Model } from "mongoose";
+import mongoose, { Model } from "mongoose";
+import { IUserLinks } from "../user/user.interface";
 
 export interface IUserAuth {
   email: string;
   password: string;
   _id: string;
+  userProfile?: mongoose.Types.ObjectId;
 }
 
 export interface AuthenticatedRequest extends Request {
@@ -25,4 +27,17 @@ export interface IChangePassword {
   email: string;
   newPassword: string;
   comparePassword: string;
+}
+
+// Complete signup request with profile data
+export interface ISignupRequest {
+  // Auth data
+  email: string;
+  password: string;
+  // Profile data
+  firstname: string;
+  lastname: string;
+  roles: string[];
+  bio?: string;
+  links?: IUserLinks;
 }
