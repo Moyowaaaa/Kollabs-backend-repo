@@ -7,6 +7,8 @@ export interface IUserAuth {
   password: string;
   _id: string;
   userProfile?: mongoose.Types.ObjectId;
+  resetPasswordToken?: string;
+  resetPasswordExpires?: Date;
 }
 
 export interface AuthenticatedRequest extends Request {
@@ -40,4 +42,15 @@ export interface ISignupRequest {
   roles: string[];
   bio?: string;
   links?: IUserLinks;
+}
+
+// Forgot password request
+export interface IForgotPasswordRequest {
+  email: string;
+}
+
+// Reset password request
+export interface IResetPasswordRequest {
+  newPassword: string;
+  confirmPassword: string;
 }

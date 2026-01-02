@@ -1,22 +1,26 @@
 import type { Request, Response } from "express";
 import mongoose from "mongoose";
+import crypto from "crypto";
 import userAuthModel from "./auth.model";
 import { createAuthToken } from "../../utils/createAuthToken";
-import { IChangePassword, ISignupRequest } from "./auth.interface";
+import {
+  IChangePassword,
+  IForgotPasswordRequest,
+  IResetPasswordRequest,
+  ISignupRequest,
+} from "./auth.interface";
 import UserProfileModel from "../user/user.model";
 import { IUserInterface, IUserLinks } from "../user/user.interface";
 import { uploadSingleToCloudinary } from "../../utils/cloudinary";
+import { sendPasswordResetEmail } from "../../utils/email.service";
 
-//signup - creates both auth and profile records atomically
 export const signUpUser = async (req: Request, res: Response) => {
-  // Start a MongoDB session for transaction
   const session = await mongoose.startSession();
   session.startTransaction();
 
   try {
     const { email, password, firstname, lastname, roles, bio, links } =
       req.body as ISignupRequest;
-    // Parse roles if sent as JSON string (from form-data)
     let parsedRoles: string[] = Array.isArray(roles) ? roles : [];
     if (typeof roles === "string") {
       try {
@@ -26,7 +30,6 @@ export const signUpUser = async (req: Request, res: Response) => {
       }
     }
 
-    // Parse links if sent as JSON string (from form-data)
     let parsedLinks: IUserLinks | undefined =
       typeof links === "object" ? links : undefined;
     if (typeof links === "string") {
@@ -37,10 +40,8 @@ export const signUpUser = async (req: Request, res: Response) => {
       }
     }
 
-    // Create auth record (uses static method for validation & hashing)
     const authUser = await userAuthModel.signUpUser(email, password);
 
-    // Handle profile picture upload if provided
     let profilePicture: { url: string; id: string } | undefined;
     if (req.file) {
       const uploadResult = await uploadSingleToCloudinary(
@@ -132,6 +133,103 @@ export const changePassword = async (
       res.status(400).json({ error: error.message });
     } else {
       res.status(400).json({ error: "An unexpected error occurred" });
+    }
+  }
+};
+
+export const forgotPassword = async (req: Request, res: Response) => {
+  const { email } = req.body as IForgotPasswordRequest;
+
+  try {
+    // Find user by email
+    const user = await userAuthModel.findOne({ email });
+
+    if (!user) {
+      res.status(200).json({
+        message:
+          "If an account with that email exists, a password reset link has been sent.",
+      });
+      return;
+    }
+
+    const resetToken = crypto.randomBytes(32).toString("hex");
+
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
+
+    user.resetPasswordToken = hashedToken;
+    user.resetPasswordExpires = new Date(Date.now() + 60 * 60 * 1000);
+    await user.save();
+
+    const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
+    const resetUrl = `${frontendUrl}/reset-password/${resetToken}`;
+
+    await sendPasswordResetEmail(email, resetUrl);
+
+    res.status(200).json({
+      message:
+        "If an account with that email exists, a password reset link has been sent.",
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json({ error: error.message });
+    } else {
+      res.status(500).json({ error: "An error occurred sending the email" });
+    }
+  }
+};
+
+export const resetPassword = async (req: Request, res: Response) => {
+  const { token } = req.params;
+  const { newPassword, confirmPassword } = req.body as IResetPasswordRequest;
+
+  try {
+    if (newPassword !== confirmPassword) {
+      res.status(400).json({ error: "Passwords do not match" });
+      return;
+    }
+
+    if (!newPassword || newPassword.length < 8) {
+      res
+        .status(400)
+        .json({ error: "Password must be at least 8 characters long" });
+      return;
+    }
+
+    const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+
+    const user = await userAuthModel.findOne({
+      resetPasswordToken: hashedToken,
+      resetPasswordExpires: { $gt: new Date() },
+    });
+
+    if (!user) {
+      res.status(400).json({ error: "Invalid or expired reset token" });
+      return;
+    }
+
+    // Hash the new password
+    const bcrypt = await import("bcryptjs");
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    // Update password and clear reset token fields
+    user.password = hashedPassword;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    await user.save();
+
+    res.status(200).json({
+      message:
+        "Password reset successful. You can now log in with your new password.",
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json({ error: error.message });
+    } else {
+      res.status(500).json({ error: "An error occurred resetting password" });
     }
   }
 };

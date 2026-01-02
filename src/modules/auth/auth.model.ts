@@ -18,6 +18,14 @@ const usersSchema = new Schema<IUserAuth>({
     ref: "UserProfile",
     required: false,
   },
+  resetPasswordToken: {
+    type: String,
+    required: false,
+  },
+  resetPasswordExpires: {
+    type: Date,
+    required: false,
+  },
 });
 
 //signup user

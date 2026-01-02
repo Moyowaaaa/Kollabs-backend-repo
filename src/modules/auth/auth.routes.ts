@@ -1,5 +1,11 @@
 import express, { Router } from "express";
-import { changePassword, loginUser, signUpUser } from "./auth.controller";
+import {
+  changePassword,
+  forgotPassword,
+  loginUser,
+  resetPassword,
+  signUpUser,
+} from "./auth.controller";
 import { authLimiter } from "../../middleware/rateLimiter";
 import { singleImageUpload } from "../../utils/multer";
 
@@ -10,6 +16,10 @@ router.use(authLimiter);
 
 router.post("/sign-in", loginUser);
 router.post("/sign-up", singleImageUpload, signUpUser);
-router.post("/reset-password", changePassword);
+router.post("/change-password", changePassword);
+
+// Password reset flow
+router.post("/forgot-password", forgotPassword);
+router.post("/reset-password/:token", resetPassword);
 
 export default router;
