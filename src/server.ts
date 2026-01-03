@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import connectDB from "./db/db";
 import cors from "cors";
 import type { Express, Request, Response } from "express";
+import swaggerUi from "swagger-ui-express";
+import swaggerSpec from "./utils/swagger";
 
 import ErrorLogger from "./middleware/ErrorLogger";
 import httpLogger from "./lib/log/morgan.log";
@@ -63,6 +65,9 @@ console.log("Starting server...");
 app.use("/v1/api", waitlistRoutes);
 app.use("/v1/api/auth", authRoutes);
 app.use("/v1/api/user", userRoutes);
+
+// Swagger API Documentation
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Email template preview (development only)
 app.get("/preview/email", async (req: Request, res: Response) => {
