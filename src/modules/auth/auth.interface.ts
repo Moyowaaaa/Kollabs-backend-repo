@@ -42,6 +42,8 @@ export interface ISignupRequest {
   roles: string[];
   bio?: string;
   links?: IUserLinks;
+  // CV data (optional)
+  cvLinkedUrl?: string; // External CV link (LinkedIn, portfolio, etc.)
 }
 
 // Forgot password request

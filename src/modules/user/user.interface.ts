@@ -7,6 +7,13 @@ export interface IUserLinks {
   website?: string;
 }
 
+export interface IUserCV {
+  fileUrl?: string;
+  fileId?: string;
+  linkedUrl?: string;
+  fileName?: string;
+}
+
 // Main user interface
 export interface IUserInterface extends Document {
   authUser: mongoose.Types.ObjectId;
@@ -15,6 +22,7 @@ export interface IUserInterface extends Document {
   roles: string[];
   bio?: string;
   profilePicture?: { url: string; id: string };
+  cv?: IUserCV;
   links?: IUserLinks;
   createdAt?: Date;
   updatedAt?: Date;
@@ -26,7 +34,6 @@ export interface IUserModel extends Model<IUserInterface> {
   findByEmail(email: string): Promise<IUserInterface | null>;
 }
 
-// Request body for updating profile (bio + links section from UI)
 export interface IUpdateProfileRequest {
   bio: string;
   links: IUserLinks;

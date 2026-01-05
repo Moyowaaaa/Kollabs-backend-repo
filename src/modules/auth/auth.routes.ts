@@ -7,7 +7,7 @@ import {
   signUpUser,
 } from "./auth.controller";
 import { authLimiter } from "../../middleware/rateLimiter";
-import { singleImageUpload } from "../../utils/multer";
+import { imageAndCvUpload } from "../../utils/multer";
 
 const router = express.Router() as Router;
 
@@ -15,7 +15,7 @@ const router = express.Router() as Router;
 router.use(authLimiter);
 
 router.post("/sign-in", loginUser);
-router.post("/sign-up", singleImageUpload, signUpUser);
+router.post("/sign-up", imageAndCvUpload, signUpUser);
 router.post("/change-password", changePassword);
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password/:token", resetPassword);

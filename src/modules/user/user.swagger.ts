@@ -45,6 +45,21 @@
  *                               type: string
  *                             id:
  *                               type: string
+ *                         cv:
+ *                           type: object
+ *                           properties:
+ *                             fileUrl:
+ *                               type: string
+ *                               description: Cloudinary URL for uploaded CV
+ *                             fileId:
+ *                               type: string
+ *                               description: Cloudinary public ID
+ *                             linkedUrl:
+ *                               type: string
+ *                               description: External CV link
+ *                             fileName:
+ *                               type: string
+ *                               description: Original filename
  *                         links:
  *                           $ref: '#/components/schemas/UserLinks'
  *       401:
@@ -66,7 +81,7 @@
  * /v1/api/user/me:
  *   patch:
  *     summary: Update user profile
- *     description: Update the authenticated user's profile (bio, links, profile picture)
+ *     description: Update the authenticated user's profile (bio, links, profile picture, CV)
  *     tags: [User]
  *     security:
  *       - bearerAuth: []
@@ -76,6 +91,17 @@
  *           schema:
  *             type: object
  *             properties:
+ *               firstname:
+ *                 type: string
+ *                 example: John
+ *               lastname:
+ *                 type: string
+ *                 example: Doe
+ *               roles:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 example: ["developer", "designer"]
  *               bio:
  *                 type: string
  *                 example: Updated bio text
@@ -83,10 +109,18 @@
  *                 type: string
  *                 description: JSON string of links object
  *                 example: '{"github":"https://github.com/user","website":"https://mysite.com"}'
- *               profilePicture:
+ *               image:
  *                 type: string
  *                 format: binary
- *                 description: New profile picture file
+ *                 description: New profile picture file (JPEG, PNG, GIF, WebP, SVG)
+ *               cv:
+ *                 type: string
+ *                 format: binary
+ *                 description: CV/Resume file (PDF, DOC, DOCX)
+ *               cvLinkedUrl:
+ *                 type: string
+ *                 description: External CV link (set empty string to clear CV)
+ *                 example: https://linkedin.com/in/johndoe
  *     responses:
  *       200:
  *         description: Profile updated successfully

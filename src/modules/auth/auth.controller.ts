@@ -10,17 +10,31 @@ import {
   ISignupRequest,
 } from "./auth.interface";
 import UserProfileModel from "../user/user.model";
-import { IUserInterface, IUserLinks } from "../user/user.interface";
+import { IUserInterface, IUserLinks, IUserCV } from "../user/user.interface";
 import { uploadSingleToCloudinary } from "../../utils/cloudinary";
 import { sendPasswordResetEmail } from "../../utils/email.service";
+
+// Type for multer fields upload
+interface MulterFiles {
+  image?: Express.Multer.File[];
+  cv?: Express.Multer.File[];
+}
 
 export const signUpUser = async (req: Request, res: Response) => {
   const session = await mongoose.startSession();
   session.startTransaction();
 
   try {
-    const { email, password, firstname, lastname, roles, bio, links } =
-      req.body as ISignupRequest;
+    const {
+      email,
+      password,
+      firstname,
+      lastname,
+      roles,
+      bio,
+      links,
+      cvLinkedUrl,
+    } = req.body as ISignupRequest;
     let parsedRoles: string[] = Array.isArray(roles) ? roles : [];
     if (typeof roles === "string") {
       try {
@@ -42,15 +56,36 @@ export const signUpUser = async (req: Request, res: Response) => {
 
     const authUser = await userAuthModel.signUpUser(email, password);
 
+    // Handle file uploads (now using fields instead of single)
+    const files = req.files as MulterFiles | undefined;
+
+    // Profile picture upload
     let profilePicture: { url: string; id: string } | undefined;
-    if (req.file) {
+    if (files?.image?.[0]) {
       const uploadResult = await uploadSingleToCloudinary(
-        req.file,
+        files.image[0],
         "user_profiles"
       );
       profilePicture = {
         url: uploadResult.secure_url,
         id: uploadResult.public_id,
+      };
+    }
+
+    // CV upload (optional)
+    let cv: IUserCV | undefined;
+    if (files?.cv?.[0]) {
+      const cvFile = files.cv[0];
+      const uploadResult = await uploadSingleToCloudinary(cvFile, "user_cvs");
+      cv = {
+        fileUrl: uploadResult.secure_url,
+        fileId: uploadResult.public_id,
+        fileName: cvFile.originalname,
+      };
+    } else if (cvLinkedUrl) {
+      // User provided external CV link instead of upload
+      cv = {
+        linkedUrl: cvLinkedUrl,
       };
     }
 
@@ -65,6 +100,7 @@ export const signUpUser = async (req: Request, res: Response) => {
           bio,
           links: parsedLinks,
           profilePicture,
+          cv,
           isVerified: false,
         },
       ],

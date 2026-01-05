@@ -43,7 +43,7 @@
  * /v1/api/auth/sign-up:
  *   post:
  *     summary: User registration
- *     description: Register a new user with profile information and optional profile picture
+ *     description: Register a new user with profile information, optional profile picture, and optional CV
  *     tags: [Auth]
  *     requestBody:
  *       required: true
@@ -90,10 +90,18 @@
  *                     type: string
  *                   website:
  *                     type: string
- *               profilePicture:
+ *               image:
  *                 type: string
  *                 format: binary
- *                 description: Profile picture file
+ *                 description: Profile picture file (JPEG, PNG, GIF, WebP, SVG)
+ *               cv:
+ *                 type: string
+ *                 format: binary
+ *                 description: CV/Resume file (PDF, DOC, DOCX) - optional
+ *               cvLinkedUrl:
+ *                 type: string
+ *                 description: External CV link (LinkedIn, portfolio) - alternative to file upload
+ *                 example: https://linkedin.com/in/johndoe
  *     responses:
  *       201:
  *         description: User successfully registered

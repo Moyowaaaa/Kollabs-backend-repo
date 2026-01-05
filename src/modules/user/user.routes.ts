@@ -1,7 +1,7 @@
 import express from "express";
 import type { Router, RequestHandler } from "express";
 import { getMe, updateProfile } from "./user.controller";
-import { singleImageUpload } from "../../utils/multer";
+import { imageAndCvUpload } from "../../utils/multer";
 import verifyAuthentication from "../../middleware/authMiddleware";
 
 const router = express.Router() as Router;
@@ -10,6 +10,6 @@ const router = express.Router() as Router;
 router.use(verifyAuthentication as express.RequestHandler);
 
 router.get("/me", getMe as RequestHandler);
-router.patch("/me", singleImageUpload, updateProfile as RequestHandler);
+router.patch("/me", imageAndCvUpload, updateProfile as RequestHandler);
 
 export default router;

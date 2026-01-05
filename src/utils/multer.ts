@@ -159,6 +159,111 @@ export const singleImageUpload = uploadImage.single("image");
 export const multipleImageUpload = uploadImage.array("images", 10);
 
 // -----------------------------------------------------------------------------
+// DOCUMENT UPLOAD: For CVs/Resumes (PDF, DOC, DOCX)
+// -----------------------------------------------------------------------------
+
+/**
+ * Allowed document types for CV uploads
+ */
+const ALLOWED_DOCUMENT_TYPES = [
+  "application/pdf", // .pdf
+  "application/msword", // .doc
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
+];
+
+/**
+ * Maximum CV file size: 10MB
+ */
+const MAX_DOCUMENT_SIZE = 10 * 1024 * 1024; // 10MB
+
+/**
+ * File filter for CV/document uploads
+ */
+const documentFileFilter = (
+  _req: Request,
+  file: Express.Multer.File,
+  callback: FileFilterCallback
+): void => {
+  if (ALLOWED_DOCUMENT_TYPES.includes(file.mimetype)) {
+    callback(null, true);
+  } else {
+    callback(
+      new Error(
+        `Invalid file type: ${file.mimetype}. Allowed types: PDF, DOC, DOCX`
+      )
+    );
+  }
+};
+
+/**
+ * Multer instance for document uploads (CVs)
+ */
+export const uploadDocument = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: MAX_DOCUMENT_SIZE,
+  },
+  fileFilter: documentFileFilter,
+});
+
+/**
+ * Middleware for uploading a single CV/document.
+ * Field name: "cv"
+ */
+export const singleCvUpload = uploadDocument.single("cv");
+
+// -----------------------------------------------------------------------------
+// COMBINED UPLOAD: Image + CV together (for signup/profile update)
+// -----------------------------------------------------------------------------
+
+/**
+ * Combined file filter that accepts both images and documents
+ */
+const combinedFileFilter = (
+  _req: Request,
+  file: Express.Multer.File,
+  callback: FileFilterCallback
+): void => {
+  const allAllowedTypes = [...ALLOWED_IMAGE_TYPES, ...ALLOWED_DOCUMENT_TYPES];
+  if (allAllowedTypes.includes(file.mimetype)) {
+    callback(null, true);
+  } else {
+    callback(
+      new Error(
+        `Invalid file type: ${file.mimetype}. Allowed: images (JPEG, PNG, GIF, WebP, SVG) and documents (PDF, DOC, DOCX)`
+      )
+    );
+  }
+};
+
+/**
+ * Multer instance for combined image + document uploads
+ */
+export const uploadImageAndDocument = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: MAX_DOCUMENT_SIZE, // Use larger limit to accommodate both
+  },
+  fileFilter: combinedFileFilter,
+});
+
+/**
+ * Middleware for uploading profile picture ("image") and CV ("cv") together.
+ * Used for signup and profile update routes.
+ *
+ * Example usage:
+ *   router.post("/sign-up", imageAndCvUpload, signUpUser);
+ *
+ * In controller:
+ *   req.files.image[0] - profile picture
+ *   req.files.cv[0] - CV document
+ */
+export const imageAndCvUpload = uploadImageAndDocument.fields([
+  { name: "image", maxCount: 1 },
+  { name: "cv", maxCount: 1 },
+]);
+
+// -----------------------------------------------------------------------------
 // 📚 QUICK REFERENCE CHEAT SHEET
 // -----------------------------------------------------------------------------
 /**

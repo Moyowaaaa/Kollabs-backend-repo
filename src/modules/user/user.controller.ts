@@ -1,13 +1,19 @@
 import type { NextFunction, Response } from "express";
 import { IError } from "../../interfaces/error.interface";
 import UserProfileModel from "./user.model";
-import { IUserLinks } from "./user.interface";
+import { IUserLinks, IUserCV } from "./user.interface";
 import {
   uploadSingleToCloudinary,
   deleteSingleFromCloudinary,
 } from "../../utils/cloudinary";
 import { AuthenticatedRequest } from "../auth/auth.interface";
 import userAuthModel from "../auth/auth.model";
+
+// Type for multer fields upload
+interface MulterFiles {
+  image?: Express.Multer.File[];
+  cv?: Express.Multer.File[];
+}
 
 // Get current authenticated user with profile
 export const getMe = async (
@@ -43,21 +49,24 @@ export const updateProfile = async (
   next: NextFunction
 ) => {
   try {
-    const { firstname, lastname, roles, bio, links } = req.body as {
-      firstname?: string;
-      lastname?: string;
-      roles?: string[];
-      bio?: string;
-      links?: IUserLinks;
-    };
+    const { firstname, lastname, roles, bio, links, cvLinkedUrl } =
+      req.body as {
+        firstname?: string;
+        lastname?: string;
+        roles?: string[];
+        bio?: string;
+        links?: IUserLinks;
+        cvLinkedUrl?: string;
+      };
 
-    // Find the user's profile
     const authUser = await userAuthModel.findById(req.user._id);
     if (!authUser?.userProfile) {
       return res.status(404).json({ error: "Profile not found" });
     }
+    const currentProfile = await UserProfileModel.findById(
+      authUser.userProfile
+    );
 
-    // Build update object with only provided fields
     const updateData: Record<string, unknown> = {};
     if (firstname) updateData.firstname = firstname;
     if (lastname) updateData.lastname = lastname;
@@ -65,21 +74,15 @@ export const updateProfile = async (
     if (bio !== undefined) updateData.bio = bio;
     if (links) updateData.links = links;
 
-    // Handle profile picture update if provided
-    if (req.file) {
-      // Get current profile to check for existing picture
-      const currentProfile = await UserProfileModel.findById(
-        authUser.userProfile
-      );
+    const files = req.files as MulterFiles | undefined;
 
-      // Delete old profile picture from Cloudinary if exists
+    if (files?.image?.[0]) {
       if (currentProfile?.profilePicture?.id) {
         await deleteSingleFromCloudinary(currentProfile.profilePicture.id);
       }
 
-      // Upload new picture
       const uploadResult = await uploadSingleToCloudinary(
-        req.file,
+        files.image[0],
         "user_profiles"
       );
       updateData.profilePicture = {
@@ -88,7 +91,31 @@ export const updateProfile = async (
       };
     }
 
-    // Update the profile
+    if (files?.cv?.[0]) {
+      if (currentProfile?.cv?.fileId) {
+        await deleteSingleFromCloudinary(currentProfile.cv.fileId);
+      }
+
+      const cvFile = files.cv[0];
+      const uploadResult = await uploadSingleToCloudinary(cvFile, "user_cvs");
+
+      const cvData: IUserCV = {
+        fileUrl: uploadResult.secure_url,
+        fileId: uploadResult.public_id,
+        fileName: cvFile.originalname,
+      };
+      updateData.cv = cvData;
+    } else if (cvLinkedUrl !== undefined) {
+      if (cvLinkedUrl) {
+        if (currentProfile?.cv?.fileId) {
+          await deleteSingleFromCloudinary(currentProfile.cv.fileId);
+        }
+        updateData.cv = { linkedUrl: cvLinkedUrl };
+      } else {
+        updateData.cv = null;
+      }
+    }
+
     const updatedProfile = await UserProfileModel.findByIdAndUpdate(
       authUser.userProfile,
       updateData,

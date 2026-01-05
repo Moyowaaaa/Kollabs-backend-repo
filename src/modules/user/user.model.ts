@@ -44,6 +44,24 @@ const userProfileSchema = new Schema<IUserInterface>(
         required: false,
       },
     },
+    cv: {
+      fileUrl: {
+        type: String,
+        required: false,
+      },
+      fileId: {
+        type: String,
+        required: false,
+      },
+      linkedUrl: {
+        type: String,
+        required: false,
+      },
+      fileName: {
+        type: String,
+        required: false,
+      },
+    },
     isVerified: {
       type: Boolean,
       required: false,

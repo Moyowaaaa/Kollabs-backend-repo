@@ -14,6 +14,7 @@ import logger from "./lib/log/winston.log";
 import { waitlistRoutes } from "./modules/waitlist";
 import { authRoutes } from "./modules/auth";
 import { userRoutes } from "./modules/user";
+import { projectsRoutes } from "./modules/projects";
 
 //
 
@@ -65,6 +66,7 @@ console.log("Starting server...");
 app.use("/v1/api", waitlistRoutes);
 app.use("/v1/api/auth", authRoutes);
 app.use("/v1/api/user", userRoutes);
+app.use("/v1/api/projects", projectsRoutes);
 
 // Swagger API Documentation
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
