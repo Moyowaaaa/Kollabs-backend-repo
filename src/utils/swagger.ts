@@ -87,6 +87,10 @@ const options: swaggerJsdoc.Options = {
         name: "Waitlist",
         description: "Waitlist management endpoints",
       },
+      {
+        name: "Projects",
+        description: "Project management endpoints",
+      },
     ],
   },
   apis: ["./src/modules/**/*.swagger.ts"],
