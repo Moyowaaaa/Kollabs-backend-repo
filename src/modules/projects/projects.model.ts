@@ -25,6 +25,10 @@ export const projectsSchema = new Schema<IProjects>(
       enum: ["draft", "pending", "ongoing", "completed", "deleted"],
       default: "draft",
     },
+    teamSize: {
+      type: Number,
+      default: 1,
+    },
     createdAt: {
       type: Date,
       default: Date.now,

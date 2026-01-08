@@ -100,6 +100,76 @@
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Error'
+ *   put:
+ *     summary: Update a project
+ *     description: Update an existing project by its ID. Only the project author can update the project.
+ *     tags: [Projects]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: projectId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the project to update
+ *         example: 507f1f77bcf86cd799439011
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 description: Updated project title
+ *                 example: My Updated Project
+ *               description:
+ *                 type: string
+ *                 description: Updated project description
+ *                 example: This is the updated description for my project
+ *               teamSize:
+ *                 type: number
+ *                 description: Number of team members for the project
+ *                 example: 5
+ *               media:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   format: binary
+ *                 description: Optional new media files to replace existing media
+ *     responses:
+ *       200:
+ *         description: Project updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Project updated successfully
+ *                 project:
+ *                   $ref: '#/components/schemas/Project'
+ *       401:
+ *         description: Authorization token required or unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       404:
+ *         description: Project not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  */
 
 /**
@@ -136,6 +206,10 @@
  *           enum: [draft, pending, ongoing, completed, deleted]
  *           description: Current status of the project
  *           example: draft
+ *         teamSize:
+ *           type: number
+ *           description: Number of team members for the project
+ *           example: 1
  *         media:
  *           type: array
  *           items:
