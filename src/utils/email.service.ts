@@ -153,3 +153,17 @@ export const sendWaitlistConfirmation = async (
     },
   });
 };
+
+export const sendPasswordResetEmail = async (
+  email: string,
+  resetUrl: string
+): Promise<void> => {
+  await sendEmail({
+    to: email,
+    subject: "Reset Your Password - Koneticus",
+    template: "password-reset",
+    data: {
+      resetUrl,
+    },
+  });
+};
