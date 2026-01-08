@@ -7,4 +7,9 @@ dist
 .logs
 logs
 all-logs.logs
+.all-logs.logs
 /logs/all-logs.logs
+
+vision-forge.md
+Vision forge.pdf
+/Vision forge.pdf

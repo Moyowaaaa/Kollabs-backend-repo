@@ -1,6 +1,6 @@
-# Vision Forge Backend
+# Koneticus Backend
 
-This repository contains the backend code for Vision Forge, a web development project. The backend is structured using Node.js and TypeScript, and is designed to be modular, scalable, and maintainable.
+This repository contains the backend code for Koneticus, a web development project. The backend is structured using Node.js and TypeScript, and is designed to be modular, scalable, and maintainable.
 
 ## Table of Contents
 
@@ -21,7 +21,7 @@ This repository contains the backend code for Vision Forge, a web development pr
 
 ## Project Overview
 
-Vision Forge Backend provides RESTful APIs and core business logic for the Vision Forge platform. It is built with TypeScript for type safety and maintainability, and uses Express.js for HTTP server functionality.
+Koneticus Backend provides RESTful APIs and core business logic for the Koneticus platform. It is built with TypeScript for type safety and maintainability, and uses Express.js for HTTP server functionality.
 
 ## Directory Structure
 
