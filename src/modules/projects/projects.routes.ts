@@ -13,7 +13,7 @@ const router = express.Router() as Router;
 // POST /v1/api/projects - Create a new project with optional media uploads
 router.post("/", multipleImageUpload, createProject as RequestHandler);
 
-// GET /v1/api/projects - Get all projects
+// GET /v1/api/projects - Get users projects
 router.get("/", getUsersProjects as RequestHandler);
 
 // PUT /v1/api/projects/:projectId - Update a project
