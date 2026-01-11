@@ -4,10 +4,7 @@ import { IError } from "../../interfaces/error.interface";
 import jwt from "jsonwebtoken";
 import { jwtToken } from "../../middleware/authMiddleware";
 import ProjectsModel from "./projects.model";
-import {
-  deleteMultipleFromCloudinary,
-  uploadMultipleToCloudinary,
-} from "../../utils/cloudinary";
+import { uploadMultipleToCloudinary } from "../../utils/cloudinary";
 
 //Create Project
 export const createProject = async (
@@ -63,7 +60,6 @@ export const createProject = async (
 };
 
 //get user's project
-//get users created hero
 export const getUsersProjects = async (
   req: Request,
   res: Response,
@@ -96,20 +92,57 @@ export const getUsersProjects = async (
 
       pagination: {
         totalProjects,
-        totalPages: Math.ceil(totalPages / Number(limit)),
+        totalPages,
         currentPage: Number(page),
         itemsPerPage: Number(limit),
       },
     });
-
-    if (!isNaN(limit) && limit > 0) {
-      return res.status(200).json(projects.slice(0, limit));
-    }
-    res.status(200).json(projects);
   } catch (error) {
     const err = error as IError;
     err.status = 500;
     err.message = "An error occurred while updating project";
+    return next(err);
+  }
+};
+
+//  get all projects
+export const getAllProjects = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { authorization } = req.headers;
+  if (!authorization) {
+    res.status(401).json({ message: "Authorization token required" });
+    return;
+  }
+  try {
+    const limit = Number(req.query.limit) || 10;
+    const page = Number(req.query.page) || 1;
+
+    const skip = (Number(page) - 1) * Number(limit);
+    const projects = await ProjectsModel.find()
+      .skip(skip)
+      .limit(limit)
+      .populate("author", "fullName profilePhoto");
+
+    const totalProjects = await ProjectsModel.countDocuments();
+    const totalPages = Math.ceil(totalProjects / limit);
+
+    res.status(200).json({
+      projects,
+
+      pagination: {
+        totalProjects,
+        totalPages: totalPages,
+        currentPage: Number(page),
+        itemsPerPage: Number(limit),
+      },
+    });
+  } catch (error) {
+    const err = error as IError;
+    err.status = 500;
+    err.message = "An error occurred while fetching projects";
     return next(err);
   }
 };
@@ -138,15 +171,15 @@ export const updateProject = async (
       return;
     }
 
-    if (project.author !== _id) {
+    if (project.author.toString() !== _id) {
       res.status(401).json({ message: "Unauthorized" });
       return;
     }
 
     const { title, description, teamSize } = req.body as ICreateProject;
 
-    // Handle media uploads (optional)
-    let media: { url: string; id: string }[] = [];
+    // Handle media uploads - preserve existing media if no new files uploaded
+    let media: { url: string; id: string }[] = project.media || [];
 
     if (req.files && Array.isArray(req.files) && req.files.length > 0) {
       const uploadResults = await uploadMultipleToCloudinary(
@@ -183,6 +216,51 @@ export const updateProject = async (
 };
 
 // Delete project
+// export const deleteProject = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   const { authorization } = req.headers;
+//   if (!authorization) {
+//     res.status(401).json({ message: "Authorization token required" });
+//     return;
+//   }
+
+//   try {
+//     const token = authorization.split(" ")[1];
+//     const decoded = jwt.verify(token, process.env.SECRET as string) as jwtToken;
+//     const { _id } = decoded;
+
+//     const { projectId } = req.params;
+//     const project = await ProjectsModel.findOne({
+//       _id: projectId,
+//       author: _id,
+//     });
+//     if (!project) {
+//       res.status(404).json({ message: "Project not found" });
+//       return;
+//     }
+
+//     if (project) {
+//       await ProjectsModel.deleteOne({ _id: projectId });
+
+//       if (project.media && project.media?.length > 0) {
+//         const deletePromises = project.media.map((media) =>
+//           deleteMultipleFromCloudinary([media.id])
+//         );
+//         await Promise.all(deletePromises);
+//       }
+//       res.status(200).json({ message: "Project deleted successfully" });
+//     }
+//   } catch (err) {
+//     const error = err as IError;
+//     error.status = 500;
+//     error.message = "An error occurred while deleting project";
+//     return next(error);
+//   }
+// };
+
 export const deleteProject = async (
   req: Request,
   res: Response,
@@ -198,29 +276,61 @@ export const deleteProject = async (
     const token = authorization.split(" ")[1];
     const decoded = jwt.verify(token, process.env.SECRET as string) as jwtToken;
     const { _id } = decoded;
-
     const { projectId } = req.params;
-    const project = await ProjectsModel.findById(projectId);
+    const project = await ProjectsModel.findOne({
+      _id: projectId,
+      author: _id,
+    });
     if (!project) {
       res.status(404).json({ message: "Project not found" });
       return;
     }
 
-    if (project) {
-      await ProjectsModel.deleteOne({ _id: projectId });
+    await ProjectsModel.findByIdAndUpdate(projectId, { status: "deleted" });
 
-      if (project.media && project.media?.length > 0) {
-        const deletePromises = project.media.map((media) =>
-          deleteMultipleFromCloudinary([media.id])
-        );
-        await Promise.all(deletePromises);
-      }
-      res.status(200).json({ message: "Project deleted successfully" });
-    }
+    res.status(200).json({ message: "Project deleted successfully" });
   } catch (err) {
     const error = err as IError;
     error.status = 500;
-    error.message = "An error occurred while creating project";
+    error.message = "An error occurred while deleting project";
+    return next(error);
+  }
+};
+
+//archive project
+
+export const archiveProject = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { authorization } = req.headers;
+  if (!authorization) {
+    res.status(401).json({ message: "Authorization token required" });
+    return;
+  }
+
+  try {
+    const token = authorization.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.SECRET as string) as jwtToken;
+    const { _id } = decoded;
+    const { projectId } = req.params;
+    const project = await ProjectsModel.findOne({
+      _id: projectId,
+      author: _id,
+    });
+    if (!project) {
+      res.status(404).json({ message: "Project not found" });
+      return;
+    }
+
+    await ProjectsModel.findByIdAndUpdate(projectId, { status: "archived" });
+
+    res.status(200).json({ message: "Project archived successfully" });
+  } catch (err) {
+    const error = err as IError;
+    error.status = 500;
+    error.message = "An error occurred while archiving project";
     return next(error);
   }
 };

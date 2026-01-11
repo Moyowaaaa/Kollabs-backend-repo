@@ -2,7 +2,13 @@ export interface IProjects {
   title: string;
   description: string;
   collaborators: string[];
-  status: "draft" | "pending" | "ongoing" | "completed" | "deleted";
+  status:
+    | "draft"
+    | "pending"
+    | "ongoing"
+    | "completed"
+    | "deleted"
+    | "archived";
   createdAt: Date;
   updatedAt: Date;
   conversationId?: string;
