@@ -80,11 +80,10 @@ export const getUsersProjects = async (
     // Filter heroes by the current user's _id
 
     const skip = (Number(page) - 1) * Number(limit);
-    const projects = await ProjectsModel.find({ author: _id })
-      .skip(skip)
-      .limit(limit);
+    const filter = { author: _id, status: { $nin: ["deleted", "archived"] } };
+    const projects = await ProjectsModel.find(filter).skip(skip).limit(limit);
 
-    const totalProjects = await ProjectsModel.countDocuments({ author: _id });
+    const totalProjects = await ProjectsModel.countDocuments(filter);
     const totalPages = Math.ceil(totalProjects / limit);
 
     res.status(200).json({
@@ -121,12 +120,13 @@ export const getAllProjects = async (
     const page = Number(req.query.page) || 1;
 
     const skip = (Number(page) - 1) * Number(limit);
-    const projects = await ProjectsModel.find()
+    const filter = { status: { $nin: ["deleted", "archived"] } };
+    const projects = await ProjectsModel.find(filter)
       .skip(skip)
       .limit(limit)
       .populate("author", "fullName profilePhoto");
 
-    const totalProjects = await ProjectsModel.countDocuments();
+    const totalProjects = await ProjectsModel.countDocuments(filter);
     const totalPages = Math.ceil(totalProjects / limit);
 
     res.status(200).json({
@@ -139,6 +139,31 @@ export const getAllProjects = async (
         itemsPerPage: Number(limit),
       },
     });
+  } catch (error) {
+    const err = error as IError;
+    err.status = 500;
+    err.message = "An error occurred while fetching projects";
+    return next(err);
+  }
+};
+
+//single project
+export const getProjectById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { projectId } = req.params;
+    const project = await ProjectsModel.findOne({
+      _id: projectId,
+      status: { $nin: ["deleted", "archived"] },
+    });
+    if (!project) {
+      res.status(404).json({ message: "Project not found" });
+      return;
+    }
+    res.status(200).json({ project });
   } catch (error) {
     const err = error as IError;
     err.status = 500;
@@ -246,7 +271,7 @@ export const patchProject = async (
 
     if (project.status === "deleted") {
       res
-        .status(400)
+        .status(404)
         .json({ message: "Project is deleted and cannot be updated" });
       return;
     }

@@ -62,7 +62,7 @@
  *               $ref: '#/components/schemas/Error'
  *   get:
  *     summary: Get user's projects
- *     description: Get all projects created by the authenticated user with pagination
+ *     description: Get all projects created by the authenticated user with pagination. Deleted and archived projects are excluded.
  *     tags: [Projects]
  *     security:
  *       - bearerAuth: []
@@ -112,7 +112,7 @@
  * /v1/api/projects/project-feed:
  *   get:
  *     summary: Get all projects (feed)
- *     description: Get all projects from all users with pagination. Author info is populated.
+ *     description: Get all projects from all users with pagination. Author info is populated. Deleted and archived projects are excluded.
  *     tags: [Projects]
  *     security:
  *       - bearerAuth: []
@@ -160,6 +160,42 @@
 /**
  * @swagger
  * /v1/api/projects/{projectId}:
+ *   get:
+ *     summary: Get a single project by ID
+ *     description: Get project details by ID. Deleted and archived projects are not accessible.
+ *     tags: [Projects]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: projectId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the project to retrieve
+ *         example: 507f1f77bcf86cd799439011
+ *     responses:
+ *       200:
+ *         description: Project details
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 project:
+ *                   $ref: '#/components/schemas/Project'
+ *       404:
+ *         description: Project not found (includes deleted/archived projects)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  *   put:
  *     summary: Full update a project
  *     description: Fully update an existing project by its ID. Replaces all fields. Only the project author can update.

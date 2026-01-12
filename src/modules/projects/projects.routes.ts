@@ -5,6 +5,7 @@ import {
   createProject,
   deleteProject,
   getAllProjects,
+  getProjectById,
   getUsersProjects,
   patchProject,
   updateProject,
@@ -24,6 +25,9 @@ router.get("/", getUsersProjects as RequestHandler);
 
 // /v1/api/projects/project-feed - Get all projects
 router.get("/project-feed", getAllProjects as RequestHandler);
+
+// /v1/api/projects/:projectId - Get a single project
+router.get("/:projectId", getProjectById as RequestHandler);
 
 // PUT /v1/api/projects/:projectId - Full update (replaces all fields)
 router.put("/:projectId", projectMediaUpload, updateProject as RequestHandler);
