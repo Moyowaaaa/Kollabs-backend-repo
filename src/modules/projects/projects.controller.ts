@@ -215,6 +215,81 @@ export const updateProject = async (
   }
 };
 
+// Patch project (partial update - only updates provided fields)
+export const patchProject = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { authorization } = req.headers;
+  if (!authorization) {
+    res.status(401).json({ message: "Authorization token required" });
+    return;
+  }
+
+  try {
+    const token = authorization.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.SECRET as string) as jwtToken;
+    const { _id } = decoded;
+
+    const { projectId } = req.params;
+    const project = await ProjectsModel.findById(projectId);
+    if (!project) {
+      res.status(404).json({ message: "Project not found" });
+      return;
+    }
+
+    if (project.author.toString() !== _id) {
+      res.status(401).json({ message: "Unauthorized" });
+      return;
+    }
+
+    if (project.status === "deleted") {
+      res
+        .status(400)
+        .json({ message: "Project is deleted and cannot be updated" });
+      return;
+    }
+
+    // Build update object with only provided fields
+    const updateFields: Partial<ICreateProject> = {};
+    const body = req.body as Partial<ICreateProject>;
+
+    if (body.title !== undefined) updateFields.title = body.title;
+    if (body.description !== undefined)
+      updateFields.description = body.description;
+    if (body.teamSize !== undefined) updateFields.teamSize = body.teamSize;
+
+    // Handle media uploads - only update if new files are provided
+    if (req.files && Array.isArray(req.files) && req.files.length > 0) {
+      const uploadResults = await uploadMultipleToCloudinary(
+        req.files,
+        "projects_media"
+      );
+      updateFields.media = uploadResults.map((result) => ({
+        url: result.secure_url,
+        id: result.public_id,
+      }));
+    }
+
+    const updatedProject = await ProjectsModel.findByIdAndUpdate(
+      projectId,
+      { $set: updateFields },
+      { new: true }
+    );
+
+    res.status(200).json({
+      message: "Project updated successfully",
+      project: updatedProject,
+    });
+  } catch (error) {
+    const err = error as IError;
+    err.status = 500;
+    err.message = "An error occurred while updating project";
+    return next(err);
+  }
+};
+
 // Delete project
 // export const deleteProject = async (
 //   req: Request,

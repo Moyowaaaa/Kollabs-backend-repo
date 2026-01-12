@@ -1,13 +1,15 @@
 import express from "express";
 import type { Router, RequestHandler } from "express";
 import {
+  archiveProject,
   createProject,
   deleteProject,
   getAllProjects,
   getUsersProjects,
+  patchProject,
   updateProject,
 } from "./projects.controller";
-import { multipleImageUpload } from "../../utils/multer";
+import { projectMediaUpload } from "../../utils/multer";
 import verifyAuthentication from "../../middleware/authMiddleware";
 
 const router = express.Router() as Router;
@@ -15,7 +17,7 @@ const router = express.Router() as Router;
 router.use(verifyAuthentication as express.RequestHandler);
 
 // POST /v1/api/projects - Create a new project with optional media uploads
-router.post("/", multipleImageUpload, createProject as RequestHandler);
+router.post("/", projectMediaUpload, createProject as RequestHandler);
 
 // GET /v1/api/projects - Get users projects
 router.get("/", getUsersProjects as RequestHandler);
@@ -23,10 +25,16 @@ router.get("/", getUsersProjects as RequestHandler);
 // /v1/api/projects/project-feed - Get all projects
 router.get("/project-feed", getAllProjects as RequestHandler);
 
-// PUT /v1/api/projects/:projectId - Update a project
-router.put("/:projectId", multipleImageUpload, updateProject as RequestHandler);
+// PUT /v1/api/projects/:projectId - Full update (replaces all fields)
+router.put("/:projectId", projectMediaUpload, updateProject as RequestHandler);
 
-// DELETE /v1/api/projects/:projectId - Delete a project and its media
+// PATCH /v1/api/projects/:projectId - Partial update (only updates provided fields)
+router.patch("/:projectId", projectMediaUpload, patchProject as RequestHandler);
+
+// PATCH /v1/api/projects/:projectId/archive - Archive a project
+router.patch("/:projectId/archive", archiveProject as RequestHandler);
+
+// DELETE /v1/api/projects/:projectId - Delete a project (soft delete)
 router.delete("/:projectId", deleteProject as RequestHandler);
 
 export default router;
