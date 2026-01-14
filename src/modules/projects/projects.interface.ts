@@ -1,7 +1,15 @@
+import { Types } from "mongoose";
+
+export interface ICollaboratorPopulated {
+  _id: string;
+  fullName?: string;
+  profilePhoto?: string;
+}
+
 export interface IProjects {
   title: string;
   description: string;
-  collaborators: string[];
+  collaborators: Types.ObjectId[] | ICollaboratorPopulated[];
   status:
     | "draft"
     | "pending"

@@ -12,7 +12,7 @@ export const projectsSchema = new Schema<IProjects>(
       required: true,
     },
     collaborators: {
-      type: [String],
+      type: [{ type: Schema.Types.ObjectId, ref: "User" }],
       default: [],
     },
     media: {

@@ -158,6 +158,13 @@ export const getProjectById = async (
     const project = await ProjectsModel.findOne({
       _id: projectId,
       status: { $nin: ["deleted", "archived"] },
+    }).populate({
+      path: "collaborators",
+      select: "email userProfile",
+      populate: {
+        path: "userProfile",
+        select: "firstname lastname profilePicture",
+      },
     });
     if (!project) {
       res.status(404).json({ message: "Project not found" });

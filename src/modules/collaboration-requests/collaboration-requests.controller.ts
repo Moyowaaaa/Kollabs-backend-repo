@@ -39,26 +39,28 @@ export const createRequest = async (
     }
 
     if (project.status !== "ongoing") {
-      res
-        .status(400)
-        .json({
-          message: "Can only request collaboration on ongoing projects",
-        });
+      res.status(400).json({
+        message: "Can only request collaboration on ongoing projects",
+      });
       return;
     }
 
     // Check if requester is not the author
     if (project.author.toString() === requesterId) {
-      res
-        .status(400)
-        .json({
-          message: "You cannot request to collaborate on your own project",
-        });
+      res.status(400).json({
+        message: "You cannot request to collaborate on your own project",
+      });
       return;
     }
 
-    // Check if already a collaborator
-    if (project.collaborators.includes(requesterId)) {
+    // Check if already a collaborator (handle both ObjectId and populated objects)
+    const collaboratorIds = project.collaborators.map((c) => {
+      if (typeof c === "object" && c !== null && "_id" in c) {
+        return String(c._id);
+      }
+      return String(c);
+    });
+    if (collaboratorIds.includes(requesterId)) {
       res
         .status(400)
         .json({ message: "You are already a collaborator on this project" });
@@ -71,11 +73,9 @@ export const createRequest = async (
       requesterId,
     });
     if (existingRequest) {
-      res
-        .status(400)
-        .json({
-          message: "You have already requested to collaborate on this project",
-        });
+      res.status(400).json({
+        message: "You have already requested to collaborate on this project",
+      });
       return;
     }
 
@@ -147,11 +147,9 @@ export const getRequestsForProject = async (
     }
 
     if (project.author.toString() !== userId) {
-      res
-        .status(403)
-        .json({
-          message: "Only the project author can view collaboration requests",
-        });
+      res.status(403).json({
+        message: "Only the project author can view collaboration requests",
+      });
       return;
     }
 
@@ -245,11 +243,9 @@ export const acceptRequest = async (
     }
 
     if (project.author.toString() !== userId) {
-      res
-        .status(403)
-        .json({
-          message: "Only the project author can accept collaboration requests",
-        });
+      res.status(403).json({
+        message: "Only the project author can accept collaboration requests",
+      });
       return;
     }
 
@@ -327,11 +323,9 @@ export const rejectRequest = async (
     }
 
     if (project.author.toString() !== userId) {
-      res
-        .status(403)
-        .json({
-          message: "Only the project author can reject collaboration requests",
-        });
+      res.status(403).json({
+        message: "Only the project author can reject collaboration requests",
+      });
       return;
     }
 
