@@ -42,6 +42,32 @@ export const getMe = async (
   }
 };
 
+export const getUser = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const authUser = await userAuthModel
+      .findById(req.user._id)
+      .populate("userProfile")
+      .select("-password");
+
+    if (!authUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    return res.status(200).json({
+      user: authUser,
+    });
+  } catch (err) {
+    const error = err as IError;
+    error.status = 500;
+    error.message = "An error occurred while fetching user";
+    return next(error);
+  }
+};
+
 // Update user profile
 export const updateProfile = async (
   req: AuthenticatedRequest,

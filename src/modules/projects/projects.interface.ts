@@ -1,8 +1,22 @@
+import { Types } from "mongoose";
+
+export interface ICollaboratorPopulated {
+  _id: string;
+  fullName?: string;
+  profilePhoto?: string;
+}
+
 export interface IProjects {
   title: string;
   description: string;
-  collaborators: string[];
-  status: "draft" | "pending" | "ongoing" | "completed" | "deleted";
+  collaborators: Types.ObjectId[] | ICollaboratorPopulated[];
+  status:
+    | "draft"
+    | "pending"
+    | "ongoing"
+    | "completed"
+    | "deleted"
+    | "archived";
   createdAt: Date;
   updatedAt: Date;
   conversationId?: string;
