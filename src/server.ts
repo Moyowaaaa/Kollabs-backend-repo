@@ -15,6 +15,7 @@ import { waitlistRoutes } from "./modules/waitlist";
 import { authRoutes } from "./modules/auth";
 import { userRoutes } from "./modules/user";
 import { projectsRoutes } from "./modules/projects";
+import { collaborationRequestsRoutes } from "./modules/collaboration-requests";
 
 //
 
@@ -67,6 +68,7 @@ app.use("/v1/api", waitlistRoutes);
 app.use("/v1/api/auth", authRoutes);
 app.use("/v1/api/user", userRoutes);
 app.use("/v1/api/projects", projectsRoutes);
+app.use("/v1/api/collaboration-requests", collaborationRequestsRoutes);
 
 // Swagger API Documentation
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));

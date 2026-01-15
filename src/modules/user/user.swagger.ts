@@ -147,3 +147,112 @@
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
+
+/**
+ * @swagger
+ * /v1/api/user/{id}:
+ *   get:
+ *     summary: Get user by ID
+ *     description: Retrieve a specific user by their ID
+ *     tags: [User]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: User ID
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: User retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 user:
+ *                   $ref: '#/components/schemas/User'
+ *       401:
+ *         description: Unauthorized - Invalid or missing token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       404:
+ *         description: User not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       properties:
+ *         _id:
+ *           type: string
+ *           description: User ID
+ *           example: 507f1f77bcf86cd799439011
+ *         email:
+ *           type: string
+ *           description: User email
+ *           example: user@example.com
+ *         userProfile:
+ *           type: object
+ *           properties:
+ *             _id:
+ *               type: string
+ *             fullName:
+ *               type: string
+ *               example: John Doe
+ *             firstname:
+ *               type: string
+ *               example: John
+ *             lastname:
+ *               type: string
+ *               example: Doe
+ *             roles:
+ *               type: array
+ *               items:
+ *                 type: string
+ *               example: ["developer", "designer"]
+ *             bio:
+ *               type: string
+ *               example: Full-stack developer passionate about building great products
+ *             profilePicture:
+ *               type: object
+ *               properties:
+ *                 url:
+ *                   type: string
+ *                   example: https://res.cloudinary.com/example/image/upload/profile.jpg
+ *                 id:
+ *                   type: string
+ *                   example: profile_images/abc123
+ *             cv:
+ *               type: object
+ *               properties:
+ *                 fileUrl:
+ *                   type: string
+ *                   description: Cloudinary URL for uploaded CV
+ *                 fileId:
+ *                   type: string
+ *                   description: Cloudinary public ID
+ *                 linkedUrl:
+ *                   type: string
+ *                   description: External CV link
+ *                 fileName:
+ *                   type: string
+ *                   description: Original filename
+ *             links:
+ *               $ref: '#/components/schemas/UserLinks'
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ */

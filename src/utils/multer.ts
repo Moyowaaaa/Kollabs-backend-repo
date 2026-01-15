@@ -158,6 +158,17 @@ export const singleImageUpload = uploadImage.single("image");
  */
 export const multipleImageUpload = uploadImage.array("images", 10);
 
+/**
+ * Middleware for uploading project media (up to 10).
+ * The field name in your form/request MUST be "media".
+ *
+ * Example usage in routes:
+ *   router.post("/projects", projectMediaUpload, createProject);
+ *
+ * Then in your controller, access them via: req.files
+ */
+export const projectMediaUpload = uploadImage.array("media", 10);
+
 // -----------------------------------------------------------------------------
 // DOCUMENT UPLOAD: For CVs/Resumes (PDF, DOC, DOCX)
 // -----------------------------------------------------------------------------

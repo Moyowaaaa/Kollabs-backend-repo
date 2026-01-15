@@ -91,6 +91,10 @@ const options: swaggerJsdoc.Options = {
         name: "Projects",
         description: "Project management endpoints",
       },
+      {
+        name: "Collaboration Requests",
+        description: "Collaboration request management endpoints",
+      },
     ],
   },
   apis: ["./src/modules/**/*.swagger.ts"],
