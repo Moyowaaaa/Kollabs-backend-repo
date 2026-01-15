@@ -144,15 +144,58 @@ export const loginUser = async (req: Request, res: Response) => {
   const { email, password } = req.body as { email: string; password: string };
   try {
     const user = await userAuthModel.loginUser(email, password);
+
+    // Populate user profile for response
+    const populatedUser = await userAuthModel
+      .findById(user._id)
+      .populate("userProfile");
+
     const token = createAuthToken(user._id);
-    res.status(200).json({ message: "User logged in", token });
+
+    // Extract profile data safely
+    const profile = populatedUser?.userProfile as IUserInterface | undefined;
+
+    // Set httpOnly cookie for secure token storage
+    res.cookie("authToken", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 2 * 24 * 60 * 60 * 1000, // 2 days in milliseconds
+    });
+
+    res.status(200).json({
+      message: "User logged in",
+      data: {
+        user: {
+          _id: user._id,
+          email: email,
+          firstname: profile?.firstname,
+          lastname: profile?.lastname,
+          roles: profile?.roles,
+          profilePicture: profile?.profilePicture?.url,
+          isVerified: profile?.isVerified,
+        },
+      },
+    });
   } catch (error) {
     if (error instanceof Error) {
-      res.status(400).json({ error: error.message });
+      res.status(401).json({ error: error.message });
     } else {
       res.status(400).json({ error: "An unexpected error occurred" });
     }
   }
+};
+
+// logout - clears the auth cookie
+export const logoutUser = (_req: Request, res: Response) => {
+  res.cookie("authToken", "", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    maxAge: 0, // Expire immediately
+  });
+
+  res.status(200).json({ message: "User logged out successfully" });
 };
 
 //change password

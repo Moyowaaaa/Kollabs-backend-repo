@@ -3,6 +3,7 @@ import {
   changePassword,
   forgotPassword,
   loginUser,
+  logoutUser,
   resetPassword,
   signUpUser,
 } from "./auth.controller";
@@ -15,6 +16,7 @@ const router = express.Router() as Router;
 router.use(authLimiter);
 
 router.post("/sign-in", loginUser);
+router.post("/sign-out", logoutUser);
 router.post("/sign-up", imageAndCvUpload, signUpUser);
 router.post("/change-password", changePassword);
 router.post("/forgot-password", forgotPassword);

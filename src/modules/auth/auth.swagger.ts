@@ -3,7 +3,10 @@
  * /v1/api/auth/sign-in:
  *   post:
  *     summary: User login
- *     description: Authenticate a user with email and password
+ *     description: |
+ *       Authenticate a user with email and password.
+ *       On success, an `authToken` httpOnly cookie is set for secure authentication.
+ *       The token is NOT returned in the response body for security reasons.
  *     tags: [Auth]
  *     requestBody:
  *       required: true
@@ -25,17 +28,45 @@
  *                 example: password123
  *     responses:
  *       200:
- *         description: Successfully logged in
+ *         description: Successfully logged in. Auth cookie is set automatically.
+ *         headers:
+ *           Set-Cookie:
+ *             schema:
+ *               type: string
+ *               example: authToken=eyJhbGc...; HttpOnly; Secure; SameSite=Lax; Max-Age=172800
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/AuthResponse'
- *       400:
+ *               $ref: '#/components/schemas/LoginResponse'
+ *       401:
  *         description: Invalid credentials
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Error'
+ */
+
+/**
+ * @swagger
+ * /v1/api/auth/sign-out:
+ *   post:
+ *     summary: User logout
+ *     description: |
+ *       Log out the current user by clearing the auth cookie.
+ *       No request body is required.
+ *     tags: [Auth]
+ *     responses:
+ *       200:
+ *         description: Successfully logged out. Auth cookie is cleared.
+ *         headers:
+ *           Set-Cookie:
+ *             schema:
+ *               type: string
+ *               example: authToken=; HttpOnly; Secure; SameSite=Lax; Max-Age=0
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/SuccessMessage'
  */
 
 /**
@@ -244,4 +275,51 @@
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Error'
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     LoginResponse:
+ *       type: object
+ *       properties:
+ *         message:
+ *           type: string
+ *           example: User logged in
+ *         data:
+ *           type: object
+ *           properties:
+ *             user:
+ *               $ref: '#/components/schemas/LoginUserData'
+ *     LoginUserData:
+ *       type: object
+ *       properties:
+ *         _id:
+ *           type: string
+ *           description: User ID
+ *           example: 507f1f77bcf86cd799439011
+ *         email:
+ *           type: string
+ *           format: email
+ *           example: user@example.com
+ *         firstname:
+ *           type: string
+ *           example: John
+ *         lastname:
+ *           type: string
+ *           example: Doe
+ *         roles:
+ *           type: array
+ *           items:
+ *             type: string
+ *           example: ["developer", "designer"]
+ *         profilePicture:
+ *           type: string
+ *           description: URL of the user's profile picture
+ *           example: https://res.cloudinary.com/example/image/upload/profile.jpg
+ *         isVerified:
+ *           type: boolean
+ *           description: Whether the user's profile is verified
+ *           example: true
  */
