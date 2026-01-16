@@ -15,14 +15,23 @@ const verifyAuthentication = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const { authorization } = req.headers;
+  // Try to get token from httpOnly cookie first, then from Authorization header
+  let token: string | undefined;
 
-  if (!authorization) {
+  // Check for token in cookies (set by login endpoint)
+  const cookies = req.cookies as { authToken?: string } | undefined;
+  if (cookies?.authToken) {
+    token = cookies.authToken;
+  }
+  // Fallback to Authorization header (for non-browser clients like mobile apps or Postman)
+  else if (req.headers.authorization?.startsWith("Bearer ")) {
+    token = req.headers.authorization.split(" ")[1];
+  }
+
+  if (!token) {
     res.status(401).json({ message: "Authorization token required" });
     return;
   }
-
-  const token = authorization.split(" ")[1];
 
   try {
     // Type assertion to specify the expected JWT payload structure
