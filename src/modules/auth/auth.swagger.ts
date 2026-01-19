@@ -322,4 +322,107 @@
  *           type: boolean
  *           description: Whether the user's profile is verified
  *           example: true
+ *         isEmailVerified:
+ *           type: boolean
+ *           description: Whether the user's email address is verified
+ *           example: false
+ */
+
+/**
+ * @swagger
+ * /v1/api/auth/verify-email/{token}:
+ *   get:
+ *     summary: Verify email address
+ *     description: Verify a user's email address using the token from the verification email
+ *     tags: [Auth]
+ *     parameters:
+ *       - in: path
+ *         name: token
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Email verification token from email
+ *     responses:
+ *       200:
+ *         description: Email verified successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/SuccessMessage'
+ *       400:
+ *         description: Invalid or expired verification token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+
+/**
+ * @swagger
+ * /v1/api/auth/resend-verification:
+ *   post:
+ *     summary: Resend verification email
+ *     description: Resend the email verification link to a user who hasn't verified yet
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: user@example.com
+ *     responses:
+ *       200:
+ *         description: Verification email sent (if account exists and is not verified)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/SuccessMessage'
+ *       400:
+ *         description: Email is already verified
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+
+/**
+ * @swagger
+ * /v1/api/auth/check-email:
+ *   post:
+ *     summary: Check email availability
+ *     description: Check if an email address is available for registration
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: user@example.com
+ *     responses:
+ *       200:
+ *         description: Email is available
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/SuccessMessage'
+ *       400:
+ *         description: Email is already in use
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  */
