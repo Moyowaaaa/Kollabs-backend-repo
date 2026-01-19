@@ -26,13 +26,25 @@ const usersSchema = new Schema<IUserAuth>({
     type: Date,
     required: false,
   },
+  emailVerificationToken: {
+    type: String,
+    required: false,
+  },
+  emailVerificationExpires: {
+    type: Date,
+    required: false,
+  },
+  isEmailVerified: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 //signup user
 usersSchema.statics.signUpUser = async function (
   this: mongoose.Model<IUserAuth>,
   email: string,
-  password: string
+  password: string,
 ) {
   if (!email || !password) {
     throw new Error("Please enter a email and a password");
@@ -59,7 +71,7 @@ usersSchema.statics.signUpUser = async function (
 usersSchema.statics.loginUser = async function (
   this: mongoose.Model<IUserAuth>,
   email: string,
-  password: string
+  password: string,
 ) {
   if (!email || !password) {
     throw new Error("Please enter a email and a password");
@@ -87,7 +99,7 @@ usersSchema.statics.changePassword = async function (
   this: mongoose.Model<IUserAuth>,
   email: string,
   newPassword: string,
-  currentPassword: string
+  currentPassword: string,
 ) {
   if (!email) {
     throw new Error("Please enter an email");
@@ -109,7 +121,7 @@ usersSchema.statics.changePassword = async function (
   // Verify current password is correct
   const isCurrentPasswordValid = await bcrypt.compare(
     currentPassword,
-    user.password
+    user.password,
   );
   if (!isCurrentPasswordValid) {
     throw new Error("Current password is incorrect");
@@ -134,7 +146,7 @@ usersSchema.statics.changePassword = async function (
 
 const userAuthModel = mongoose.model<IUserAuth, IUserAuthModel>(
   "User",
-  usersSchema
+  usersSchema,
 );
 
 export default userAuthModel;
