@@ -114,7 +114,7 @@ const sendEmail = async (options: EmailOptions): Promise<void> => {
   const templatePath = path.join(
     process.cwd(),
     "templates",
-    `${options.template}.ejs`
+    `${options.template}.ejs`,
   );
   const html = await ejs.renderFile(templatePath, options.data || {});
 
@@ -142,7 +142,7 @@ const sendEmail = async (options: EmailOptions): Promise<void> => {
 };
 
 export const sendWaitlistConfirmation = async (
-  email: string
+  email: string,
 ): Promise<void> => {
   await sendEmail({
     to: email,
@@ -156,7 +156,7 @@ export const sendWaitlistConfirmation = async (
 
 export const sendPasswordResetEmail = async (
   email: string,
-  resetUrl: string
+  resetUrl: string,
 ): Promise<void> => {
   await sendEmail({
     to: email,
@@ -164,6 +164,21 @@ export const sendPasswordResetEmail = async (
     template: "password-reset",
     data: {
       resetUrl,
+    },
+  });
+};
+
+export const sendVerificationEmail = async (
+  email: string,
+  verificationUrl: string,
+): Promise<void> => {
+  await sendEmail({
+    to: email,
+    subject: "Verify Your Email Address - Koneticus",
+    template: "verification",
+    data: {
+      email,
+      verificationUrl,
     },
   });
 };

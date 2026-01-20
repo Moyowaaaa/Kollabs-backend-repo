@@ -9,6 +9,9 @@ export interface IUserAuth {
   userProfile?: mongoose.Types.ObjectId;
   resetPasswordToken?: string;
   resetPasswordExpires?: Date;
+  emailVerificationToken?: string;
+  emailVerificationExpires?: Date;
+  isEmailVerified?: boolean;
 }
 
 export interface AuthenticatedRequest extends Request {
@@ -19,7 +22,7 @@ export interface IUserAuthModel extends Model<IUserAuth> {
   changePassword(
     email: string,
     newPassword: string,
-    comparePassword: string
+    comparePassword: string,
   ): Promise<IUserAuth>;
   signUpUser(email: string, password: string): Promise<IUserAuth>;
   loginUser(email: string, password: string): Promise<IUserAuth>;
