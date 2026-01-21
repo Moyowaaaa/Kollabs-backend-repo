@@ -135,11 +135,18 @@
  *                 example: https://linkedin.com/in/johndoe
  *     responses:
  *       201:
- *         description: User successfully registered
+ *         description: User successfully registered. A verification email is sent to the user.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/AuthResponse'
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: User successfully signed up. Please check your email to verify your account.
+ *                 isEmailVerified:
+ *                   type: boolean
+ *                   example: false
  *       400:
  *         description: Validation error or user already exists
  *         content:
