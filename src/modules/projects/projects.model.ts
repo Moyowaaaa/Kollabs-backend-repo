@@ -46,7 +46,13 @@ export const projectsSchema = new Schema<IProjects>(
       required: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
+);
+
+// Add text index for search functionality
+projectsSchema.index(
+  { title: "text", description: "text" },
+  { weights: { title: 10, description: 5 }, name: "projects_text_search" },
 );
 
 const ProjectsModel = model<IProjects>("Projects", projectsSchema);

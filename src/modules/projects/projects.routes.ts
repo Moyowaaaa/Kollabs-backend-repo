@@ -8,6 +8,7 @@ import {
   getProjectById,
   getUsersProjects,
   patchProject,
+  searchProjects,
   updateProject,
 } from "./projects.controller";
 import { projectMediaUpload } from "../../utils/multer";
@@ -22,6 +23,9 @@ router.post("/", projectMediaUpload, createProject as RequestHandler);
 
 // GET /v1/api/projects - Get users projects
 router.get("/", getUsersProjects as RequestHandler);
+
+// GET /v1/api/projects/search - Search projects with filters (must be before :projectId)
+router.get("/search", searchProjects as RequestHandler);
 
 // /v1/api/projects/project-feed - Get all projects
 router.get("/project-feed", getAllProjects as RequestHandler);

@@ -10,7 +10,7 @@ import { uploadMultipleToCloudinary } from "../../utils/cloudinary";
 export const createProject = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const { authorization } = req.headers;
   if (!authorization) {
@@ -31,7 +31,7 @@ export const createProject = async (
     if (req.files && Array.isArray(req.files) && req.files.length > 0) {
       const uploadResults = await uploadMultipleToCloudinary(
         req.files,
-        "projects_media"
+        "projects_media",
       );
       media = uploadResults.map((result) => ({
         url: result.secure_url,
@@ -59,11 +59,130 @@ export const createProject = async (
   }
 };
 
+// Search projects/ideas with filters
+export const searchProjects = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const { authorization } = req.headers;
+  if (!authorization) {
+    res.status(401).json({ message: "Authorization token required" });
+    return;
+  }
+
+  try {
+    const {
+      query,
+      status,
+      page = "1",
+      limit = "10",
+      sortBy = "createdAt",
+      sortOrder = "desc",
+    } = req.query as {
+      query?: string;
+      status?: string;
+      page?: string;
+      limit?: string;
+      sortBy?: string;
+      sortOrder?: "asc" | "desc";
+    };
+
+    const pageNum = Math.max(1, parseInt(page, 10));
+    const limitNum = Math.min(50, Math.max(1, parseInt(limit, 10)));
+    const skip = (pageNum - 1) * limitNum;
+
+    // Build filter object
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const filter: Record<string, any> = {
+      status: { $nin: ["deleted", "archived"] },
+    };
+
+    // Text search if query provided
+    if (query && query.trim()) {
+      filter.$text = { $search: query.trim() };
+    }
+
+    // Filter by specific status if provided
+    if (
+      status &&
+      ["draft", "pending", "ongoing", "completed"].includes(status)
+    ) {
+      filter.status = status;
+    }
+
+    // Build sort object
+    const sortOptions: Record<string, 1 | -1> = {};
+
+    // If text search, include text score for relevance sorting
+    if (query && query.trim()) {
+      sortOptions.score = { $meta: "textScore" } as unknown as 1;
+    }
+
+    sortOptions[sortBy] = sortOrder === "asc" ? 1 : -1;
+
+    // Execute query with population
+    const projectsQuery = ProjectsModel.find(
+      filter,
+      query && query.trim() ? { score: { $meta: "textScore" } } : {},
+    )
+      .sort(sortOptions)
+      .skip(skip)
+      .limit(limitNum)
+      .populate({
+        path: "author",
+        select: "email userProfile",
+        populate: {
+          path: "userProfile",
+          select: "firstname lastname profilePicture roles bio",
+        },
+      })
+      .populate({
+        path: "collaborators",
+        select: "email userProfile",
+        populate: {
+          path: "userProfile",
+          select: "firstname lastname profilePicture",
+        },
+      });
+
+    const [projects, totalProjects] = await Promise.all([
+      projectsQuery.exec(),
+      ProjectsModel.countDocuments(filter),
+    ]);
+
+    const totalPages = Math.ceil(totalProjects / limitNum);
+
+    res.status(200).json({
+      projects,
+      pagination: {
+        totalProjects,
+        totalPages,
+        currentPage: pageNum,
+        itemsPerPage: limitNum,
+        hasNextPage: pageNum < totalPages,
+        hasPrevPage: pageNum > 1,
+      },
+      filters: {
+        query: query || null,
+        status: status || null,
+        sortBy,
+        sortOrder,
+      },
+    });
+  } catch (err) {
+    const error = err as IError;
+    error.status = 500;
+    error.message = "An error occurred while searching projects";
+    return next(error);
+  }
+};
+
 //get user's project
 export const getUsersProjects = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const { authorization } = req.headers;
   if (!authorization) {
@@ -108,7 +227,7 @@ export const getUsersProjects = async (
 export const getAllProjects = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const { authorization } = req.headers;
   if (!authorization) {
@@ -151,7 +270,7 @@ export const getAllProjects = async (
 export const getProjectById = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { projectId } = req.params;
@@ -183,7 +302,7 @@ export const getProjectById = async (
 export const updateProject = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const { authorization } = req.headers;
   if (!authorization) {
@@ -216,7 +335,7 @@ export const updateProject = async (
     if (req.files && Array.isArray(req.files) && req.files.length > 0) {
       const uploadResults = await uploadMultipleToCloudinary(
         req.files,
-        "projects_media"
+        "projects_media",
       );
       media = uploadResults.map((result) => ({
         url: result.secure_url,
@@ -232,7 +351,7 @@ export const updateProject = async (
         teamSize,
         media,
       },
-      { new: true }
+      { new: true },
     );
 
     res.status(200).json({
@@ -251,7 +370,7 @@ export const updateProject = async (
 export const patchProject = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const { authorization } = req.headers;
   if (!authorization) {
@@ -296,7 +415,7 @@ export const patchProject = async (
     if (req.files && Array.isArray(req.files) && req.files.length > 0) {
       const uploadResults = await uploadMultipleToCloudinary(
         req.files,
-        "projects_media"
+        "projects_media",
       );
       updateFields.media = uploadResults.map((result) => ({
         url: result.secure_url,
@@ -307,7 +426,7 @@ export const patchProject = async (
     const updatedProject = await ProjectsModel.findByIdAndUpdate(
       projectId,
       { $set: updateFields },
-      { new: true }
+      { new: true },
     );
 
     res.status(200).json({
@@ -371,7 +490,7 @@ export const patchProject = async (
 export const deleteProject = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const { authorization } = req.headers;
   if (!authorization) {
@@ -409,7 +528,7 @@ export const deleteProject = async (
 export const archiveProject = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const { authorization } = req.headers;
   if (!authorization) {
