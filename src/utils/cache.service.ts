@@ -10,7 +10,7 @@ export const CacheService = {
   async get<T>(key: string): Promise<T | null> {
     try {
       const data = await redis.get(key);
-      return data ? JSON.parse(data) : null;
+      return data ? (JSON.parse(data) as T) : null;
     } catch (error) {
       console.error(`Cache GET error for key ${key}:`, error);
       return null;
