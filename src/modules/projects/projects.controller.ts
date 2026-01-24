@@ -1,10 +1,20 @@
 import type { NextFunction, Request, Response } from "express";
-import { ICreateProject } from "./projects.interface";
+import { ICreateProject, IAuthorPopulated } from "./projects.interface";
 import { IError } from "../../interfaces/error.interface";
 import jwt from "jsonwebtoken";
 import { jwtToken } from "../../middleware/authMiddleware";
 import ProjectsModel from "./projects.model";
 import { uploadMultipleToCloudinary } from "../../utils/cloudinary";
+import { invalidateFeedCache } from "../feed/feed.controller";
+import { Types } from "mongoose";
+
+// Helper to safely get author ID string from ObjectId or populated object
+const getAuthorId = (author: Types.ObjectId | IAuthorPopulated): string => {
+  if (typeof author === "object" && author !== null && "_id" in author) {
+    return String(author._id);
+  }
+  return String(author);
+};
 
 //Create Project
 export const createProject = async (
@@ -23,7 +33,8 @@ export const createProject = async (
     const decoded = jwt.verify(token, process.env.SECRET as string) as jwtToken;
     const { _id } = decoded;
 
-    const { title, description, teamSize } = req.body as ICreateProject;
+    const { title, description, teamSize, requiredRoles } =
+      req.body as ICreateProject;
 
     // Handle media uploads (optional)
     let media: { url: string; id: string }[] = [];
@@ -45,7 +56,11 @@ export const createProject = async (
       author: _id,
       media,
       teamSize,
+      requiredRoles: requiredRoles || [],
     });
+
+    // Invalidate feed cache so new project appears immediately
+    await invalidateFeedCache();
 
     res.status(201).json({
       message: "Project created successfully",
@@ -322,12 +337,13 @@ export const updateProject = async (
       return;
     }
 
-    if (project.author.toString() !== _id) {
+    if (getAuthorId(project.author) !== _id) {
       res.status(401).json({ message: "Unauthorized" });
       return;
     }
 
-    const { title, description, teamSize } = req.body as ICreateProject;
+    const { title, description, teamSize, requiredRoles } =
+      req.body as ICreateProject;
 
     // Handle media uploads - preserve existing media if no new files uploaded
     let media: { url: string; id: string }[] = project.media || [];
@@ -350,9 +366,13 @@ export const updateProject = async (
         description,
         teamSize,
         media,
+        requiredRoles: requiredRoles || project.requiredRoles || [],
       },
       { new: true },
     );
+
+    // Invalidate feed cache
+    await invalidateFeedCache();
 
     res.status(200).json({
       message: "Project updated successfully",
@@ -390,7 +410,7 @@ export const patchProject = async (
       return;
     }
 
-    if (project.author.toString() !== _id) {
+    if (getAuthorId(project.author) !== _id) {
       res.status(401).json({ message: "Unauthorized" });
       return;
     }
@@ -410,6 +430,8 @@ export const patchProject = async (
     if (body.description !== undefined)
       updateFields.description = body.description;
     if (body.teamSize !== undefined) updateFields.teamSize = body.teamSize;
+    if (body.requiredRoles !== undefined)
+      updateFields.requiredRoles = body.requiredRoles;
 
     // Handle media uploads - only update if new files are provided
     if (req.files && Array.isArray(req.files) && req.files.length > 0) {
@@ -428,6 +450,9 @@ export const patchProject = async (
       { $set: updateFields },
       { new: true },
     );
+
+    // Invalidate feed cache
+    await invalidateFeedCache();
 
     res.status(200).json({
       message: "Project updated successfully",
@@ -557,6 +582,70 @@ export const archiveProject = async (
     const error = err as IError;
     error.status = 500;
     error.message = "An error occurred while archiving project";
+    return next(error);
+  }
+};
+
+// Update project status
+export const updateProjectStatus = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const { authorization } = req.headers;
+  if (!authorization) {
+    res.status(401).json({ message: "Authorization token required" });
+    return;
+  }
+
+  try {
+    const token = authorization.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.SECRET as string) as jwtToken;
+    const { _id } = decoded;
+    const { projectId } = req.params;
+    const { status } = req.body as { status: string };
+
+    // Validate status
+    const allowedStatuses = ["draft", "pending", "ongoing", "completed"];
+    if (!status || !allowedStatuses.includes(status)) {
+      res.status(400).json({
+        message: `Invalid status. Allowed values: ${allowedStatuses.join(", ")}`,
+      });
+      return;
+    }
+
+    const project = await ProjectsModel.findOne({
+      _id: projectId,
+      author: _id,
+    });
+
+    if (!project) {
+      res.status(404).json({ message: "Project not found" });
+      return;
+    }
+
+    // Prevent status changes on deleted/archived projects
+    if (project.status === "deleted" || project.status === "archived") {
+      res.status(400).json({
+        message: `Cannot change status of ${project.status} project. Restore it first.`,
+      });
+      return;
+    }
+
+    const updatedProject = await ProjectsModel.findByIdAndUpdate(
+      projectId,
+      { status },
+      { new: true },
+    );
+
+    res.status(200).json({
+      message: `Project status updated to ${status}`,
+      project: updatedProject,
+    });
+  } catch (err) {
+    const error = err as IError;
+    error.status = 500;
+    error.message = "An error occurred while updating project status";
     return next(error);
   }
 };

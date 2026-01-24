@@ -10,6 +10,7 @@ import {
   patchProject,
   searchProjects,
   updateProject,
+  updateProjectStatus,
 } from "./projects.controller";
 import { projectMediaUpload } from "../../utils/multer";
 import verifyAuthentication from "../../middleware/authMiddleware";
@@ -38,6 +39,9 @@ router.put("/:projectId", projectMediaUpload, updateProject as RequestHandler);
 
 // PATCH /v1/api/projects/:projectId - Partial update (only updates provided fields)
 router.patch("/:projectId", projectMediaUpload, patchProject as RequestHandler);
+
+// PATCH /v1/api/projects/:projectId/status - Update project status
+router.patch("/:projectId/status", updateProjectStatus as RequestHandler);
 
 // PATCH /v1/api/projects/:projectId/archive - Archive a project
 router.patch("/:projectId/archive", archiveProject as RequestHandler);

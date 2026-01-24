@@ -102,6 +102,10 @@ const options: swaggerJsdoc.Options = {
         description: "Project management endpoints",
       },
       {
+        name: "Feed",
+        description: "Ideas feed endpoints (cached with Redis)",
+      },
+      {
         name: "Collaboration Requests",
         description: "Collaboration request management endpoints",
       },

@@ -119,7 +119,7 @@ export const getTrendingFeed = async (
       });
     }
 
-    // Aggregate to count collaboration requests and sort
+    // Aggregate to count collaboration requests and sort by team activity
     const projects = await ProjectsModel.aggregate([
       { $match: { status: { $nin: ["deleted", "archived"] } } },
       {
@@ -132,11 +132,29 @@ export const getTrendingFeed = async (
       },
       {
         $addFields: {
-          requestCount: { $size: "$requests" },
+          // Count only accepted requests for better trending signal
+          acceptedRequestCount: {
+            $size: {
+              $filter: {
+                input: "$requests",
+                as: "req",
+                cond: { $eq: ["$$req.status", "accepted"] },
+              },
+            },
+          },
+          totalRequestCount: { $size: "$requests" },
           collaboratorCount: { $size: "$collaborators" },
         },
       },
-      { $sort: { requestCount: -1, createdAt: -1 } },
+      // Sort by: collaborators first (actual team), then accepted requests, then total interest
+      {
+        $sort: {
+          collaboratorCount: -1,
+          acceptedRequestCount: -1,
+          totalRequestCount: -1,
+          createdAt: -1,
+        },
+      },
       { $limit: limitNum },
       { $project: { requests: 0 } },
     ]);

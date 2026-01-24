@@ -1,5 +1,8 @@
-import express from "express";
+// Load environment variables FIRST, before any other imports
 import dotenv from "dotenv";
+dotenv.config();
+
+import express from "express";
 import connectDB from "./db/db";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -18,10 +21,6 @@ import { userRoutes } from "./modules/user";
 import { projectsRoutes } from "./modules/projects";
 import { collaborationRequestsRoutes } from "./modules/collaboration-requests";
 import { feedRoutes } from "./modules/feed";
-
-//
-
-dotenv.config();
 
 const app: Express = express();
 
