@@ -2,3 +2,6 @@
 [32m2025-11-19 20:28:11:2811[39m info: [34mApp running on port 4000.....[39m
 [32m2025-11-19 20:28:39:2839[39m info: [34mApp running on port 4000.....[39m
 [32m2025-12-21 15:02:50:250[39m info: [34mApp running on port 4000.....[39m
+[32m2026-01-30 23:34:24:3424[39m info: [34mApp running on port 4000.....[39m
+[32m2026-01-30 23:34:52:3452[39m info: [34mPOST /v1/api/auth/sign-in 200 798.498 ms - 524[39m
+[32m2026-01-30 23:34:55:3455[39m info: [34mGET /v1/api/feed?limit=20 304 2141.855 ms - -[39m
