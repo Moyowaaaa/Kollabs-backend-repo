@@ -62,14 +62,23 @@ export const CacheService = {
   async invalidatePattern(pattern: string): Promise<void> {
     try {
       const redis = await getRedisClient();
-      if (!redis) return; // Redis unavailable, skip
+      if (!redis) {
+        console.log(
+          `⚠️ Redis unavailable, skipping cache invalidation for pattern: ${pattern}`,
+        );
+        return; // Redis unavailable, skip
+      }
 
       const keys = await redis.keys(pattern);
+      console.log(`🔍 Found ${keys.length} keys matching pattern: ${pattern}`);
       if (keys.length > 0) {
         await redis.del(...keys);
         console.log(
           `🗑️ Invalidated ${keys.length} cache keys matching: ${pattern}`,
         );
+        console.log(`📋 Invalidated keys:`, keys);
+      } else {
+        console.log(`📭 No cache keys found matching pattern: ${pattern}`);
       }
     } catch (error) {
       console.error(`Cache INVALIDATE error for pattern ${pattern}:`, error);

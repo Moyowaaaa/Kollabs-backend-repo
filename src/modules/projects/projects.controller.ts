@@ -1,8 +1,7 @@
-import type { NextFunction, Request, Response } from "express";
+import type { NextFunction, Response } from "express";
 import { ICreateProject, IAuthorPopulated } from "./projects.interface";
 import { IError } from "../../interfaces/error.interface";
-import jwt from "jsonwebtoken";
-import { jwtToken } from "../../middleware/authMiddleware";
+import { AuthenticatedRequest } from "../auth/auth.interface";
 import ProjectsModel from "./projects.model";
 import { uploadMultipleToCloudinary } from "../../utils/cloudinary";
 import { invalidateFeedCache } from "../feed/feed.controller";
@@ -18,20 +17,12 @@ const getAuthorId = (author: Types.ObjectId | IAuthorPopulated): string => {
 
 //Create Project
 export const createProject = async (
-  req: Request,
+  req: AuthenticatedRequest,
   res: Response,
   next: NextFunction,
 ) => {
-  const { authorization } = req.headers;
-  if (!authorization) {
-    res.status(401).json({ message: "Authorization token required" });
-    return;
-  }
-
   try {
-    const token = authorization.split(" ")[1];
-    const decoded = jwt.verify(token, process.env.SECRET as string) as jwtToken;
-    const { _id } = decoded;
+    const { _id } = req.user; // User is already authenticated by middleware
 
     const { title, description, teamSize, requiredRoles } =
       req.body as ICreateProject;
@@ -60,7 +51,9 @@ export const createProject = async (
     });
 
     // Invalidate feed cache so new project appears immediately
+    console.log("🔄 Invalidating feed cache after project creation...");
     await invalidateFeedCache();
+    console.log("✅ Feed cache invalidated successfully");
 
     res.status(201).json({
       message: "Project created successfully",
@@ -76,16 +69,10 @@ export const createProject = async (
 
 // Search projects/ideas with filters
 export const searchProjects = async (
-  req: Request,
+  req: AuthenticatedRequest,
   res: Response,
   next: NextFunction,
 ) => {
-  const { authorization } = req.headers;
-  if (!authorization) {
-    res.status(401).json({ message: "Authorization token required" });
-    return;
-  }
-
   try {
     const {
       query,
@@ -195,19 +182,12 @@ export const searchProjects = async (
 
 //get user's project
 export const getUsersProjects = async (
-  req: Request,
+  req: AuthenticatedRequest,
   res: Response,
   next: NextFunction,
 ) => {
-  const { authorization } = req.headers;
-  if (!authorization) {
-    res.status(401).json({ message: "Authorization token required" });
-    return;
-  }
   try {
-    const token = authorization.split(" ")[1];
-    const decoded = jwt.verify(token, process.env.SECRET as string) as jwtToken;
-    const { _id } = decoded; // ✅ Get _id, not userId
+    const { _id } = req.user; // User is already authenticated by middleware
 
     const limit = Number(req.query.limit) || 10;
     const page = Number(req.query.page) || 1;
@@ -240,15 +220,10 @@ export const getUsersProjects = async (
 
 //  get all projects
 export const getAllProjects = async (
-  req: Request,
+  req: AuthenticatedRequest,
   res: Response,
   next: NextFunction,
 ) => {
-  const { authorization } = req.headers;
-  if (!authorization) {
-    res.status(401).json({ message: "Authorization token required" });
-    return;
-  }
   try {
     const limit = Number(req.query.limit) || 10;
     const page = Number(req.query.page) || 1;
@@ -283,7 +258,7 @@ export const getAllProjects = async (
 
 //single project
 export const getProjectById = async (
-  req: Request,
+  req: AuthenticatedRequest,
   res: Response,
   next: NextFunction,
 ) => {
@@ -315,20 +290,12 @@ export const getProjectById = async (
 
 //update project
 export const updateProject = async (
-  req: Request,
+  req: AuthenticatedRequest,
   res: Response,
   next: NextFunction,
 ) => {
-  const { authorization } = req.headers;
-  if (!authorization) {
-    res.status(401).json({ message: "Authorization token required" });
-    return;
-  }
-
   try {
-    const token = authorization.split(" ")[1];
-    const decoded = jwt.verify(token, process.env.SECRET as string) as jwtToken;
-    const { _id } = decoded;
+    const { _id } = req.user; // User is already authenticated by middleware
 
     const { projectId } = req.params;
     const project = await ProjectsModel.findById(projectId);
@@ -372,7 +339,9 @@ export const updateProject = async (
     );
 
     // Invalidate feed cache
+    console.log("🔄 Invalidating feed cache after project update...");
     await invalidateFeedCache();
+    console.log("✅ Feed cache invalidated successfully");
 
     res.status(200).json({
       message: "Project updated successfully",
@@ -388,20 +357,12 @@ export const updateProject = async (
 
 // Patch project (partial update - only updates provided fields)
 export const patchProject = async (
-  req: Request,
+  req: AuthenticatedRequest,
   res: Response,
   next: NextFunction,
 ) => {
-  const { authorization } = req.headers;
-  if (!authorization) {
-    res.status(401).json({ message: "Authorization token required" });
-    return;
-  }
-
   try {
-    const token = authorization.split(" ")[1];
-    const decoded = jwt.verify(token, process.env.SECRET as string) as jwtToken;
-    const { _id } = decoded;
+    const { _id } = req.user; // User is already authenticated by middleware
 
     const { projectId } = req.params;
     const project = await ProjectsModel.findById(projectId);
@@ -452,7 +413,9 @@ export const patchProject = async (
     );
 
     // Invalidate feed cache
+    console.log("🔄 Invalidating feed cache after project update...");
     await invalidateFeedCache();
+    console.log("✅ Feed cache invalidated successfully");
 
     res.status(200).json({
       message: "Project updated successfully",
@@ -513,20 +476,12 @@ export const patchProject = async (
 // };
 
 export const deleteProject = async (
-  req: Request,
+  req: AuthenticatedRequest,
   res: Response,
   next: NextFunction,
 ) => {
-  const { authorization } = req.headers;
-  if (!authorization) {
-    res.status(401).json({ message: "Authorization token required" });
-    return;
-  }
-
   try {
-    const token = authorization.split(" ")[1];
-    const decoded = jwt.verify(token, process.env.SECRET as string) as jwtToken;
-    const { _id } = decoded;
+    const { _id } = req.user; // User is already authenticated by middleware
     const { projectId } = req.params;
     const project = await ProjectsModel.findOne({
       _id: projectId,
@@ -551,20 +506,12 @@ export const deleteProject = async (
 //archive project
 
 export const archiveProject = async (
-  req: Request,
+  req: AuthenticatedRequest,
   res: Response,
   next: NextFunction,
 ) => {
-  const { authorization } = req.headers;
-  if (!authorization) {
-    res.status(401).json({ message: "Authorization token required" });
-    return;
-  }
-
   try {
-    const token = authorization.split(" ")[1];
-    const decoded = jwt.verify(token, process.env.SECRET as string) as jwtToken;
-    const { _id } = decoded;
+    const { _id } = req.user; // User is already authenticated by middleware
     const { projectId } = req.params;
     const project = await ProjectsModel.findOne({
       _id: projectId,
@@ -588,20 +535,12 @@ export const archiveProject = async (
 
 // Update project status
 export const updateProjectStatus = async (
-  req: Request,
+  req: AuthenticatedRequest,
   res: Response,
   next: NextFunction,
 ) => {
-  const { authorization } = req.headers;
-  if (!authorization) {
-    res.status(401).json({ message: "Authorization token required" });
-    return;
-  }
-
   try {
-    const token = authorization.split(" ")[1];
-    const decoded = jwt.verify(token, process.env.SECRET as string) as jwtToken;
-    const { _id } = decoded;
+    const { _id } = req.user; // User is already authenticated by middleware
     const { projectId } = req.params;
     const { status } = req.body as { status: string };
 
