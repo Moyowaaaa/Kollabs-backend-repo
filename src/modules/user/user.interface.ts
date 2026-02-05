@@ -5,6 +5,7 @@ export interface IUserLinks {
   github?: string;
   behance?: string;
   website?: string;
+  linkedin?: string;
 }
 
 export interface IUserCV {

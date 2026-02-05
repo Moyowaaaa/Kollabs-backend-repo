@@ -31,18 +31,10 @@ const userProfileSchema = new Schema<IUserInterface>(
       required: false,
     },
     links: {
-      github: {
-        type: String,
-        required: false,
-      },
-      behance: {
-        type: String,
-        required: false,
-      },
-      website: {
-        type: String,
-        required: false,
-      },
+      github: { type: String, required: false },
+      behance: { type: String, required: false },
+      website: { type: String, required: false },
+      linkedin: { type: String, required: false }, // Add this
     },
     cv: {
       fileUrl: {
@@ -68,7 +60,7 @@ const userProfileSchema = new Schema<IUserInterface>(
       default: false,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const UserProfileModel: Model<IUserInterface> =

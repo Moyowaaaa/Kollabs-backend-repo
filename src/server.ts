@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./db/db";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import type { Express, Request, Response } from "express";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./utils/swagger";
@@ -50,6 +51,7 @@ app.use(
 app.use(httpLogger);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(ErrorLogger);
 
 app.get("/", (req: Request, res: Response) => {
