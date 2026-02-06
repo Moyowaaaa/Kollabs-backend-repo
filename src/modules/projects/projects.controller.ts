@@ -7,7 +7,6 @@ import { uploadMultipleToCloudinary } from "../../utils/cloudinary";
 import { invalidateFeedCache } from "../feed/feed.controller";
 import { Types } from "mongoose";
 
-// Helper to safely get author ID string from ObjectId or populated object
 const getAuthorId = (author: Types.ObjectId | IAuthorPopulated): string => {
   if (typeof author === "object" && author !== null && "_id" in author) {
     return String(author._id);
