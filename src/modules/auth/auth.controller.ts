@@ -207,6 +207,7 @@ export const loginUser = async (req: Request, res: Response) => {
           isEmailVerified: populatedUser?.isEmailVerified ?? false,
         },
       },
+      token,
     });
   } catch (error) {
     if (error instanceof Error) {
@@ -274,7 +275,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
     await user.save();
 
     const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
-    const resetUrl = `${frontendUrl}/reset-password/${resetToken}`;
+    const resetUrl = `${frontendUrl}/auth/reset-password/${resetToken}`;
 
     await sendPasswordResetEmail(email, resetUrl);
 

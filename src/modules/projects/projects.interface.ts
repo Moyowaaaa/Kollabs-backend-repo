@@ -6,6 +6,19 @@ export interface ICollaboratorPopulated {
   profilePhoto?: string;
 }
 
+// Populated author from User model
+export interface IAuthorPopulated {
+  _id: string;
+  email: string;
+  userProfile?: {
+    firstname: string;
+    lastname: string;
+    profilePicture?: { url: string; id: string };
+    roles?: string[];
+    bio?: string;
+  };
+}
+
 export interface IProjects {
   title: string;
   description: string;
@@ -20,9 +33,10 @@ export interface IProjects {
   createdAt: Date;
   updatedAt: Date;
   conversationId?: string;
-  author: string;
+  author: Types.ObjectId | IAuthorPopulated; // ObjectId or populated user
   teamSize: number;
   media?: { url: string; id: string }[]; // Array of {url, publicId} for Cloudinary
+  requiredRoles?: string[]; // Roles/skills needed for the project (e.g., "UI/UX Designer", "Frontend")
 }
 
 export interface ICreateProject {
@@ -30,4 +44,5 @@ export interface ICreateProject {
   description: string;
   media?: { url: string; id: string }[];
   teamSize: number;
+  requiredRoles?: string[];
 }
