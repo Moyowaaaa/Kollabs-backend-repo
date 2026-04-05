@@ -13,3 +13,4 @@ all-logs.logs
 vision-forge.md
 Vision forge.pdf
 /Vision forge.pdf
+/src/scripts/migrate-author-to-objectid.ts

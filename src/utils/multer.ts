@@ -73,7 +73,7 @@ const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const imageFileFilter = (
   _req: Request,
   file: Express.Multer.File,
-  callback: FileFilterCallback
+  callback: FileFilterCallback,
 ): void => {
   // Check if the file's mimetype is in our allowed list
   if (ALLOWED_IMAGE_TYPES.includes(file.mimetype)) {
@@ -85,8 +85,8 @@ const imageFileFilter = (
       new Error(
         `Invalid file type: ${
           file.mimetype
-        }. Allowed types: ${ALLOWED_IMAGE_TYPES.join(", ")}`
-      )
+        }. Allowed types: ${ALLOWED_IMAGE_TYPES.join(", ")}`,
+      ),
     );
   }
 };
@@ -193,15 +193,15 @@ const MAX_DOCUMENT_SIZE = 10 * 1024 * 1024; // 10MB
 const documentFileFilter = (
   _req: Request,
   file: Express.Multer.File,
-  callback: FileFilterCallback
+  callback: FileFilterCallback,
 ): void => {
   if (ALLOWED_DOCUMENT_TYPES.includes(file.mimetype)) {
     callback(null, true);
   } else {
     callback(
       new Error(
-        `Invalid file type: ${file.mimetype}. Allowed types: PDF, DOC, DOCX`
-      )
+        `Invalid file type: ${file.mimetype}. Allowed types: PDF, DOC, DOCX`,
+      ),
     );
   }
 };
@@ -233,7 +233,7 @@ export const singleCvUpload = uploadDocument.single("cv");
 const combinedFileFilter = (
   _req: Request,
   file: Express.Multer.File,
-  callback: FileFilterCallback
+  callback: FileFilterCallback,
 ): void => {
   const allAllowedTypes = [...ALLOWED_IMAGE_TYPES, ...ALLOWED_DOCUMENT_TYPES];
   if (allAllowedTypes.includes(file.mimetype)) {
@@ -241,8 +241,8 @@ const combinedFileFilter = (
   } else {
     callback(
       new Error(
-        `Invalid file type: ${file.mimetype}. Allowed: images (JPEG, PNG, GIF, WebP, SVG) and documents (PDF, DOC, DOCX)`
-      )
+        `Invalid file type: ${file.mimetype}. Allowed: images (JPEG, PNG, GIF, WebP, SVG) and documents (PDF, DOC, DOCX)`,
+      ),
     );
   }
 };

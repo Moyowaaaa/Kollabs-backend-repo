@@ -12,7 +12,10 @@ import {
 import UserProfileModel from "../user/user.model";
 import { IUserInterface, IUserLinks, IUserCV } from "../user/user.interface";
 import { uploadSingleToCloudinary } from "../../utils/cloudinary";
-import { sendPasswordResetEmail } from "../../utils/email.service";
+import {
+  sendPasswordResetEmail,
+  sendVerificationEmail,
+} from "../../utils/email.service";
 
 // Type for multer fields upload
 interface MulterFiles {
@@ -56,6 +59,24 @@ export const signUpUser = async (req: Request, res: Response) => {
 
     const authUser = await userAuthModel.signUpUser(email, password);
 
+    // Generate email verification token
+    const verificationToken = crypto.randomBytes(32).toString("hex");
+    const hashedVerificationToken = crypto
+      .createHash("sha256")
+      .update(verificationToken)
+      .digest("hex");
+
+    // Update auth user with verification token (expires in 24 hours)
+    await userAuthModel.findByIdAndUpdate(
+      authUser._id,
+      {
+        emailVerificationToken: hashedVerificationToken,
+        emailVerificationExpires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+        isEmailVerified: false,
+      },
+      { session },
+    );
+
     // Handle file uploads (now using fields instead of single)
     const files = req.files as MulterFiles | undefined;
 
@@ -64,7 +85,7 @@ export const signUpUser = async (req: Request, res: Response) => {
     if (files?.image?.[0]) {
       const uploadResult = await uploadSingleToCloudinary(
         files.image[0],
-        "user_profiles"
+        "user_profiles",
       );
       profilePicture = {
         url: uploadResult.secure_url,
@@ -104,7 +125,7 @@ export const signUpUser = async (req: Request, res: Response) => {
           isVerified: false,
         },
       ],
-      { session }
+      { session },
     );
     const profile = profiles[0] as IUserInterface;
 
@@ -112,18 +133,27 @@ export const signUpUser = async (req: Request, res: Response) => {
     await userAuthModel.findByIdAndUpdate(
       authUser._id,
       { userProfile: profile._id },
-      { session }
+      { session },
     );
 
     // Commit the transaction
     await session.commitTransaction();
 
-    // Generate token
-    const token = createAuthToken(authUser._id);
+    // Send verification email (after transaction commits)
+    const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
+    const verificationUrl = `${frontendUrl}/auth/verify-email/${verificationToken}`;
+
+    try {
+      await sendVerificationEmail(email, verificationUrl);
+    } catch (emailError) {
+      // Log error but don't fail signup if email fails
+      console.error("Failed to send verification email:", emailError);
+    }
 
     res.status(201).json({
-      message: "User successfully signed up",
-      token,
+      message:
+        "User successfully signed up. Please check your email to verify your account.",
+      isEmailVerified: false,
     });
   } catch (error) {
     // Abort transaction on error
@@ -144,21 +174,66 @@ export const loginUser = async (req: Request, res: Response) => {
   const { email, password } = req.body as { email: string; password: string };
   try {
     const user = await userAuthModel.loginUser(email, password);
+
+    // Populate user profile for response
+    const populatedUser = await userAuthModel
+      .findById(user._id)
+      .populate("userProfile");
+
     const token = createAuthToken(user._id);
-    res.status(200).json({ message: "User logged in", token });
+
+    // Extract profile data safely
+    const profile = populatedUser?.userProfile as IUserInterface | undefined;
+
+    // Set httpOnly cookie for secure token storage
+    res.cookie("authToken", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 2 * 24 * 60 * 60 * 1000, // 2 days in milliseconds
+    });
+
+    res.status(200).json({
+      message: "User logged in",
+      data: {
+        user: {
+          _id: user._id,
+          email: email,
+          firstname: profile?.firstname,
+          lastname: profile?.lastname,
+          roles: profile?.roles,
+          profilePicture: profile?.profilePicture?.url,
+          isVerified: profile?.isVerified,
+          isEmailVerified: populatedUser?.isEmailVerified ?? false,
+        },
+      },
+      token,
+    });
   } catch (error) {
     if (error instanceof Error) {
-      res.status(400).json({ error: error.message });
+      res.status(401).json({ error: error.message });
     } else {
       res.status(400).json({ error: "An unexpected error occurred" });
     }
   }
 };
 
+// logout - clears the auth cookie
+export const logoutUser = (_req: Request, res: Response) => {
+  res.cookie("authToken", "", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    maxAge: 0, // Expire immediately
+  });
+
+  res.status(200).json({ message: "User logged out successfully" });
+};
+
 //change password
 export const changePassword = async (
   req: Request<IChangePassword>,
-  res: Response
+  res: Response,
 ) => {
   const { email, newPassword, comparePassword } = req.body as IChangePassword;
   try {
@@ -200,7 +275,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
     await user.save();
 
     const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
-    const resetUrl = `${frontendUrl}/reset-password/${resetToken}`;
+    const resetUrl = `${frontendUrl}/auth/reset-password/${resetToken}`;
 
     await sendPasswordResetEmail(email, resetUrl);
 
@@ -266,6 +341,124 @@ export const resetPassword = async (req: Request, res: Response) => {
       res.status(500).json({ error: error.message });
     } else {
       res.status(500).json({ error: "An error occurred resetting password" });
+    }
+  }
+};
+
+//check email
+export const checkEmail = async (req: Request, res: Response) => {
+  try {
+    const { email } = req.body as { email: string };
+
+    const emailExists = await userAuthModel.findOne({ email });
+    if (!emailExists) {
+      res.status(200).json({ message: "Email available" });
+      return;
+    } else {
+      res
+        .status(400)
+        .json({ message: "Email already in use, please use something else" });
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json({ error: error.message });
+    } else {
+      res.status(500).json({ error: "An error occurred resetting password" });
+    }
+  }
+};
+
+// Verify email with token
+export const verifyEmail = async (req: Request, res: Response) => {
+  const { token } = req.params;
+
+  try {
+    // Hash the token to match stored hash
+    const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+
+    // Find user with matching token that hasn't expired
+    const user = await userAuthModel.findOne({
+      emailVerificationToken: hashedToken,
+      emailVerificationExpires: { $gt: new Date() },
+    });
+
+    if (!user) {
+      res.status(400).json({
+        error: "Invalid or expired verification token",
+      });
+      return;
+    }
+
+    // Mark as verified and clear token fields
+    user.isEmailVerified = true;
+    user.emailVerificationToken = undefined;
+    user.emailVerificationExpires = undefined;
+    await user.save();
+
+    res.status(200).json({
+      message: "Email verified successfully. You can now access all features.",
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json({ error: error.message });
+    } else {
+      res.status(500).json({ error: "An error occurred verifying email" });
+    }
+  }
+};
+
+// Resend verification email
+export const resendVerificationEmail = async (req: Request, res: Response) => {
+  const { email } = req.body as { email: string };
+
+  try {
+    const user = await userAuthModel.findOne({ email });
+
+    if (!user) {
+      // Don't reveal if email exists (security best practice)
+      res.status(200).json({
+        message:
+          "If an account with that email exists and is not verified, a new verification email has been sent.",
+      });
+      return;
+    }
+
+    if (user.isEmailVerified) {
+      res.status(400).json({
+        error: "This email is already verified. You can log in.",
+      });
+      return;
+    }
+
+    // Generate new verification token
+    const verificationToken = crypto.randomBytes(32).toString("hex");
+    const hashedVerificationToken = crypto
+      .createHash("sha256")
+      .update(verificationToken)
+      .digest("hex");
+
+    // Update user with new token
+    user.emailVerificationToken = hashedVerificationToken;
+    user.emailVerificationExpires = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    await user.save();
+
+    // Send verification email
+    const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
+    const verificationUrl = `${frontendUrl}/auth/verify-email/${verificationToken}`;
+
+    await sendVerificationEmail(email, verificationUrl);
+
+    res.status(200).json({
+      message:
+        "If an account with that email exists and is not verified, a new verification email has been sent.",
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json({ error: error.message });
+    } else {
+      res
+        .status(500)
+        .json({ error: "An error occurred sending verification email" });
     }
   }
 };

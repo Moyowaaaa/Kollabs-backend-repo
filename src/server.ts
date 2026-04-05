@@ -1,7 +1,11 @@
-import express from "express";
+// Load environment variables FIRST, before any other imports
 import dotenv from "dotenv";
+dotenv.config();
+
+import express from "express";
 import connectDB from "./db/db";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import type { Express, Request, Response } from "express";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./utils/swagger";
@@ -16,10 +20,7 @@ import { authRoutes } from "./modules/auth";
 import { userRoutes } from "./modules/user";
 import { projectsRoutes } from "./modules/projects";
 import { collaborationRequestsRoutes } from "./modules/collaboration-requests";
-
-//
-
-dotenv.config();
+import { feedRoutes } from "./modules/feed";
 
 const app: Express = express();
 
@@ -34,7 +35,7 @@ app.use(
   cors({
     origin: (
       origin: string | undefined,
-      callback: (err: Error | null, allow?: boolean) => void
+      callback: (err: Error | null, allow?: boolean) => void,
     ) => {
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
@@ -44,12 +45,13 @@ app.use(
     },
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
-  })
+  }),
 );
 
 app.use(httpLogger);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(ErrorLogger);
 
 app.get("/", (req: Request, res: Response) => {
@@ -69,6 +71,7 @@ app.use("/v1/api/auth", authRoutes);
 app.use("/v1/api/user", userRoutes);
 app.use("/v1/api/projects", projectsRoutes);
 app.use("/v1/api/collaboration-requests", collaborationRequestsRoutes);
+app.use("/v1/api/feed", feedRoutes);
 
 // Swagger API Documentation
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -81,7 +84,7 @@ app.get("/preview/email", async (req: Request, res: Response) => {
     const templatePath = path.join(
       process.cwd(),
       "templates",
-      "waitlist-confirmation.ejs"
+      "waitlist-confirmation.ejs",
     );
     const html = await ejs.renderFile(templatePath, {
       email: "test@example.com",
@@ -112,5 +115,5 @@ process.on(
   "unhandledRejection",
   (reason: unknown, promise: Promise<unknown>) => {
     console.error("Unhandled rejection at:", promise, "reason:", reason);
-  }
+  },
 );

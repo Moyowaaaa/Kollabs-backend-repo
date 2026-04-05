@@ -28,7 +28,15 @@ const options: swaggerJsdoc.Options = {
           type: "http",
           scheme: "bearer",
           bearerFormat: "JWT",
-          description: "Enter your JWT token",
+          description:
+            "Enter your JWT token (for non-browser clients like mobile apps)",
+        },
+        cookieAuth: {
+          type: "apiKey",
+          in: "cookie",
+          name: "authToken",
+          description:
+            "HttpOnly cookie set automatically on login (for browser clients)",
         },
       },
       schemas: {
@@ -52,6 +60,8 @@ const options: swaggerJsdoc.Options = {
         },
         AuthResponse: {
           type: "object",
+          description:
+            "Legacy auth response (deprecated - use LoginResponse for sign-in)",
           properties: {
             message: {
               type: "string",
@@ -59,16 +69,16 @@ const options: swaggerJsdoc.Options = {
             },
             token: {
               type: "string",
-              description: "JWT authentication token",
+              description:
+                "JWT authentication token (only for sign-up, sign-in uses cookies)",
             },
           },
         },
         UserLinks: {
           type: "object",
           properties: {
-            twitter: { type: "string" },
-            instagram: { type: "string" },
-            linkedin: { type: "string" },
+            github: { type: "string" },
+            behance: { type: "string" },
             website: { type: "string" },
           },
         },
@@ -90,6 +100,10 @@ const options: swaggerJsdoc.Options = {
       {
         name: "Projects",
         description: "Project management endpoints",
+      },
+      {
+        name: "Feed",
+        description: "Ideas feed endpoints (cached with Redis)",
       },
       {
         name: "Collaboration Requests",

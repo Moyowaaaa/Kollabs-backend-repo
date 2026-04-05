@@ -8,7 +8,9 @@ import {
   getProjectById,
   getUsersProjects,
   patchProject,
+  searchProjects,
   updateProject,
+  updateProjectStatus,
 } from "./projects.controller";
 import { projectMediaUpload } from "../../utils/multer";
 import verifyAuthentication from "../../middleware/authMiddleware";
@@ -23,6 +25,9 @@ router.post("/", projectMediaUpload, createProject as RequestHandler);
 // GET /v1/api/projects - Get users projects
 router.get("/", getUsersProjects as RequestHandler);
 
+// GET /v1/api/projects/search - Search projects with filters (must be before :projectId)
+router.get("/search", searchProjects as RequestHandler);
+
 // /v1/api/projects/project-feed - Get all projects
 router.get("/project-feed", getAllProjects as RequestHandler);
 
@@ -34,6 +39,9 @@ router.put("/:projectId", projectMediaUpload, updateProject as RequestHandler);
 
 // PATCH /v1/api/projects/:projectId - Partial update (only updates provided fields)
 router.patch("/:projectId", projectMediaUpload, patchProject as RequestHandler);
+
+// PATCH /v1/api/projects/:projectId/status - Update project status
+router.patch("/:projectId/status", updateProjectStatus as RequestHandler);
 
 // PATCH /v1/api/projects/:projectId/archive - Archive a project
 router.patch("/:projectId/archive", archiveProject as RequestHandler);

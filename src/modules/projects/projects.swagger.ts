@@ -29,6 +29,12 @@
  *                 type: number
  *                 description: Number of team members for the project
  *                 example: 3
+ *               requiredRoles:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: Roles/skills needed for the project
+ *                 example: ["UI/UX Designer", "Frontend Developer"]
  *               media:
  *                 type: array
  *                 items:
@@ -229,6 +235,12 @@
  *                 type: number
  *                 description: Number of team members for the project
  *                 example: 5
+ *               requiredRoles:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: Updated roles/skills needed
+ *                 example: ["Backend Developer", "DevOps"]
  *               media:
  *                 type: array
  *                 items:
@@ -432,6 +444,126 @@
 
 /**
  * @swagger
+ * /v1/api/projects/{projectId}/status:
+ *   patch:
+ *     summary: Update project status
+ *     description: |
+ *       Update the status of a project. Only the project author can change status.
+ *       Cannot change status of deleted or archived projects.
+ *     tags: [Projects]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: projectId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the project
+ *         example: 507f1f77bcf86cd799439011
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - status
+ *             properties:
+ *               status:
+ *                 type: string
+ *                 enum: [draft, pending, ongoing, completed]
+ *                 description: New status for the project
+ *                 example: ongoing
+ *     responses:
+ *       200:
+ *         description: Status updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Project status updated to ongoing
+ *                 project:
+ *                   $ref: '#/components/schemas/Project'
+ *       400:
+ *         description: Invalid status or cannot change status of deleted/archived project
+ *       401:
+ *         description: Authorization token required or unauthorized
+ *       404:
+ *         description: Project not found
+ *       500:
+ *         description: Internal server error
+ */
+
+/**
+ * @swagger
+ * /v1/api/projects/search:
+ *   get:
+ *     summary: Search projects
+ *     description: Search projects/ideas with text search and filters. Uses MongoDB text index.
+ *     tags: [Projects]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: query
+ *         schema:
+ *           type: string
+ *         description: Text search query (searches title, description, and required roles)
+ *         example: mobile app design
+ *       - in: query
+ *         name: status
+ *         schema:
+ *           type: string
+ *           enum: [draft, pending, ongoing, completed]
+ *         description: Filter by project status
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *           maximum: 50
+ *       - in: query
+ *         name: sortBy
+ *         schema:
+ *           type: string
+ *           default: createdAt
+ *       - in: query
+ *         name: sortOrder
+ *         schema:
+ *           type: string
+ *           enum: [asc, desc]
+ *           default: desc
+ *     responses:
+ *       200:
+ *         description: Search results with pagination
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 projects:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/ProjectWithAuthor'
+ *                 pagination:
+ *                   $ref: '#/components/schemas/Pagination'
+ *       401:
+ *         description: Authorization token required
+ *       500:
+ *         description: Internal server error
+ */
+
+/**
+ * @swagger
  * components:
  *   schemas:
  *     Project:
@@ -486,6 +618,12 @@
  *           type: string
  *           format: date-time
  *           description: Timestamp when the project was last updated
+ *         requiredRoles:
+ *           type: array
+ *           items:
+ *             type: string
+ *           description: Roles/skills needed for the project
+ *           example: ["UI/UX Designer", "Frontend Developer"]
  *     ProjectWithAuthor:
  *       allOf:
  *         - $ref: '#/components/schemas/Project'

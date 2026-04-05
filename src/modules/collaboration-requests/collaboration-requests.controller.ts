@@ -5,12 +5,23 @@ import { jwtToken } from "../../middleware/authMiddleware";
 import CollaborationRequestModel from "./collaboration-requests.model";
 import ProjectsModel from "../projects/projects.model";
 import { uploadMultipleToCloudinary } from "../../utils/cloudinary";
+import { invalidateFeedCache } from "../feed/feed.controller";
+import { Types } from "mongoose";
+import type { IAuthorPopulated } from "../projects/projects.interface";
+
+// Helper to safely get author ID string from ObjectId or populated object
+const getAuthorId = (author: Types.ObjectId | IAuthorPopulated): string => {
+  if (typeof author === "object" && author !== null && "_id" in author) {
+    return String(author._id);
+  }
+  return String(author);
+};
 
 // Create a collaboration request
 export const createRequest = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const { authorization } = req.headers;
   if (!authorization) {
@@ -46,7 +57,7 @@ export const createRequest = async (
     }
 
     // Check if requester is not the author
-    if (project.author.toString() === requesterId) {
+    if (getAuthorId(project.author) === requesterId) {
       res.status(400).json({
         message: "You cannot request to collaborate on your own project",
       });
@@ -93,7 +104,7 @@ export const createRequest = async (
     if (req.files && Array.isArray(req.files) && req.files.length > 0) {
       const uploadResults = await uploadMultipleToCloudinary(
         req.files,
-        "collaboration_requests"
+        "collaboration_requests",
       );
       media = uploadResults.map((result) => ({
         url: result.secure_url,
@@ -124,7 +135,7 @@ export const createRequest = async (
 export const getRequestsForProject = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const { authorization } = req.headers;
   if (!authorization) {
@@ -146,7 +157,7 @@ export const getRequestsForProject = async (
       return;
     }
 
-    if (project.author.toString() !== userId) {
+    if (getAuthorId(project.author) !== userId) {
       res.status(403).json({
         message: "Only the project author can view collaboration requests",
       });
@@ -170,7 +181,7 @@ export const getRequestsForProject = async (
 export const getMyRequests = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const { authorization } = req.headers;
   if (!authorization) {
@@ -202,7 +213,7 @@ export const getMyRequests = async (
 export const acceptRequest = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const { authorization } = req.headers;
   if (!authorization) {
@@ -218,9 +229,8 @@ export const acceptRequest = async (
     const { requestId } = req.params;
 
     // Find the request
-    const collaborationRequest = await CollaborationRequestModel.findById(
-      requestId
-    );
+    const collaborationRequest =
+      await CollaborationRequestModel.findById(requestId);
     if (!collaborationRequest) {
       res.status(404).json({ message: "Collaboration request not found" });
       return;
@@ -235,14 +245,14 @@ export const acceptRequest = async (
 
     // Check if user is the project author
     const project = await ProjectsModel.findById(
-      collaborationRequest.projectId
+      collaborationRequest.projectId,
     );
     if (!project) {
       res.status(404).json({ message: "Project not found" });
       return;
     }
 
-    if (project.author.toString() !== userId) {
+    if (getAuthorId(project.author) !== userId) {
       res.status(403).json({
         message: "Only the project author can accept collaboration requests",
       });
@@ -267,6 +277,9 @@ export const acceptRequest = async (
       status: "accepted",
     });
 
+    // Invalidate feed cache so changes are visible immediately
+    await invalidateFeedCache();
+
     res
       .status(200)
       .json({ message: "Collaboration request accepted successfully" });
@@ -282,7 +295,7 @@ export const acceptRequest = async (
 export const rejectRequest = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const { authorization } = req.headers;
   if (!authorization) {
@@ -298,9 +311,8 @@ export const rejectRequest = async (
     const { requestId } = req.params;
 
     // Find the request
-    const collaborationRequest = await CollaborationRequestModel.findById(
-      requestId
-    );
+    const collaborationRequest =
+      await CollaborationRequestModel.findById(requestId);
     if (!collaborationRequest) {
       res.status(404).json({ message: "Collaboration request not found" });
       return;
@@ -315,14 +327,14 @@ export const rejectRequest = async (
 
     // Check if user is the project author
     const project = await ProjectsModel.findById(
-      collaborationRequest.projectId
+      collaborationRequest.projectId,
     );
     if (!project) {
       res.status(404).json({ message: "Project not found" });
       return;
     }
 
-    if (project.author.toString() !== userId) {
+    if (getAuthorId(project.author) !== userId) {
       res.status(403).json({
         message: "Only the project author can reject collaboration requests",
       });

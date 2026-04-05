@@ -42,11 +42,25 @@ export const projectsSchema = new Schema<IProjects>(
       default: null,
     },
     author: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
+    requiredRoles: {
+      type: [String],
+      default: [],
+    },
   },
-  { timestamps: true }
+  { timestamps: true },
+);
+
+// Add text index for search functionality (includes requiredRoles for filtering by skills)
+projectsSchema.index(
+  { title: "text", description: "text", requiredRoles: "text" },
+  {
+    weights: { title: 10, description: 5, requiredRoles: 8 },
+    name: "projects_text_search",
+  },
 );
 
 const ProjectsModel = model<IProjects>("Projects", projectsSchema);
