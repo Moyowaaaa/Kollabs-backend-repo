@@ -57,3 +57,326 @@
 [32m2026-02-16 14:17:54:1754[39m info: [34mGET /v1/api/projects?page=1&limit=10 304 539.950 ms - -[39m
 [32m2026-02-16 14:27:43:2743[39m info: [34mGET /v1/api/projects?page=1&limit=10 304 484.268 ms - -[39m
 [32m2026-02-16 14:29:02:292[39m info: [34mGET /v1/api/projects?page=1&limit=10 304 562.303 ms - -[39m
+[32m2026-08-02 15:27:32:2732[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 15:28:39:2839[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 15:43:03:433[39m info: [34mPOST /v1/api/auth/sign-in 401 205.422 ms - 48[39m
+[32m2026-08-02 15:43:04:434[39m info: [34mPOST /v1/api/auth/sign-in 401 157.950 ms - 48[39m
+[32m2026-08-02 15:43:15:4315[39m info: [34mPOST /v1/api/auth/sign-in 401 199.943 ms - 39[39m
+[32m2026-08-02 15:43:16:4316[39m info: [34mPOST /v1/api/auth/sign-in 401 193.694 ms - 39[39m
+[32m2026-08-02 15:43:21:4321[39m info: [34mPOST /v1/api/auth/sign-in 401 195.276 ms - 39[39m
+[32m2026-08-02 15:43:23:4323[39m info: [34mPOST /v1/api/auth/sign-in 401 188.168 ms - 39[39m
+[32m2026-08-02 15:43:33:4333[39m info: [34mPOST /v1/api/auth/sign-in 200 486.203 ms - 524[39m
+[32m2026-08-02 15:43:35:4335[39m info: [34mGET /v1/api/feed?limit=20 200 777.360 ms - 8321[39m
+[32m2026-08-02 15:43:54:4354[39m info: [34mPOST /v1/api/auth/logout 404 2.375 ms - 158[39m
+[32m2026-08-02 15:43:55:4355[39m info: [34mPOST /v1/api/auth/logout 404 0.656 ms - 158[39m
+[32m2026-08-02 15:44:02:442[39m info: [34mPOST /v1/api/auth/sign-in 200 448.977 ms - 524[39m
+[32m2026-08-02 16:00:03:03[39m info: [34mGET /v1/api/feed?limit=20 200 497.322 ms - 8321[39m
+[32m2026-08-02 16:00:12:012[39m info: [34mGET /v1/api/projects?page=1&limit=10 200 640.981 ms - 2750[39m
+[32m2026-08-02 16:07:54:754[39m info: [34mGET /v1/api/projects?page=1&limit=10 304 373.391 ms - -[39m
+[32m2026-08-02 16:07:58:758[39m info: [34mGET /v1/api/projects/6974cb22a520a5e54d022b9f 200 404.729 ms - 896[39m
+[32m2026-08-02 16:08:26:826[39m info: [34mGET /v1/api/projects?page=1&limit=10 304 372.703 ms - -[39m
+[32m2026-08-02 16:08:34:834[39m info: [34mGET /v1/api/projects/6974cb22a520a5e54d022b9f 304 363.210 ms - -[39m
+[32m2026-08-02 16:10:53:1053[39m info: [34mGET /v1/api/projects?page=1&limit=10 304 675.627 ms - -[39m
+[32m2026-08-02 16:14:44:1444[39m info: [34mDELETE /v1/api/projects/697f35a5858faf02c8d73882 200 382.681 ms - 42[39m
+[32m2026-08-02 16:14:45:1445[39m info: [34mGET /v1/api/projects?page=1&limit=10 200 762.561 ms - 2216[39m
+[32m2026-08-02 16:14:46:1446[39m info: [34mGET /v1/api/projects?page=1&limit=10 304 377.162 ms - -[39m
+[32m2026-08-02 16:14:46:1446[39m info: [34mDELETE /v1/api/projects/697f2f775711929dc339f800 200 375.029 ms - 42[39m
+[32m2026-08-02 16:14:47:1447[39m info: [34mGET /v1/api/projects?page=1&limit=10 200 452.997 ms - 1866[39m
+[32m2026-08-02 16:14:47:1447[39m info: [34mGET /v1/api/projects?page=1&limit=10 304 422.560 ms - -[39m
+[32m2026-08-02 16:14:47:1447[39m info: [34mDELETE /v1/api/projects/6974cb3ca520a5e54d022bab 200 364.420 ms - 42[39m
+[32m2026-08-02 16:14:48:1448[39m info: [34mGET /v1/api/projects?page=1&limit=10 200 345.185 ms - 981[39m
+[32m2026-08-02 16:14:48:1448[39m info: [34mGET /v1/api/projects?page=1&limit=10 304 344.834 ms - -[39m
+[32m2026-08-02 16:16:12:1612[39m info: [34mPOST /v1/api/projects 201 266.853 ms - 404[39m
+[32m2026-08-02 16:16:12:1612[39m info: [34mGET /v1/api/projects?page=1&limit=10 200 351.927 ms - 1333[39m
+[32m2026-08-02 16:17:31:1731[39m info: [34mGET /v1/api/projects/6a6f5f3cf5fcbd999fd7d93f 200 242.076 ms - 363[39m
+[32m2026-08-02 16:17:59:1759[39m info: [34mGET /v1/api/feed?limit=20 200 494.231 ms - 6139[39m
+[32m2026-08-02 16:27:19:2719[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 16:29:31:2931[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 16:29:55:2955[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 16:30:41:3041[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 16:30:46:3046[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 16:31:01:311[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 16:31:08:318[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 16:31:14:3114[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 16:31:19:3119[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 16:31:38:3138[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 16:31:47:3147[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 16:31:51:3151[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 16:32:19:3219[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 16:35:29:3529[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 16:35:38:3538[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 16:35:46:3546[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 16:35:52:3552[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 16:36:19:3619[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 16:36:34:3634[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 16:36:57:3657[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 16:40:10:4010[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 16:40:16:4016[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 16:40:33:4033[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 16:40:39:4039[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:26:21:2621[39m info: [34mGET /v1/api/feed?limit=20 304 4433.654 ms - -[39m
+[32m2026-08-02 23:30:00:300[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:32:51:3251[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:34:19:3419[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:34:29:3429[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:35:11:3511[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:40:50:4050[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:41:22:4122[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:41:38:4138[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:41:45:4145[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:41:51:4151[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:41:55:4155[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:42:13:4213[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:42:19:4219[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:43:02:432[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:43:22:4322[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:43:39:4339[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:44:05:445[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:44:22:4422[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:44:38:4438[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:44:54:4454[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:45:19:4519[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:45:27:4527[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:45:47:4547[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:46:02:462[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:46:15:4615[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:47:41:4741[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:47:47:4747[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:47:52:4752[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:48:01:481[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:48:23:4823[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:50:24:5024[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:50:32:5032[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:50:43:5043[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:51:02:512[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:51:12:5112[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:51:19:5119[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:51:28:5128[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:51:46:5146[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:52:04:524[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:52:17:5217[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:52:33:5233[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:52:49:5249[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:53:17:5317[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:53:31:5331[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:53:39:5339[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:53:57:5357[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:54:43:5443[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:54:59:5459[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:55:05:555[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:55:41:5541[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:55:57:5557[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:56:01:561[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:56:26:5626[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:56:49:5649[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:57:16:5716[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:57:30:5730[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:57:48:5748[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:58:06:586[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:58:13:5813[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:58:24:5824[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:58:46:5846[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:59:03:593[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-02 23:59:10:5910[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:00:05:05[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:05:39:539[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:05:43:543[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:05:56:556[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:06:13:613[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:06:22:622[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:06:28:628[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:08:24:824[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:08:40:840[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:08:55:855[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:09:06:96[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:09:33:933[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:09:40:940[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:09:57:957[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:10:09:109[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:10:54:1054[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:11:14:1114[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:11:33:1133[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:11:48:1148[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:12:06:126[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:12:20:1220[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:13:48:1348[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:14:07:147[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:14:46:1446[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:14:57:1457[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:15:11:1511[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:15:22:1522[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:15:54:1554[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:16:04:164[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:16:12:1612[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:16:21:1621[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:16:39:1639[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:17:17:1717[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:17:33:1733[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:18:03:183[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:18:30:1830[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:18:42:1842[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:20:03:203[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:20:51:2051[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:21:26:2126[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:21:52:2152[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:22:55:2255[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:23:30:2330[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:25:02:252[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:25:17:2517[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:25:51:2551[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:26:00:260[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:26:32:2632[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:26:41:2641[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:27:16:2716[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:28:05:285[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:28:27:2827[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:28:52:2852[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:29:16:2916[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:29:25:2925[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:29:48:2948[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:30:09:309[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:30:39:3039[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:31:40:3140[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:31:53:3153[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:32:02:322[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:32:31:3231[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:34:30:3430[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:35:08:358[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:35:24:3524[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:35:34:3534[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:36:02:362[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:36:23:3623[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:36:38:3638[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:36:59:3659[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:37:13:3713[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:37:37:3737[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:37:55:3755[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:39:12:3912[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:39:35:3935[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:39:44:3944[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:39:55:3955[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 00:40:04:404[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 09:26:20:2620[39m info: [34mGET /v1/api/feed?limit=20 304 5053.738 ms - -[39m
+[32m2026-08-03 10:50:59:5059[39m info: [34mGET /v1/api/feed?limit=20 304 3091.356 ms - -[39m
+[32m2026-08-03 12:19:43:1943[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:01:11:111[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:05:19:519[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:05:25:525[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:05:51:551[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:06:12:612[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:06:27:627[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:06:47:647[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:06:57:657[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:07:17:717[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:07:34:734[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:07:38:738[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:07:47:747[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:08:08:88[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:08:27:827[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:08:32:832[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:08:42:842[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:08:52:852[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:09:06:96[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:09:13:913[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:09:20:920[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:09:33:933[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:09:38:938[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:09:50:950[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:10:18:1018[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:10:36:1036[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:11:07:117[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:12:07:127[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:12:26:1226[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:13:11:1311[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:13:23:1323[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:13:49:1349[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:14:15:1415[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:14:26:1426[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:14:52:1452[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:15:45:1545[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:15:53:1553[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:16:18:1618[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:16:36:1636[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:16:51:1651[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:17:04:174[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:17:16:1716[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:17:22:1722[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:17:29:1729[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:18:28:1828[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:18:47:1847[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:19:00:190[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:19:31:1931[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:19:45:1945[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:20:08:208[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:20:17:2017[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:20:22:2022[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:20:58:2058[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:21:28:2128[39m info: [34mGET / 200 1.747 ms - 61[39m
+[32m2026-08-03 13:25:19:2519[39m info: [34mPOST /api/auth/login 404 64.845 ms - 154[39m
+[32m2026-08-03 13:26:04:264[39m info: [34mPOST /api/auth/sign-in 404 0.563 ms - 156[39m
+[32m2026-08-03 13:26:43:2643[39m info: [34mPOST /v1/api/auth/sign-in 401 3972.715 ms - 48[39m
+[32m2026-08-03 13:27:44:2744[39m info: [34mPOST /v1/api/auth/sign-in 200 581.371 ms - 524[39m
+[32m2026-08-03 13:28:41:2841[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:28:54:2854[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:29:00:290[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:29:07:297[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:29:23:2923[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:29:51:2951[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:30:31:3031[39m info: [34mGET /v1/api/notifications 200 485.872 ms - 111[39m
+[32m2026-08-03 13:31:45:3145[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:32:26:3226[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:32:32:3232[39m info: [34mGET /v1/api/notifications 200 309.306 ms - 111[39m
+[32m2026-08-03 13:33:39:3339[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:33:45:3345[39m info: [34mGET /v1/api/notifications 200 2600.196 ms - 107[39m
+[32m2026-08-03 13:35:44:3544[39m info: [34mPOST /v1/api/notifications 404 166.277 ms - 160[39m
+[32m2026-08-03 13:36:07:367[39m info: [34mPOST /v1/api/notifications 404 146.298 ms - 160[39m
+[32m2026-08-03 13:36:29:3629[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:37:11:3711[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:57:27:5727[39m info: [34mGET /v1/api/notifications 200 2749.554 ms - 107[39m
+[32m2026-08-03 13:57:31:5731[39m info: [34mPOST /v1/api/notifications 404 177.569 ms - 160[39m
+[32m2026-08-03 13:57:44:5744[39m info: [34mPOST /v1/api/notifications/test-notification 404 147.893 ms - 178[39m
+[32m2026-08-03 13:57:58:5758[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:58:15:5815[39m info: [34mPOST /v1/api/notifications/test-notification 404 273.720 ms - 178[39m
+[32m2026-08-03 13:58:29:5829[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:58:35:5835[39m info: [34mPOST /v1/api/notifications/test-notification 500 195.189 ms - 682[39m
+[32m2026-08-03 13:58:48:5848[39m info: [34mPOST /v1/api/notifications/test-notification 500 147.200 ms - 682[39m
+[32m2026-08-03 13:59:00:590[39m info: [34mGET /v1/api/notifications 200 320.683 ms - 107[39m
+[32m2026-08-03 13:59:01:591[39m info: [34mPOST /v1/api/notifications/test-notification 500 148.983 ms - 682[39m
+[32m2026-08-03 13:59:53:5953[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 13:59:56:5956[39m info: [34mPOST /v1/api/notifications/test-notification 500 2645.863 ms - 682[39m
+[32m2026-08-03 14:00:39:039[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 14:01:03:13[39m info: [34mPOST /v1/api/notifications/test-notification 200 358.703 ms - 377[39m
+[32m2026-08-03 14:01:26:126[39m info: [34mPOST /v1/api/notifications/test-notification 200 370.738 ms - 377[39m
+[32m2026-08-03 14:01:28:128[39m info: [34mGET /v1/api/notifications 200 325.087 ms - 726[39m
+[32m2026-08-03 14:04:26:426[39m info: [34mPATCH /v1/api/notifications/6a709126f454351870ca35dd 200 317.748 ms - 26[39m
+[32m2026-08-03 14:04:33:433[39m info: [34mGET /v1/api/notifications 200 292.760 ms - 747[39m
+[32m2026-08-03 14:05:28:528[39m info: [34mDELETE /v1/api/notifications/6a70910ff454351870ca35da 200 316.947 ms - 47[39m
+[32m2026-08-03 14:06:17:617[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 14:06:24:624[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 14:06:45:645[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 14:07:05:75[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 14:07:37:737[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 14:08:31:831[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 14:08:38:838[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 14:09:05:95[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 14:09:18:918[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 14:09:23:923[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 14:14:40:1440[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 14:14:52:1452[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 14:15:00:150[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 14:15:09:159[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 14:15:18:1518[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 14:15:30:1530[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 14:16:15:1615[39m info: [34mGET /v1/api/notifications/6a70910ff454351870ca35da 200 330.444 ms - 747[39m
+[32m2026-08-03 14:16:36:1636[39m info: [34mGET /v1/api/notifications/6a70910ff454351870ca35da 200 322.223 ms - 747[39m
+[32m2026-08-03 14:16:47:1647[39m info: [34mGET /v1/api/notifications/6a709126f454351870ca35dd 200 304.971 ms - 747[39m
+[32m2026-08-03 14:17:13:1713[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 14:17:17:1717[39m info: [34mGET /v1/api/notifications/6a709126f454351870ca35dd 200 3474.444 ms - 747[39m
+[32m2026-08-03 14:18:38:1838[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 14:20:11:2011[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 14:20:33:2033[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 14:20:50:2050[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 14:20:57:2057[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 14:21:00:210[39m info: [34mGET /v1/api/notifications/6a709126f454351870ca35dd 200 1929.069 ms - 747[39m
+[32m2026-08-03 14:21:15:2115[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 14:21:18:2118[39m info: [34mGET /v1/api/notifications/6a709126f454351870ca35dd 200 3209.308 ms - 747[39m
