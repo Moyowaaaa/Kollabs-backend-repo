@@ -5,6 +5,7 @@ import {
   createTestNotification,
   deleteUserNotification,
   getSingleNotification,
+  getUnreadNotificationCount,
   getUserNotifications,
   markUserNotificationAsRead,
 } from "./notifications.controller";
@@ -18,6 +19,10 @@ router.post("/test-notification", createTestNotification as RequestHandler);
 
 // GET /v1/api/notifications - Get users notifications
 router.get("/", getUserNotifications as RequestHandler);
+
+// GET /v1/api/notifications/unread-count - Get user unread notification count  
+router.get("/unread-count", getUnreadNotificationCount as RequestHandler);
+
 
 // GET /v1/api/notifications/:notificationId - Get single user notification
 router.get("/:notificationId", getSingleNotification as RequestHandler);

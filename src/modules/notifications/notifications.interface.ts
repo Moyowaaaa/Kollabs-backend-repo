@@ -12,7 +12,9 @@ export interface INotification {
     | "project_completed"
     | "project_uncompleted"
     | "collab_request_received"
-    | "collab_request_accepted";
+    | "collab_request_accepted"
+    | "collab_request_rejected";
+
   title: string;
   body: string;
   isRead: boolean;
@@ -26,8 +28,6 @@ export interface INotification {
   createdAt: Date;
   updatedAt: Date;
 }
-
-
 
 export interface ICreateNotificationPayload {
   recipientId: string;

@@ -82,6 +82,115 @@ const options: swaggerJsdoc.Options = {
             website: { type: "string" },
           },
         },
+        Notification: {
+          type: "object",
+          properties: {
+            _id: { type: "string", example: "507f1f77bcf86cd799439011" },
+            recipientId: {
+              type: "string",
+              description: "User ID of the notification recipient",
+            },
+            actorId: {
+              type: "string",
+              description: "User ID who triggered the notification",
+            },
+            type: {
+              type: "string",
+              enum: [
+                "test",
+                "project_created",
+                "project_updated",
+                "project_deleted",
+                "project_archived",
+                "project_unarchived",
+                "project_completed",
+                "project_uncompleted",
+                "collab_request_received",
+                "collab_request_accepted",
+                "collab_request_rejected",
+              ],
+            },
+            title: { type: "string", example: "New request" },
+            body: {
+              type: "string",
+              example:
+                "Andrea Smith is requesting to join your project: Kollabs MVP",
+            },
+            isRead: { type: "boolean", example: false },
+            meta: {
+              type: "object",
+              properties: {
+                projectId: { type: "string" },
+                collabRequestId: { type: "string" },
+              },
+            },
+            readAt: { type: "string", format: "date-time", nullable: true },
+            deletedAt: { type: "string", format: "date-time", nullable: true },
+            purgeAt: { type: "string", format: "date-time", nullable: true },
+            createdAt: { type: "string", format: "date-time" },
+            updatedAt: { type: "string", format: "date-time" },
+          },
+        },
+        NotificationWithActor: {
+          type: "object",
+          properties: {
+            _id: { type: "string", example: "507f1f77bcf86cd799439011" },
+            recipientId: { type: "string" },
+            actorId: {
+              type: "object",
+              properties: {
+                _id: { type: "string" },
+                email: { type: "string", example: "andrea@example.com" },
+                userProfile: {
+                  type: "object",
+                  properties: {
+                    _id: { type: "string" },
+                    firstname: { type: "string", example: "Andrea" },
+                    lastname: { type: "string", example: "Smith" },
+                    profilePicture: {
+                      type: "object",
+                      properties: {
+                        url: { type: "string" },
+                        id: { type: "string" },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+            type: {
+              type: "string",
+              enum: [
+                "test",
+                "project_created",
+                "project_updated",
+                "project_deleted",
+                "project_archived",
+                "project_unarchived",
+                "project_completed",
+                "project_uncompleted",
+                "collab_request_received",
+                "collab_request_accepted",
+                "collab_request_rejected",
+              ],
+            },
+            title: { type: "string", example: "New request" },
+            body: { type: "string" },
+            isRead: { type: "boolean", example: false },
+            meta: {
+              type: "object",
+              properties: {
+                projectId: { type: "string" },
+                collabRequestId: { type: "string" },
+              },
+            },
+            readAt: { type: "string", format: "date-time", nullable: true },
+            deletedAt: { type: "string", format: "date-time", nullable: true },
+            purgeAt: { type: "string", format: "date-time", nullable: true },
+            createdAt: { type: "string", format: "date-time" },
+            updatedAt: { type: "string", format: "date-time" },
+          },
+        },
       },
     },
     tags: [
@@ -108,6 +217,10 @@ const options: swaggerJsdoc.Options = {
       {
         name: "Collaboration Requests",
         description: "Collaboration request management endpoints",
+      },
+      {
+        name: "Notifications",
+        description: "In-app notification inbox, unread count, and read/delete actions",
       },
     ],
   },

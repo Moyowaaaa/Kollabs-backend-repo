@@ -17,6 +17,9 @@ import { createNotification } from "./notification.service";
 
 // }
 
+const getRecipientId = (user: AuthenticatedRequest["user"]) =>
+  String(user._id);
+
 //Create User Test notification
 export const createTestNotification = async (
   req: AuthenticatedRequest,
@@ -24,15 +27,23 @@ export const createTestNotification = async (
   next: NextFunction,
 ) => {
   try {
-    const { _id } = req.user;
+    const recipientId = getRecipientId(req.user);
     const notification = await createNotification({
       title: "A test notification",
       body: "This is a test notification.",
-      recipientId: _id,
-      actorId: _id,
+      recipientId,
+      actorId: recipientId,
       type: "test",
       meta: {},
     });
+
+    if (!notification) {
+      res.status(500).json({
+        message: "An error occurred while creating test notification",
+      });
+      return;
+    }
+
     res.status(200).json({
       message: "Test notification created successfully",
       notification,
@@ -53,27 +64,46 @@ export const getUserNotifications = async (
   next: NextFunction,
 ) => {
   try {
-    const { _id } = req.user;
+    const recipientId = getRecipientId(req.user);
 
     const limit = Number(req.query.limit) || 15;
     const page = Number(req.query.page) || 1;
 
     const skip = (Number(page) - 1) * Number(limit);
-    const filter = { recipientId: _id, deletedAt: null };
+    const filter = {
+      recipientId,
+      $or: [{ deletedAt: null }, { deletedAt: { $exists: false } }],
+    };
 
-    const [notifications, totalNotifications] = await Promise.all([
-      NotificationsModel.find(filter)
-        .sort({ createdAt: -1 })
-        .skip(skip)
-        .limit(limit),
+    const [notifications, totalNotifications, unreadNotificationCount] =
+      await Promise.all([
+        NotificationsModel.find(filter)
+          .sort({ createdAt: -1 })
+          .skip(skip)
+          .limit(limit)
+          .populate({
+            path: "actorId",
+            select: "email userProfile",
+            populate: {
+              path: "userProfile",
+              select: "firstname lastname profilePicture",
+            },
+          }),
 
-      NotificationsModel.countDocuments(filter),
-    ]);
+        NotificationsModel.countDocuments(filter),
+
+        NotificationsModel.countDocuments({
+          recipientId,
+          isRead: false,
+          $or: [{ deletedAt: null }, { deletedAt: { $exists: false } }],
+        }),
+      ]);
 
     const totalPages = Math.ceil(totalNotifications / limit);
 
     res.status(200).json({
       notifications,
+      unreadNotificationCount,
       pagination: {
         totalNotifications,
         totalPages,
@@ -97,12 +127,12 @@ export const getSingleNotification = async (
   next: NextFunction,
 ) => {
   try {
-    const { _id } = req.user;
+    const recipientId = getRecipientId(req.user);
     const { notificationId } = req.params;
     const notification = await NotificationsModel.findOne({
       _id: notificationId,
-      recipientId: _id,
-      deletedAt: null,
+      recipientId,
+      $or: [{ deletedAt: null }, { deletedAt: { $exists: false } }],
     });
 
     if (!notification) {
@@ -129,14 +159,14 @@ export const markUserNotificationAsRead = async (
   next: NextFunction,
 ) => {
   try {
-    const { _id } = req.user;
+    const recipientId = getRecipientId(req.user);
     const { notificationId } = req.params;
 
     const notification = await NotificationsModel.findOneAndUpdate(
       {
         _id: notificationId,
-        recipientId: _id,
-        deletedAt: null,
+        recipientId,
+        $or: [{ deletedAt: null }, { deletedAt: { $exists: false } }],
       },
       {
         $set: {
@@ -165,6 +195,31 @@ export const markUserNotificationAsRead = async (
   }
 };
 
+//Get unread notifications count
+export const getUnreadNotificationCount = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const recipientId = getRecipientId(req.user);
+    const unreadNotificationCount = await NotificationsModel.countDocuments({
+      recipientId,
+      isRead: false,
+      $or: [{ deletedAt: null }, { deletedAt: { $exists: false } }],
+    });
+
+    res.status(200).json({
+      unreadNotificationCount,
+    });
+  } catch (error) {
+    const err = error as IError;
+    err.status = 500;
+    err.message = "An error occurred while fetching users notifications count";
+    return next(err);
+  }
+};
+
 //Delete Notification
 export const deleteUserNotification = async (
   req: AuthenticatedRequest,
@@ -172,7 +227,7 @@ export const deleteUserNotification = async (
   next: NextFunction,
 ) => {
   try {
-    const { _id } = req.user;
+    const recipientId = getRecipientId(req.user);
     const { notificationId } = req.params;
     const purgeAt = new Date();
     purgeAt.setDate(purgeAt.getDate() + 90);
@@ -180,8 +235,8 @@ export const deleteUserNotification = async (
     const notification = await NotificationsModel.findOneAndUpdate(
       {
         _id: notificationId,
-        recipientId: _id,
-        deletedAt: null,
+        recipientId,
+        $or: [{ deletedAt: null }, { deletedAt: { $exists: false } }],
       },
       {
         $set: {

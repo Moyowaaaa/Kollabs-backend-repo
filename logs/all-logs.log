@@ -380,3 +380,90 @@
 [32m2026-08-03 14:21:00:210[39m info: [34mGET /v1/api/notifications/6a709126f454351870ca35dd 200 1929.069 ms - 747[39m
 [32m2026-08-03 14:21:15:2115[39m info: [34mApp running on port 4000.....[39m
 [32m2026-08-03 14:21:18:2118[39m info: [34mGET /v1/api/notifications/6a709126f454351870ca35dd 200 3209.308 ms - 747[39m
+[32m2026-08-03 14:22:12:2212[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 14:32:04:324[39m info: [34mGET /v1/api/notifications/6a709126f454351870ca35dd 200 1552.270 ms - 378[39m
+[32m2026-08-03 14:32:17:3217[39m info: [34mGET /v1/api/notifications/ 200 1507.789 ms - 747[39m
+[32m2026-08-03 16:32:43:3243[39m info: [34mGET /v1/api/feed?limit=20 304 15193.223 ms - -[39m
+[32m2026-08-03 17:10:04:104[39m info: [34mGET /v1/api/feed?limit=20 304 5561.122 ms - -[39m
+[32m2026-08-03 17:20:01:201[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 17:22:19:2219[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 17:23:27:2327[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 17:25:13:2513[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 17:30:20:3020[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 17:32:43:3243[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 17:34:11:3411[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 17:34:19:3419[39m info: [34mGET /v1/api/notifications/unread-count 200 484.990 ms - 29[39m
+[32m2026-08-03 17:36:38:3638[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 17:37:35:3735[39m info: [34mGET /v1/api/notifications/unread-count 200 410.981 ms - 29[39m
+[32m2026-08-03 18:07:37:737[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 18:08:17:817[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 18:08:31:831[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 18:09:47:947[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 18:10:36:1036[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 18:20:18:2018[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 18:21:52:2152[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 18:22:09:229[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 18:22:37:2237[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 18:28:07:287[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 18:28:45:2845[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 18:34:34:3434[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 18:34:50:3450[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 18:34:55:3455[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 18:35:07:357[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 18:35:20:3520[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 18:41:21:4121[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 21:51:08:518[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 21:52:30:5230[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 21:52:46:5246[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 21:58:07:587[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 22:03:23:323[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 22:03:46:346[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 22:05:22:522[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 22:07:49:749[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 22:10:23:1023[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 22:10:33:1033[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 22:18:21:1821[39m info: [34mGET /v1/api/feed?limit=20 - - ms - -[39m
+[32m2026-08-03 22:18:23:1823[39m info: [34mGET /v1/api/feed?limit=20 200 1950.017 ms - 6139[39m
+[32m2026-08-03 22:19:36:1936[39m info: [34mPOST /v1/api/projects 201 2459.430 ms - 598[39m
+[32m2026-08-03 22:19:37:1937[39m info: [34mGET /v1/api/feed?limit=20 200 932.114 ms - 7077[39m
+[32m2026-08-03 22:19:38:1938[39m info: [34mGET /v1/api/feed?limit=20 304 939.034 ms - -[39m
+[32m2026-08-03 22:19:52:1952[39m info: [34mDELETE /v1/api/projects/6a7105e8fa43ca25f0aabd14 200 541.616 ms - 42[39m
+[32m2026-08-03 22:19:53:1953[39m info: [34mGET /v1/api/feed?limit=20 200 835.758 ms - 6139[39m
+[32m2026-08-03 22:19:53:1953[39m info: [34mGET /v1/api/feed?limit=20 304 830.394 ms - -[39m
+[32m2026-08-03 22:21:20:2120[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 22:21:38:2138[39m info: [34mGET /v1/api/feed?limit=20 304 865.896 ms - -[39m
+[32m2026-08-03 22:21:55:2155[39m info: [34mGET /v1/api/notifications/unread-count 200 324.130 ms - 29[39m
+[32m2026-08-03 22:21:57:2157[39m info: [34mGET /v1/api/notifications/unread-count 304 468.768 ms - -[39m
+[32m2026-08-03 22:21:57:2157[39m info: [34mGET /v1/api/feed?limit=20 304 924.725 ms - -[39m
+[32m2026-08-03 22:22:17:2217[39m info: [34mGET /v1/api/notifications?page=1&limit=15 200 635.285 ms - 1493[39m
+[32m2026-08-03 22:22:26:2226[39m info: [34mGET /v1/api/notifications/unread-count 200 312.958 ms - 29[39m
+[32m2026-08-03 22:22:26:2226[39m info: [34mGET /v1/api/feed?limit=20 200 795.922 ms - 6139[39m
+[32m2026-08-03 22:22:34:2234[39m info: [34mGET /v1/api/notifications?page=1&limit=15 304 628.190 ms - -[39m
+[32m2026-08-03 22:24:26:2426[39m info: [34mGET /v1/api/notifications/unread-count 304 315.832 ms - -[39m
+[32m2026-08-03 22:24:51:2451[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 22:25:06:256[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 22:25:21:2521[39m info: [34mGET /v1/api/notifications/unread-count 304 475.437 ms - -[39m
+[32m2026-08-03 22:25:22:2522[39m info: [34mGET /v1/api/feed?limit=20 304 1525.012 ms - -[39m
+[32m2026-08-03 22:27:59:2759[39m info: [34mGET /v1/api/notifications/unread-count 304 337.775 ms - -[39m
+[32m2026-08-03 22:28:30:2830[39m info: [34mGET /v1/api/notifications/unread-count 304 315.411 ms - -[39m
+[32m2026-08-03 22:30:37:3037[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-03 22:31:12:3112[39m info: [34mGET /api-docs 301 3.456 ms - 158[39m
+[32m2026-08-03 22:31:12:3112[39m info: [34mGET /api-docs/ 200 2.788 ms - 3106[39m
+[32m2026-08-03 22:31:12:3112[39m info: [34mGET /api-docs/swagger-ui-init.js 200 0.594 ms - 111702[39m
+[32m2026-08-03 22:31:12:3112[39m info: [34mGET /api-docs/swagger-ui.css 200 7.279 ms - 177183[39m
+[32m2026-08-03 22:31:12:3112[39m info: [34mGET /api-docs/swagger-ui-standalone-preset.js 200 7.957 ms - 252451[39m
+[32m2026-08-03 22:31:12:3112[39m info: [34mGET /api-docs/swagger-ui-bundle.js 200 8.813 ms - 1510271[39m
+[32m2026-08-03 22:31:21:3121[39m info: [34mGET /api-docs 301 1.204 ms - 158[39m
+[32m2026-08-03 22:31:21:3121[39m info: [34mGET /api-docs/ 200 1.071 ms - 3106[39m
+[32m2026-08-03 22:31:21:3121[39m info: [34mGET /api-docs/swagger-ui.css 200 1.823 ms - 177183[39m
+[32m2026-08-03 22:31:21:3121[39m info: [34mGET /api-docs/swagger-ui-init.js 200 0.735 ms - 111702[39m
+[32m2026-08-03 22:31:21:3121[39m info: [34mGET /api-docs/swagger-ui-standalone-preset.js 200 5.543 ms - 252451[39m
+[32m2026-08-03 22:31:21:3121[39m info: [34mGET /api-docs/swagger-ui-bundle.js 200 6.718 ms - 1510271[39m
+[32m2026-08-03 22:31:21:3121[39m info: [34mGET /api-docs/favicon-32x32.png 200 3.561 ms - 628[39m
+[32m2026-08-03 22:34:46:3446[39m info: [34mGET /api-docs/ 304 1.004 ms - -[39m
+[32m2026-08-03 22:34:46:3446[39m info: [34mGET /api-docs/swagger-ui.css 304 1.192 ms - -[39m
+[32m2026-08-03 22:34:46:3446[39m info: [34mGET /api-docs/swagger-ui-bundle.js 304 1.081 ms - -[39m
+[32m2026-08-03 22:34:46:3446[39m info: [34mGET /api-docs/swagger-ui-init.js 304 0.444 ms - -[39m
+[32m2026-08-03 22:34:46:3446[39m info: [34mGET /api-docs/swagger-ui-standalone-preset.js 304 1.884 ms - -[39m
+[32m2026-08-03 22:34:47:3447[39m info: [34mGET /api-docs/favicon-32x32.png 304 0.857 ms - -[39m
+[32m2026-08-03 22:35:34:3534[39m info: [34mApp running on port 4000.....[39m

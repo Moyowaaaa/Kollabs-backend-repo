@@ -1,50 +1,70 @@
 import { model, Schema } from "mongoose";
 import { INotification } from "./notifications.interface";
 
-export  const NotificationsSchema = new Schema<INotification>({
+export const NotificationsSchema = new Schema<INotification>(
+  {
     recipientId: {
-        type: String,
-        ref: "User",
-        required: true,
+      type: String,
+      ref: "User",
+      required: true,
     },
     actorId: {
-        type: String,
-        ref: "User",
-        required: true,
+      type: String,
+      ref: "User",
+      required: false,
     },
     type: {
-        type: String,
-        enum: ["test", "project_created", "project_updated", "project_deleted", "project_archived", "project_unarchived", "project_completed", "project_uncompleted", "collab_request_received", "collab_request_accepted"],
-        required: true,
+      type: String,
+      enum: [
+        "test",
+        "project_created",
+        "project_updated",
+        "project_deleted",
+        "project_archived",
+        "project_unarchived",
+        "project_completed",
+        "project_uncompleted",
+        "collab_request_received",
+        "collab_request_accepted",
+        "collab_request_rejected"
+      ],
+      required: true,
     },
     title: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     body: {
-        type: String,
-        required: true,
+      type: String,
+      required: false,
     },
     isRead: {
-        type: Boolean,
-        default: false,
+      type: Boolean,
+      default: false,
     },
     meta: {
-        type: Object,
-        default: {},
+      type: Object,
+      default: {},
     },
     readAt: {
-        type: Date,
-        default: null,
+      type: Date,
+      default: null,
     },
-    createdAt: {
-        type: Date,
-        default: Date.now,
+
+    deletedAt: {
+      type: Date,
+      default: null,
     },
-    updatedAt: {
-        type: Date,
-        default: Date.now,
+
+    purgeAt: {
+      type: Date,
+      default: null,
     },
-}, { timestamps: true });
+  },
+  { timestamps: true },
+);
+
+NotificationsSchema.index({ recipientId: 1, createdAt: -1 });
+NotificationsSchema.index({ recipientId: 1, isRead: 1, deletedAt: 1 });
 
 export default model<INotification>("Notification", NotificationsSchema);
