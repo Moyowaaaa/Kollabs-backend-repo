@@ -8,6 +8,8 @@ import { uploadMultipleToCloudinary } from "../../utils/cloudinary";
 import { invalidateFeedCache } from "../feed/feed.controller";
 import { Types } from "mongoose";
 import type { IAuthorPopulated } from "../projects/projects.interface";
+import { createNotification } from "../notifications";
+import { UserModel } from "../user";
 
 // Helper to safely get author ID string from ObjectId or populated object
 const getAuthorId = (author: Types.ObjectId | IAuthorPopulated): string => {
@@ -112,12 +114,32 @@ export const createRequest = async (
       }));
     }
 
+    const requesterProfile = await UserModel.findOne({ authUser: requesterId });
+    const recipientId = getAuthorId(project.author);
+
     const collaborationRequest = await CollaborationRequestModel.create({
       projectId,
       requesterId,
       proposal,
       media,
     });
+    if (requesterProfile && recipientId) {
+      const name = requesterProfile
+  ? `${requesterProfile.firstname} ${requesterProfile.lastname}`
+  : "Someone";
+
+      await createNotification({
+        title: "New request",
+        actorId: requesterId,
+        body: `${name} is requesting to join your project: ${project.title}`,
+        recipientId,
+        type: "collab_request_received",
+        meta: {
+          projectId: String(collaborationRequest.projectId),
+          collabRequestId: String(collaborationRequest._id),
+        },
+      });
+    }
 
     res.status(201).json({
       message: "Collaboration request submitted successfully",
@@ -277,6 +299,20 @@ export const acceptRequest = async (
       status: "accepted",
     });
 
+      await createNotification({
+        title: "Proposal approved",
+        body: `Your proposal was approved for "${project.title}`,
+        meta: {
+          projectId: String(collaborationRequest.projectId),
+          collabRequestId: String(requestId),
+        },
+        actorId: getAuthorId(project.author),
+        type: "collab_request_accepted",
+        recipientId: collaborationRequest.requesterId,
+      });
+
+    
+
     // Invalidate feed cache so changes are visible immediately
     await invalidateFeedCache();
 
@@ -344,6 +380,18 @@ export const rejectRequest = async (
     await CollaborationRequestModel.findByIdAndUpdate(requestId, {
       status: "rejected",
     });
+
+      await createNotification({
+        title: "Proposal rejected",
+        body: 'Your proposal was rejected by the project"s author',
+        meta: {
+          projectId: String(collaborationRequest.projectId),
+          collabRequestId: String(requestId),
+        },
+        actorId: getAuthorId(project.author),
+        type: "collab_request_rejected",
+        recipientId: collaborationRequest.requesterId,
+      });
 
     res.status(200).json({ message: "Collaboration request rejected" });
   } catch (err) {

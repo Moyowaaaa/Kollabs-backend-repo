@@ -21,6 +21,7 @@ import { userRoutes } from "./modules/user";
 import { projectsRoutes } from "./modules/projects";
 import { collaborationRequestsRoutes } from "./modules/collaboration-requests";
 import { feedRoutes } from "./modules/feed";
+import { notificationsRoutes } from "./modules/notifications";
 
 const app: Express = express();
 
@@ -72,6 +73,8 @@ app.use("/v1/api/user", userRoutes);
 app.use("/v1/api/projects", projectsRoutes);
 app.use("/v1/api/collaboration-requests", collaborationRequestsRoutes);
 app.use("/v1/api/feed", feedRoutes);
+app.use("/v1/api/notifications", notificationsRoutes);
+
 
 // Swagger API Documentation
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
