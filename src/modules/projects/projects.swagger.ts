@@ -68,7 +68,10 @@
  *               $ref: '#/components/schemas/Error'
  *   get:
  *     summary: Get user's projects
- *     description: Get all projects created by the authenticated user with pagination. Deleted and archived projects are excluded.
+ *     description: >
+ *       Get paginated projects for the authenticated user.
+ *       By default returns projects the user authored **or** collaborates on.
+ *       Use `scope` to narrow results. Deleted and archived projects are excluded.
  *     tags: [Projects]
  *     security:
  *       - bearerAuth: []
@@ -85,6 +88,16 @@
  *           type: integer
  *           default: 10
  *         description: Number of items per page
+ *       - in: query
+ *         name: scope
+ *         schema:
+ *           type: string
+ *           enum: [all, authored, collaborating]
+ *           default: all
+ *         description: >
+ *           `all` — authored + collaborating;
+ *           `authored` — only projects created by the user;
+ *           `collaborating` — only projects where the user is a collaborator
  *     responses:
  *       200:
  *         description: List of user's projects

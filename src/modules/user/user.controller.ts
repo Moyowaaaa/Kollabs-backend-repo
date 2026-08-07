@@ -79,9 +79,9 @@ export const updateProfile = async (
       req.body as {
         firstname?: string;
         lastname?: string;
-        roles?: string[];
+        roles?: string[] | string;
         bio?: string;
-        links?: IUserLinks;
+        links?: IUserLinks | string;
         cvLinkedUrl?: string;
       };
 
@@ -93,12 +93,34 @@ export const updateProfile = async (
       authUser.userProfile
     );
 
+    let parsedRoles: string[] | undefined;
+    if (typeof roles === "string") {
+      try {
+        parsedRoles = JSON.parse(roles) as string[];
+      } catch {
+        parsedRoles = undefined;
+      }
+    } else if (Array.isArray(roles)) {
+      parsedRoles = roles;
+    }
+
+    let parsedLinks: IUserLinks | undefined;
+    if (typeof links === "string") {
+      try {
+        parsedLinks = JSON.parse(links) as IUserLinks;
+      } catch {
+        parsedLinks = undefined;
+      }
+    } else if (links && typeof links === "object") {
+      parsedLinks = links;
+    }
+
     const updateData: Record<string, unknown> = {};
     if (firstname) updateData.firstname = firstname;
     if (lastname) updateData.lastname = lastname;
-    if (roles) updateData.roles = roles;
+    if (parsedRoles) updateData.roles = parsedRoles;
     if (bio !== undefined) updateData.bio = bio;
-    if (links) updateData.links = links;
+    if (parsedLinks) updateData.links = parsedLinks;
 
     const files = req.files as MulterFiles | undefined;
 

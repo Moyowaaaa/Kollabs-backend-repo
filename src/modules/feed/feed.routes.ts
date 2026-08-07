@@ -12,7 +12,7 @@ router.use(verifyAuthentication as express.RequestHandler);
  * GET /v1/api/feed
  * Main chronological feed with cursor-based pagination
  * Query params:
- *   - cursor: ID of last item for pagination
+ *   - cursor: compound cursor (`createdAtMs_objectId`) from last item
  *   - limit: Number of items per page (default: 20, max: 50)
  */
 router.get("/", getFeed as RequestHandler);

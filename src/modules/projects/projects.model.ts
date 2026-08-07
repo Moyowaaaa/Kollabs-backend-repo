@@ -63,6 +63,18 @@ projectsSchema.index(
   },
 );
 
+// Feed pagination: public statuses + newest-first compound cursor
+projectsSchema.index(
+  { status: 1, createdAt: -1, _id: -1 },
+  { name: "projects_feed_status_created" },
+);
+
+// Own-drafts slice of personalized feed
+projectsSchema.index(
+  { author: 1, status: 1, createdAt: -1, _id: -1 },
+  { name: "projects_feed_author_status_created" },
+);
+
 const ProjectsModel = model<IProjects>("Projects", projectsSchema);
 
 export default ProjectsModel;

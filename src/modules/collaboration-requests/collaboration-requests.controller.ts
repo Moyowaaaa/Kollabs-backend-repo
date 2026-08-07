@@ -187,7 +187,14 @@ export const getRequestsForProject = async (
     }
 
     const requests = await CollaborationRequestModel.find({ projectId })
-      .populate("requesterId", "fullName profilePhoto email")
+      .populate({
+        path: "requesterId",
+        select: "email userProfile",
+        populate: {
+          path: "userProfile",
+          select: "firstname lastname profilePicture roles bio links",
+        },
+      })
       .sort({ createdAt: -1 });
 
     res.status(200).json({ requests });
@@ -216,17 +223,115 @@ export const getMyRequests = async (
     const decoded = jwt.verify(token, process.env.SECRET as string) as jwtToken;
     const { _id: userId } = decoded;
 
-    const requests = await CollaborationRequestModel.find({
-      requesterId: userId,
-    })
-      .populate("projectId", "title description status")
-      .sort({ createdAt: -1 });
+    const page = Math.max(1, Number(req.query.page) || 1);
+    const limit = Math.min(50, Math.max(1, Number(req.query.limit) || 10));
+    const skip = (page - 1) * limit;
+    const filter = { requesterId: userId };
 
-    res.status(200).json({ requests });
+    const [requests, totalRequests] = await Promise.all([
+      CollaborationRequestModel.find(filter)
+        .populate("projectId", "title description status")
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit),
+      CollaborationRequestModel.countDocuments(filter),
+    ]);
+
+    const totalPages = Math.ceil(totalRequests / limit);
+
+    res.status(200).json({
+      requests,
+      pagination: {
+        totalRequests,
+        totalPages,
+        currentPage: page,
+        itemsPerPage: limit,
+      },
+    });
   } catch (err) {
     const error = err as IError;
     error.status = 500;
     error.message = "An error occurred while fetching your requests";
+    return next(error);
+  }
+};
+
+// Get a single collaboration request by ID
+export const getRequestById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const { authorization } = req.headers;
+  if (!authorization) {
+    res.status(401).json({ message: "Authorization token required" });
+    return;
+  }
+
+  try {
+    const token = authorization.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.SECRET as string) as jwtToken;
+    const { _id: userId } = decoded;
+    const { requestId } = req.params;
+
+    const collaborationRequest = await CollaborationRequestModel.findById(
+      requestId,
+    )
+      .populate({
+        path: "requesterId",
+        select: "email userProfile",
+        populate: {
+          path: "userProfile",
+          select: "firstname lastname profilePicture roles bio",
+        },
+      })
+      .populate("projectId", "title description status author teamSize");
+
+    if (!collaborationRequest) {
+      res.status(404).json({ message: "Collaboration request not found" });
+      return;
+    }
+
+    const project = await ProjectsModel.findById(
+      // projectId may be populated
+      typeof collaborationRequest.projectId === "object" &&
+        collaborationRequest.projectId !== null &&
+        "_id" in collaborationRequest.projectId
+        ? (collaborationRequest.projectId as { _id: string })._id
+        : collaborationRequest.projectId,
+    );
+
+    if (!project) {
+      res.status(404).json({ message: "Project not found" });
+      return;
+    }
+
+    const isAuthor = getAuthorId(project.author) === userId;
+    const requesterIdValue =
+      typeof collaborationRequest.requesterId === "object" &&
+      collaborationRequest.requesterId !== null &&
+      "_id" in collaborationRequest.requesterId
+        ? String((collaborationRequest.requesterId as { _id: string })._id)
+        : String(collaborationRequest.requesterId);
+    const isRequester = requesterIdValue === userId;
+
+    if (!isAuthor && !isRequester) {
+      res.status(403).json({
+        message:
+          "Only the project author or the requester can view this collaboration request",
+      });
+      return;
+    }
+
+    res.status(200).json({
+      message: "Collaboration request found",
+      request: collaborationRequest,
+    });
+  } catch (err) {
+    const error = err as IError;
+    error.status = 500;
+    error.message =
+      "An error occurred while fetching the collaboration request";
     return next(error);
   }
 };

@@ -4,7 +4,9 @@
  *   get:
  *     summary: Get main feed
  *     description: |
- *       Get paginated feed of Ideas/Projects with cursor-based pagination for infinite scroll.
+ *       Get paginated feed of Ideas/Projects with compound cursor pagination for infinite scroll.
+ *       Public statuses (draft/pending/ongoing/completed) are visible to everyone.
+ *       Draft ideas appear with a draft / not-active flag on the client; interest actions stay disabled until activated.
  *       Results are cached in Redis for performance. Deleted and archived projects are excluded.
  *     tags: [Feed]
  *     security:
@@ -15,8 +17,8 @@
  *         name: cursor
  *         schema:
  *           type: string
- *         description: ID of last item for cursor-based pagination (omit for first page)
- *         example: 507f1f77bcf86cd799439011
+ *         description: Compound cursor from the previous page (`createdAtMs_objectId`). Omit for the first page.
+ *         example: 1735689600000_507f1f77bcf86cd799439011
  *       - in: query
  *         name: limit
  *         schema:
