@@ -13,7 +13,8 @@ export interface INotification {
     | "project_uncompleted"
     | "collab_request_received"
     | "collab_request_accepted"
-    | "collab_request_rejected";
+    | "collab_request_rejected"
+    | "collaboration_started";
 
   title: string;
   body: string;
@@ -38,6 +39,7 @@ export interface ICreateNotificationPayload {
   meta: {
     projectId?: string;
     collabRequestId?: string;
+    conversationId?:string
   };
   isRead?: boolean;
   readAt?: Date;

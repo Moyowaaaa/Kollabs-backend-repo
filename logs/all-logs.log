@@ -1391,3 +1391,540 @@
 [32m2026-08-07 12:02:32:232[39m info: [34mGET /v1/api/feed?limit=20 200 557.627 ms - 7462[39m
 [32m2026-08-07 12:03:02:32[39m info: [34mGET /v1/api/notifications/unread-count 304 273.205 ms - -[39m
 [32m2026-08-07 12:03:33:333[39m info: [34mGET /v1/api/notifications/unread-count 304 261.027 ms - -[39m
+[32m2026-08-08 13:41:19:4119[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 15:58:26:5826[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 15:58:40:5840[39m info: [34mGET /v1/api/notifications/unread-count 304 291.900 ms - -[39m
+[32m2026-08-08 15:58:40:5840[39m info: [34mGET /v1/api/notifications/unread-count 304 321.369 ms - -[39m
+[32m2026-08-08 15:58:40:5840[39m info: [34mGET /v1/api/user/me 304 466.818 ms - -[39m
+[32m2026-08-08 15:58:40:5840[39m info: [34mGET /v1/api/user/me 304 466.922 ms - -[39m
+[32m2026-08-08 15:59:10:5910[39m info: [34mGET /v1/api/notifications/unread-count 304 264.187 ms - -[39m
+[32m2026-08-08 15:59:10:5910[39m info: [34mGET /v1/api/notifications/unread-count 304 244.565 ms - -[39m
+[32m2026-08-08 15:59:40:5940[39m info: [34mGET /v1/api/notifications/unread-count 304 252.985 ms - -[39m
+[32m2026-08-08 15:59:41:5941[39m info: [34mGET /v1/api/notifications/unread-count 304 262.498 ms - -[39m
+[32m2026-08-08 16:00:11:011[39m info: [34mGET /v1/api/notifications/unread-count 304 261.667 ms - -[39m
+[32m2026-08-08 16:00:11:011[39m info: [34mGET /v1/api/notifications/unread-count 304 255.975 ms - -[39m
+[32m2026-08-08 16:00:41:041[39m info: [34mGET /v1/api/notifications/unread-count 304 247.646 ms - -[39m
+[32m2026-08-08 16:01:11:111[39m info: [34mGET /v1/api/notifications/unread-count 304 248.847 ms - -[39m
+[32m2026-08-08 16:01:42:142[39m info: [34mGET /v1/api/notifications/unread-count 304 246.146 ms - -[39m
+[32m2026-08-08 16:02:12:212[39m info: [34mGET /v1/api/notifications/unread-count 304 245.074 ms - -[39m
+[32m2026-08-08 16:02:42:242[39m info: [34mGET /v1/api/notifications/unread-count 304 244.439 ms - -[39m
+[32m2026-08-08 16:03:12:312[39m info: [34mGET /v1/api/notifications/unread-count 304 248.619 ms - -[39m
+[32m2026-08-08 16:03:43:343[39m info: [34mGET /v1/api/notifications/unread-count 304 248.019 ms - -[39m
+[32m2026-08-08 16:04:13:413[39m info: [34mGET /v1/api/notifications/unread-count 304 244.411 ms - -[39m
+[32m2026-08-08 16:04:43:443[39m info: [34mGET /v1/api/notifications/unread-count 304 310.106 ms - -[39m
+[32m2026-08-08 16:05:13:513[39m info: [34mGET /v1/api/notifications/unread-count 304 248.773 ms - -[39m
+[32m2026-08-08 16:05:44:544[39m info: [34mGET /v1/api/notifications/unread-count 304 250.579 ms - -[39m
+[32m2026-08-08 16:06:14:614[39m info: [34mGET /v1/api/notifications/unread-count 304 249.259 ms - -[39m
+[32m2026-08-08 16:06:44:644[39m info: [34mGET /v1/api/notifications/unread-count 304 245.204 ms - -[39m
+[32m2026-08-08 16:07:15:715[39m info: [34mGET /v1/api/notifications/unread-count 304 245.393 ms - -[39m
+[32m2026-08-08 16:07:45:745[39m info: [34mGET /v1/api/notifications/unread-count 304 245.706 ms - -[39m
+[32m2026-08-08 16:08:15:815[39m info: [34mGET /v1/api/notifications/unread-count 304 245.764 ms - -[39m
+[32m2026-08-08 16:08:45:845[39m info: [34mGET /v1/api/notifications/unread-count 304 250.762 ms - -[39m
+[32m2026-08-08 16:09:16:916[39m info: [34mGET /v1/api/notifications/unread-count 304 245.130 ms - -[39m
+[32m2026-08-08 16:09:46:946[39m info: [34mGET /v1/api/notifications/unread-count 304 259.957 ms - -[39m
+[32m2026-08-08 16:15:50:1550[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:16:09:169[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:16:22:1622[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:16:46:1646[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:17:04:174[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:17:28:1728[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:19:13:1913[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:19:20:1920[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:19:26:1926[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:19:43:1943[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:20:06:206[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:20:43:2043[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:20:55:2055[39m info: [34mGET /v1/api/notifications/unread-count 304 292.064 ms - -[39m
+[32m2026-08-08 16:21:02:212[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:21:09:219[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:21:22:2122[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:21:40:2140[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:21:53:2153[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:22:13:2213[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:22:28:2228[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:22:44:2244[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:23:20:2320[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:23:49:2349[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:23:57:2357[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:24:06:246[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:24:24:2424[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:24:37:2437[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:24:57:2457[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:25:05:255[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:25:18:2518[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:25:31:2531[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:26:43:2643[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:27:01:271[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:27:38:2738[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:27:53:2753[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:28:02:282[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:28:22:2822[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:28:55:2855[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:30:55:3055[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:31:05:315[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:31:45:3145[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:32:39:3239[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:32:58:3258[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:33:08:338[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:33:51:3351[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:34:03:343[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:34:35:3435[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:34:45:3445[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:35:31:3531[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:38:02:382[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:38:19:3819[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 16:39:24:3924[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 18:30:42:3042[39m info: [34mGET /v1/api/notifications/unread-count 304 2543.622 ms - -[39m
+[32m2026-08-08 18:30:42:3042[39m info: [34mGET /v1/api/user/me 304 2711.540 ms - -[39m
+[32m2026-08-08 18:30:42:3042[39m info: [34mGET /v1/api/notifications/unread-count 304 3192.885 ms - -[39m
+[32m2026-08-08 18:30:43:3043[39m info: [34mGET /v1/api/user/me 304 3723.416 ms - -[39m
+[32m2026-08-08 19:31:16:3116[39m info: [34mGET /v1/api/user/me 401 1.349 ms - 136[39m
+[32m2026-08-08 19:31:16:3116[39m info: [34mGET /v1/api/notifications/unread-count 401 1.019 ms - 136[39m
+[32m2026-08-08 19:31:21:3121[39m info: [34mGET /v1/api/user/me - - ms - -[39m
+[32m2026-08-08 19:31:21:3121[39m info: [34mGET /v1/api/notifications/unread-count - - ms - -[39m
+[32m2026-08-08 19:31:59:3159[39m info: [34mGET /v1/api/user/me 304 2242.277 ms - -[39m
+[32m2026-08-08 19:32:28:3228[39m info: [34mGET /v1/api/notifications/unread-count 304 262.405 ms - -[39m
+[32m2026-08-08 19:32:37:3237[39m info: [34mGET /v1/api/feed?limit=20 304 302.486 ms - -[39m
+[32m2026-08-08 19:32:37:3237[39m info: [34mGET /v1/api/feed/trending 304 1050.720 ms - -[39m
+[32m2026-08-08 19:33:46:3346[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 19:35:05:355[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 19:35:23:3523[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 19:35:30:3530[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 19:36:20:3620[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 19:36:44:3644[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 19:36:58:3658[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 19:40:41:4041[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-08 19:40:58:4058[39m info: [34mGET /v1/api/notifications/unread-count 304 362.709 ms - -[39m
+[32m2026-08-08 19:41:58:4158[39m info: [34mGET /v1/api/notifications/unread-count 304 340.726 ms - -[39m
+[32m2026-08-08 19:42:29:4229[39m info: [34mGET /v1/api/notifications/unread-count 304 389.127 ms - -[39m
+[32m2026-08-08 19:42:36:4236[39m info: [34mGET /v1/api/projects?page=1&limit=10&scope=authored 304 347.073 ms - -[39m
+[32m2026-08-08 19:42:44:4244[39m info: [34mGET /v1/api/projects?page=1&limit=10&scope=all 304 371.779 ms - -[39m
+[32m2026-08-08 19:42:59:4259[39m info: [34mGET /v1/api/notifications/unread-count 304 339.465 ms - -[39m
+[32m2026-08-08 19:43:09:439[39m info: [34mGET /v1/api/user/me 304 526.065 ms - -[39m
+[32m2026-08-08 19:43:27:4327[39m info: [34mGET /v1/api/feed/trending 304 296.888 ms - -[39m
+[32m2026-08-08 19:43:28:4328[39m info: [34mGET /v1/api/feed?limit=20 304 342.342 ms - -[39m
+[32m2026-08-08 19:43:29:4329[39m info: [34mGET /v1/api/notifications/unread-count 304 340.037 ms - -[39m
+[32m2026-08-08 19:45:30:4530[39m info: [34mGET /v1/api/notifications/unread-count 304 338.737 ms - -[39m
+[32m2026-08-08 22:22:50:2250[39m info: [34mGET /v1/api/notifications/unread-count 304 3773.250 ms - -[39m
+[32m2026-08-08 22:22:50:2250[39m info: [34mGET /v1/api/user/me 304 3907.202 ms - -[39m
+[32m2026-08-08 22:22:51:2251[39m info: [34mGET /v1/api/feed/trending 304 5088.173 ms - -[39m
+[32m2026-08-08 22:22:51:2251[39m info: [34mGET /v1/api/feed?limit=20 304 5167.745 ms - -[39m
+[32m2026-08-08 22:25:22:2522[39m info: [34mGET /v1/api/notifications/unread-count 304 353.990 ms - -[39m
+[32m2026-08-08 22:32:32:3232[39m info: [34mGET /v1/api/notifications/unread-count 304 716.723 ms - -[39m
+[32m2026-08-08 22:35:03:353[39m info: [34mGET /v1/api/notifications/unread-count 304 262.496 ms - -[39m
+[32m2026-08-08 22:36:34:3634[39m info: [34mGET /v1/api/notifications/unread-count 304 262.017 ms - -[39m
+[32m2026-08-08 23:07:43:743[39m info: [34mGET /v1/api/notifications/unread-count 304 341.882 ms - -[39m
+[32m2026-08-08 23:08:43:843[39m info: [34mGET /v1/api/notifications/unread-count 304 409.011 ms - -[39m
+[32m2026-08-08 23:17:13:1713[39m info: [34mGET /v1/api/notifications/unread-count 304 258.917 ms - -[39m
+[32m2026-08-08 23:17:44:1744[39m info: [34mGET /v1/api/notifications/unread-count 304 258.255 ms - -[39m
+[32m2026-08-08 23:28:27:2827[39m info: [34mGET /v1/api/notifications/unread-count 304 270.577 ms - -[39m
+[32m2026-08-08 23:29:48:2948[39m info: [34mGET /v1/api/notifications/unread-count 304 459.596 ms - -[39m
+[32m2026-08-08 23:29:48:2948[39m info: [34mGET /v1/api/feed/trending 304 467.466 ms - -[39m
+[32m2026-08-08 23:29:48:2948[39m info: [34mGET /v1/api/feed?limit=20 304 472.339 ms - -[39m
+[32m2026-08-08 23:29:48:2948[39m info: [34mGET /v1/api/user/me 304 757.818 ms - -[39m
+[32m2026-08-08 23:30:05:305[39m info: [34mPOST /v1/api/auth/sign-in 200 1108.788 ms - 524[39m
+[32m2026-08-08 23:30:05:305[39m info: [34mGET /v1/api/user/me 304 383.465 ms - -[39m
+[32m2026-08-08 23:30:05:305[39m info: [34mGET /v1/api/notifications/unread-count 304 242.298 ms - -[39m
+[32m2026-08-08 23:30:05:305[39m info: [34mGET /v1/api/feed?limit=20 304 256.428 ms - -[39m
+[32m2026-08-08 23:30:05:305[39m info: [34mGET /v1/api/feed/trending 304 255.310 ms - -[39m
+[32m2026-08-08 23:31:06:316[39m info: [34mGET /v1/api/notifications/unread-count 304 256.314 ms - -[39m
+[32m2026-08-08 23:31:30:3130[39m info: [34mPOST /v1/api/projects 201 2041.497 ms - 614[39m
+[32m2026-08-08 23:31:30:3130[39m info: [34mGET /v1/api/feed/trending 304 265.338 ms - -[39m
+[32m2026-08-08 23:31:35:3135[39m info: [34mGET /v1/api/notifications/unread-count 304 290.325 ms - -[39m
+[32m2026-08-08 23:31:35:3135[39m info: [34mGET /v1/api/feed/trending 304 297.801 ms - -[39m
+[32m2026-08-08 23:31:35:3135[39m info: [34mGET /v1/api/user/me 304 366.113 ms - -[39m
+[32m2026-08-08 23:31:35:3135[39m info: [34mGET /v1/api/feed?limit=20 200 532.490 ms - 1043[39m
+[32m2026-08-08 23:32:05:325[39m info: [34mGET /v1/api/notifications/unread-count 304 261.862 ms - -[39m
+[32m2026-08-08 23:32:33:3233[39m info: [34mPOST /v1/api/projects 201 2798.695 ms - 634[39m
+[32m2026-08-08 23:32:33:3233[39m info: [34mGET /v1/api/feed/trending 304 258.942 ms - -[39m
+[32m2026-08-08 23:32:35:3235[39m info: [34mGET /v1/api/notifications/unread-count 304 255.472 ms - -[39m
+[32m2026-08-08 23:32:44:3244[39m info: [34mGET /v1/api/projects/6a77ae8170811ff56624f4b2 200 523.281 ms - 963[39m
+[32m2026-08-08 23:32:46:3246[39m info: [34mPATCH /v1/api/projects/6a77ae8170811ff56624f4b2 401 257.792 ms - 26[39m
+[32m2026-08-08 23:32:48:3248[39m info: [34mPATCH /v1/api/projects/6a77ae8170811ff56624f4b2 401 255.872 ms - 26[39m
+[32m2026-08-08 23:32:56:3256[39m info: [34mGET /v1/api/feed/trending 304 251.708 ms - -[39m
+[32m2026-08-08 23:32:56:3256[39m info: [34mGET /v1/api/notifications/unread-count 304 264.313 ms - -[39m
+[32m2026-08-08 23:32:56:3256[39m info: [34mGET /v1/api/user/me 304 398.444 ms - -[39m
+[32m2026-08-08 23:32:56:3256[39m info: [34mGET /v1/api/feed?limit=20 200 525.180 ms - 1995[39m
+[32m2026-08-08 23:33:01:331[39m info: [34mGET /v1/api/projects/6a77ae8170811ff56624f4b2 200 528.479 ms - 963[39m
+[32m2026-08-08 23:33:03:333[39m info: [34mPATCH /v1/api/projects/6a77ae8170811ff56624f4b2 401 258.520 ms - 26[39m
+[32m2026-08-08 23:33:04:334[39m info: [34mPATCH /v1/api/projects/6a77ae8170811ff56624f4b2 401 258.477 ms - 26[39m
+[32m2026-08-08 23:33:19:3319[39m info: [34mGET /v1/api/projects?page=1&limit=10&scope=authored 200 524.637 ms - 1048[39m
+[32m2026-08-08 23:33:26:3326[39m info: [34mPATCH /v1/api/projects/6a77ae8170811ff56624f4b2 401 256.088 ms - 26[39m
+[32m2026-08-08 23:33:26:3326[39m info: [34mGET /v1/api/notifications/unread-count 304 257.007 ms - -[39m
+[32m2026-08-08 23:33:27:3327[39m info: [34mPATCH /v1/api/projects/6a77ae8170811ff56624f4b2 401 255.595 ms - 26[39m
+[32m2026-08-08 23:33:32:3332[39m info: [34mPATCH /v1/api/projects/6a77ae8170811ff56624f4b2 401 257.929 ms - 26[39m
+[32m2026-08-08 23:33:33:3333[39m info: [34mPATCH /v1/api/projects/6a77ae8170811ff56624f4b2 401 261.658 ms - 26[39m
+[32m2026-08-08 23:33:52:3352[39m info: [34mGET /v1/api/projects?page=1&limit=10&scope=all 200 516.405 ms - 1050[39m
+[32m2026-08-08 23:33:54:3354[39m info: [34mGET /v1/api/projects?page=1&limit=10&scope=authored 200 807.428 ms - 1050[39m
+[32m2026-08-08 23:33:56:3356[39m info: [34mGET /v1/api/projects/6a77ae4270811ff56624f49f 200 893.965 ms - 965[39m
+[32m2026-08-08 23:33:59:3359[39m info: [34mPATCH /v1/api/projects/6a77ae4270811ff56624f49f/status 200 410.357 ms - 621[39m
+[32m2026-08-08 23:33:59:3359[39m info: [34mGET /v1/api/projects?page=1&limit=10&scope=authored 200 511.517 ms - 1052[39m
+[32m2026-08-08 23:33:59:3359[39m info: [34mGET /v1/api/projects/6a77ae4270811ff56624f49f 200 516.232 ms - 967[39m
+[32m2026-08-08 23:34:00:340[39m info: [34mGET /v1/api/projects/6a77ae4270811ff56624f49f 304 517.777 ms - -[39m
+[32m2026-08-08 23:34:04:344[39m info: [34mPOST /v1/api/auth/sign-out 200 0.830 ms - 42[39m
+[32m2026-08-08 23:34:16:3416[39m info: [34mPOST /v1/api/auth/sign-in 401 212.106 ms - 39[39m
+[32m2026-08-08 23:34:17:3417[39m info: [34mPOST /v1/api/auth/sign-in 401 204.466 ms - 39[39m
+[32m2026-08-08 23:34:23:3423[39m info: [34mPOST /v1/api/auth/sign-in 200 465.680 ms - 534[39m
+[32m2026-08-08 23:34:31:3431[39m info: [34mPATCH /v1/api/projects/6a77ae8170811ff56624f4b2 401 256.458 ms - 26[39m
+[32m2026-08-08 23:34:32:3432[39m info: [34mPATCH /v1/api/projects/6a77ae8170811ff56624f4b2 401 257.799 ms - 26[39m
+[32m2026-08-08 23:34:46:3446[39m info: [34mPATCH /v1/api/projects/6a77ae8170811ff56624f4b2 401 260.641 ms - 26[39m
+[32m2026-08-08 23:34:47:3447[39m info: [34mPATCH /v1/api/projects/6a77ae8170811ff56624f4b2 401 254.000 ms - 26[39m
+[32m2026-08-08 23:34:54:3454[39m info: [34mGET /v1/api/notifications/unread-count 304 256.196 ms - -[39m
+[32m2026-08-08 23:34:57:3457[39m info: [34mPATCH /v1/api/projects/6a77ae8170811ff56624f4b2 401 255.393 ms - 26[39m
+[32m2026-08-08 23:34:58:3458[39m info: [34mPATCH /v1/api/projects/6a77ae8170811ff56624f4b2 401 256.105 ms - 26[39m
+[32m2026-08-08 23:35:21:3521[39m info: [34mPOST /v1/api/projects 201 262.479 ms - 396[39m
+[32m2026-08-08 23:35:21:3521[39m info: [34mGET /v1/api/projects?page=1&limit=10&scope=authored 200 512.822 ms - 1762[39m
+[32m2026-08-08 23:35:24:3524[39m info: [34mGET /v1/api/projects/6a77af2870811ff56624f52e 200 514.339 ms - 725[39m
+[32m2026-08-08 23:35:24:3524[39m info: [34mGET /v1/api/notifications/unread-count 304 254.663 ms - -[39m
+[32m2026-08-08 23:35:27:3527[39m info: [34mPATCH /v1/api/projects/6a77af2870811ff56624f52e/status 200 385.383 ms - 403[39m
+[32m2026-08-08 23:35:28:3528[39m info: [34mGET /v1/api/projects/6a77af2870811ff56624f52e 200 512.128 ms - 727[39m
+[32m2026-08-08 23:35:28:3528[39m info: [34mGET /v1/api/projects?page=1&limit=10&scope=authored 200 512.409 ms - 1764[39m
+[32m2026-08-08 23:35:28:3528[39m info: [34mGET /v1/api/projects/6a77af2870811ff56624f52e 304 513.007 ms - -[39m
+[32m2026-08-08 23:35:36:3536[39m info: [34mGET /v1/api/notifications/unread-count 304 280.352 ms - -[39m
+[32m2026-08-08 23:35:41:3541[39m info: [34mGET /v1/api/projects?page=1&limit=10&scope=all 200 517.567 ms - 1052[39m
+[32m2026-08-08 23:35:52:3552[39m info: [34mGET /v1/api/feed/trending 200 736.469 ms - 1857[39m
+[32m2026-08-08 23:35:54:3554[39m info: [34mGET /v1/api/notifications/unread-count 304 279.107 ms - -[39m
+[32m2026-08-08 23:35:57:3557[39m info: [34mGET /v1/api/notifications/unread-count 304 274.174 ms - -[39m
+[32m2026-08-08 23:35:57:3557[39m info: [34mGET /v1/api/user/me 304 389.032 ms - -[39m
+[32m2026-08-08 23:35:58:3558[39m info: [34mGET /v1/api/feed/trending 304 531.989 ms - -[39m
+[32m2026-08-08 23:35:58:3558[39m info: [34mGET /v1/api/feed?limit=20 200 535.859 ms - 2713[39m
+[32m2026-08-08 23:36:06:366[39m info: [34mGET /v1/api/feed/trending 200 513.001 ms - 1857[39m
+[32m2026-08-08 23:36:06:366[39m info: [34mGET /v1/api/notifications/unread-count 304 256.642 ms - -[39m
+[32m2026-08-08 23:36:08:368[39m info: [34mGET /v1/api/notifications/unread-count 304 262.050 ms - -[39m
+[32m2026-08-08 23:36:08:368[39m info: [34mGET /v1/api/user/me 304 385.800 ms - -[39m
+[32m2026-08-08 23:36:08:368[39m info: [34mGET /v1/api/feed?limit=20 200 493.631 ms - 2713[39m
+[32m2026-08-08 23:36:08:368[39m info: [34mGET /v1/api/feed/trending 304 522.018 ms - -[39m
+[32m2026-08-08 23:36:38:3638[39m info: [34mPOST /v1/api/collaboration-requests/projects/6a77af2870811ff56624f52e/requests 201 3893.367 ms - 532[39m
+[32m2026-08-08 23:36:38:3638[39m info: [34mGET /v1/api/notifications/unread-count 304 255.280 ms - -[39m
+[32m2026-08-08 23:36:46:3646[39m info: [34mGET /v1/api/notifications/unread-count 200 254.524 ms - 29[39m
+[32m2026-08-08 23:36:47:3647[39m info: [34mGET /v1/api/user/me 304 381.947 ms - -[39m
+[32m2026-08-08 23:36:47:3647[39m info: [34mGET /v1/api/feed/trending 304 483.385 ms - -[39m
+[32m2026-08-08 23:36:47:3647[39m info: [34mGET /v1/api/feed?limit=20 304 512.916 ms - -[39m
+[32m2026-08-08 23:36:54:3654[39m info: [34mPOST /v1/api/collaboration-requests/projects/6a77ae4270811ff56624f49f/requests 201 772.419 ms - 321[39m
+[32m2026-08-08 23:36:54:3654[39m info: [34mGET /v1/api/notifications/unread-count 304 257.037 ms - -[39m
+[32m2026-08-08 23:36:59:3659[39m info: [34mGET /v1/api/notifications/unread-count 200 255.095 ms - 29[39m
+[32m2026-08-08 23:36:59:3659[39m info: [34mGET /v1/api/user/me 304 381.953 ms - -[39m
+[32m2026-08-08 23:36:59:3659[39m info: [34mGET /v1/api/feed/trending 304 489.031 ms - -[39m
+[32m2026-08-08 23:36:59:3659[39m info: [34mGET /v1/api/feed?limit=20 304 512.470 ms - -[39m
+[32m2026-08-08 23:37:11:3711[39m info: [34mPOST /v1/api/collaboration-requests/projects/6a77af2870811ff56624f52e/requests 400 383.392 ms - 71[39m
+[32m2026-08-08 23:37:12:3712[39m info: [34mPOST /v1/api/collaboration-requests/projects/6a77af2870811ff56624f52e/requests 400 382.768 ms - 71[39m
+[32m2026-08-08 23:37:22:3722[39m info: [34mGET /v1/api/projects?page=1&limit=10&scope=all 304 493.526 ms - -[39m
+[32m2026-08-08 23:37:25:3725[39m info: [34mGET /v1/api/projects/6a77ae4270811ff56624f49f 304 484.660 ms - -[39m
+[32m2026-08-08 23:37:27:3727[39m info: [34mGET /v1/api/collaboration-requests/projects/6a77ae4270811ff56624f49f/requests 200 1166.231 ms - 699[39m
+[32m2026-08-08 23:37:33:3733[39m info: [34mGET /v1/api/projects?page=1&limit=10&scope=all 200 974.225 ms - 1764[39m
+[32m2026-08-08 23:37:36:3736[39m info: [34mGET /v1/api/projects/6a77af2870811ff56624f52e 304 779.384 ms - -[39m
+[32m2026-08-08 23:37:37:3737[39m info: [34mGET /v1/api/collaboration-requests/projects/6a77af2870811ff56624f52e/requests 200 838.082 ms - 974[39m
+[32m2026-08-08 23:37:50:3750[39m info: [34mPATCH /v1/api/collaboration-requests/6a77af7570811ff56624f57f/accept 200 791.499 ms - 57[39m
+[32m2026-08-08 23:37:50:3750[39m info: [34mGET /v1/api/notifications/unread-count 304 253.377 ms - -[39m
+[32m2026-08-08 23:37:50:3750[39m info: [34mGET /v1/api/projects/6a77af2870811ff56624f52e 200 495.997 ms - 1145[39m
+[32m2026-08-08 23:37:51:3751[39m info: [34mGET /v1/api/collaboration-requests/projects/6a77af2870811ff56624f52e/requests 200 636.522 ms - 975[39m
+[32m2026-08-08 23:37:51:3751[39m info: [34mGET /v1/api/projects/6a77af2870811ff56624f52e 304 514.436 ms - -[39m
+[32m2026-08-08 23:37:51:3751[39m info: [34mGET /v1/api/collaboration-requests/projects/6a77af2870811ff56624f52e/requests 304 637.544 ms - -[39m
+[32m2026-08-08 23:37:54:3754[39m info: [34mPATCH /v1/api/collaboration-requests/6a77af8570811ff56624f598/accept 200 779.533 ms - 57[39m
+[32m2026-08-08 23:37:54:3754[39m info: [34mGET /v1/api/notifications/unread-count 200 240.555 ms - 29[39m
+[32m2026-08-08 23:37:55:3755[39m info: [34mGET /v1/api/projects/6a77ae4270811ff56624f49f 200 507.722 ms - 1363[39m
+[32m2026-08-08 23:37:55:3755[39m info: [34mGET /v1/api/collaboration-requests/projects/6a77ae4270811ff56624f49f/requests 200 638.409 ms - 700[39m
+[32m2026-08-08 23:37:55:3755[39m info: [34mGET /v1/api/projects/6a77ae4270811ff56624f49f 304 511.549 ms - -[39m
+[32m2026-08-08 23:37:55:3755[39m info: [34mGET /v1/api/collaboration-requests/projects/6a77ae4270811ff56624f49f/requests 304 636.022 ms - -[39m
+[32m2026-08-08 23:38:25:3825[39m info: [34mGET /v1/api/notifications/unread-count 304 256.324 ms - -[39m
+[32m2026-08-08 23:38:38:3838[39m info: [34mGET /v1/api/notifications/unread-count 200 244.533 ms - 29[39m
+[32m2026-08-08 23:38:39:3839[39m info: [34mGET /v1/api/user/me 200 385.370 ms - 705[39m
+[32m2026-08-08 23:38:39:3839[39m info: [34mGET /v1/api/projects/6a77ae4270811ff56624f49f 200 514.739 ms - 1363[39m
+[32m2026-08-08 23:38:39:3839[39m info: [34mGET /v1/api/collaboration-requests/projects/6a77ae4270811ff56624f49f/requests 304 640.235 ms - -[39m
+[32m2026-08-08 23:38:53:3853[39m info: [34mGET /v1/api/notifications?page=1&limit=15 200 517.941 ms - 5584[39m
+[32m2026-08-09 13:00:58:058[39m info: [34mGET /v1/api/notifications/unread-count 304 2777.313 ms - -[39m
+[32m2026-08-09 13:00:58:058[39m info: [34mGET /v1/api/user/me 304 2992.646 ms - -[39m
+[32m2026-08-09 13:00:58:058[39m info: [34mGET /v1/api/user/me 304 3186.205 ms - -[39m
+[32m2026-08-09 13:00:58:058[39m info: [34mGET /v1/api/notifications/unread-count 200 3265.173 ms - 29[39m
+[32m2026-08-09 13:00:58:058[39m info: [34mGET /v1/api/projects/6a77ae4270811ff56624f49f 304 3358.292 ms - -[39m
+[32m2026-08-09 13:00:59:059[39m info: [34mGET /v1/api/collaboration-requests/projects/6a77af2870811ff56624f52e/requests 304 3657.056 ms - -[39m
+[32m2026-08-09 13:00:59:059[39m info: [34mGET /v1/api/projects/6a77af2870811ff56624f52e 304 4225.433 ms - -[39m
+[32m2026-08-09 13:00:59:059[39m info: [34mGET /v1/api/collaboration-requests/projects/6a77ae4270811ff56624f49f/requests 304 4377.963 ms - -[39m
+[32m2026-08-09 13:14:28:1428[39m info: [34mGET /v1/api/projects?page=1&limit=10 401 3.686 ms - 136[39m
+[32m2026-08-09 13:14:35:1435[39m info: [34mGET /v1/api/notifications/unread-count 304 268.487 ms - -[39m
+[32m2026-08-09 13:14:38:1438[39m info: [34mGET /v1/api/notifications/unread-count 304 265.398 ms - -[39m
+[32m2026-08-09 13:14:38:1438[39m info: [34mGET /v1/api/user/me 304 370.275 ms - -[39m
+[32m2026-08-09 13:14:38:1438[39m info: [34mGET /v1/api/projects/6a77af2870811ff56624f52e 304 509.253 ms - -[39m
+[32m2026-08-09 13:14:39:1439[39m info: [34mGET /v1/api/collaboration-requests/projects/6a77af2870811ff56624f52e/requests 304 622.663 ms - -[39m
+[32m2026-08-09 13:14:52:1452[39m info: [34mGET /v1/api/projects?page=1&limit=10 200 573.759 ms - 3430[39m
+[32m2026-08-09 13:18:23:1823[39m info: [34mGET /v1/api/chat/dms 401 1.622 ms - 42[39m
+[32m2026-08-09 13:18:44:1844[39m info: [34mGET /v1/api/chat/dms 404 163.297 ms - 154[39m
+[32m2026-08-09 13:18:49:1849[39m info: [34mPOST /v1/api/chat/dms 400 127.944 ms - 49[39m
+[32m2026-08-09 13:19:19:1919[39m info: [34mPOST /v1/api/chat/dms 201 507.435 ms - 797[39m
+[32m2026-08-09 13:24:38:2438[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 13:25:39:2539[39m info: [34mGET /v1/api/notifications/unread-count 304 285.838 ms - -[39m
+[32m2026-08-09 13:26:29:2629[39m info: [34mPOST /v1/api/chat/group-conversations 400 451.816 ms - 84[39m
+[32m2026-08-09 13:26:34:2634[39m info: [34mPOST /v1/api/chat/group-conversations 201 409.191 ms - 776[39m
+[32m2026-08-09 13:28:10:2810[39m info: [34mPOST //v1/api/chat/dms?name=New%20group%20conversation&memberIds=6974b698c8919d89ac23d26b 404 0.718 ms - 156[39m
+[32m2026-08-09 13:29:29:2929[39m info: [34mPOST //v1/api/chat/group-conversations 404 1.149 ms - 172[39m
+[32m2026-08-09 13:29:37:2937[39m info: [34mPOST /v1/api/chat/group-conversations 400 133.774 ms - 65[39m
+[32m2026-08-09 13:29:52:2952[39m info: [34mPOST /v1/api/chat/group-conversations 201 1821.366 ms - 972[39m
+[32m2026-08-09 13:31:58:3158[39m info: [34mPOST /v1/api/chat/kollaborations 201 664.873 ms - 820[39m
+[32m2026-08-09 13:32:37:3237[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 13:32:58:3258[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 13:33:20:3320[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 13:33:31:3331[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 13:33:46:3346[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 13:34:24:3424[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 13:39:26:3926[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 13:44:55:4455[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 13:45:28:4528[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 13:46:15:4615[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 13:46:25:4625[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 13:49:40:4940[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 13:49:57:4957[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 13:50:43:5043[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 13:52:04:524[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 13:53:28:5328[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 14:01:21:121[39m info: [34mGET /v1/api/chat/conversations 401 1.935 ms - 42[39m
+[32m2026-08-09 14:01:33:133[39m info: [34mGET /v1/api/chat/conversations 200 313.142 ms - 3143[39m
+[32m2026-08-09 14:01:42:142[39m info: [34mGET /v1/api/chat/conversations?type=dms 400 137.044 ms - 68[39m
+[32m2026-08-09 14:01:45:145[39m info: [34mGET /v1/api/chat/conversations?type=dm 200 261.175 ms - 823[39m
+[32m2026-08-09 14:01:50:150[39m info: [34mGET /v1/api/chat/conversations?type=kollaboration 200 256.283 ms - 844[39m
+[32m2026-08-09 14:02:14:214[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 14:02:41:241[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 14:02:50:250[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 14:04:48:448[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 14:05:29:529[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 14:05:48:548[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 14:06:34:634[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 14:06:59:659[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 14:07:10:710[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 14:07:34:734[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 14:07:51:751[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 14:09:39:939[39m info: [34mGET /v1/api/chat/conversations/6a78733e42eb56b0895aae6a 404 134.504 ms - 189[39m
+[32m2026-08-09 14:09:55:955[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 14:10:01:101[39m info: [34mGET /v1/api/chat/conversations/6a78733e42eb56b0895aae6a 404 6313.313 ms - 189[39m
+[32m2026-08-09 14:10:36:1036[39m info: [34mGET /v1/api/chat/conversations/6a78733e42eb56b0895aae6a 404 120.367 ms - 189[39m
+[32m2026-08-09 14:11:31:1131[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 14:11:38:1138[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 14:11:42:1142[39m info: [34mGET /v1/api/chat/conversations/6a78733e42eb56b0895aae6a 200 258.884 ms - 785[39m
+[32m2026-08-09 14:13:09:139[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 14:14:19:1419[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 14:14:41:1441[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 23:13:20:1320[39m info: [34mGET /v1/api/notifications/unread-count 304 1040.305 ms - -[39m
+[32m2026-08-09 23:13:20:1320[39m info: [34mGET /v1/api/user/me 304 1203.344 ms - -[39m
+[32m2026-08-09 23:13:21:1321[39m info: [34mGET /v1/api/notifications/unread-count 304 400.847 ms - -[39m
+[32m2026-08-09 23:13:21:1321[39m info: [34mGET /v1/api/user/me 304 572.887 ms - -[39m
+[32m2026-08-09 23:13:21:1321[39m info: [34mGET /v1/api/collaboration-requests/projects/6a77af2870811ff56624f52e/requests 304 2413.489 ms - -[39m
+[32m2026-08-09 23:13:22:1322[39m info: [34mGET /v1/api/projects/6a77ae4270811ff56624f49f 304 782.593 ms - -[39m
+[32m2026-08-09 23:13:22:1322[39m info: [34mGET /v1/api/projects/6a77af2870811ff56624f52e 200 3033.585 ms - 1167[39m
+[32m2026-08-09 23:13:23:1323[39m info: [34mGET /v1/api/collaboration-requests/projects/6a77ae4270811ff56624f49f/requests 304 1717.641 ms - -[39m
+[32m2026-08-09 23:13:51:1351[39m info: [34mGET /v1/api/notifications/unread-count 304 232.888 ms - -[39m
+[32m2026-08-09 23:20:11:2011[39m info: [34mGET /v1/api/notifications/unread-count 304 232.713 ms - -[39m
+[32m2026-08-09 23:20:19:2019[39m info: [34mGET /v1/api/notifications?page=1&limit=15 200 456.891 ms - 2572[39m
+[32m2026-08-09 23:20:26:2026[39m info: [34mGET /v1/api/feed?limit=20 200 586.537 ms - 3445[39m
+[32m2026-08-09 23:20:26:2026[39m info: [34mGET /v1/api/feed/trending 200 602.608 ms - 2589[39m
+[32m2026-08-09 23:20:41:2041[39m info: [34mGET /v1/api/notifications/unread-count 304 240.177 ms - -[39m
+[32m2026-08-09 23:21:11:2111[39m info: [34mGET /v1/api/notifications/unread-count 304 238.580 ms - -[39m
+[32m2026-08-09 23:21:58:2158[39m info: [34mGET /v1/api/notifications/unread-count 304 224.633 ms - -[39m
+[32m2026-08-09 23:21:58:2158[39m info: [34mGET /v1/api/user/me 304 336.555 ms - -[39m
+[32m2026-08-09 23:21:58:2158[39m info: [34mGET /v1/api/feed/trending 304 468.756 ms - -[39m
+[32m2026-08-09 23:21:58:2158[39m info: [34mGET /v1/api/feed?limit=20 304 481.998 ms - -[39m
+[32m2026-08-09 23:22:28:2228[39m info: [34mGET /v1/api/notifications/unread-count 304 239.817 ms - -[39m
+[32m2026-08-09 23:22:59:2259[39m info: [34mGET /v1/api/notifications/unread-count 304 244.644 ms - -[39m
+[32m2026-08-09 23:23:29:2329[39m info: [34mGET /v1/api/notifications/unread-count 304 247.626 ms - -[39m
+[32m2026-08-09 23:23:59:2359[39m info: [34mGET /v1/api/notifications/unread-count 304 237.787 ms - -[39m
+[32m2026-08-09 23:24:29:2429[39m info: [34mGET /v1/api/notifications/unread-count 304 237.260 ms - -[39m
+[32m2026-08-09 23:25:00:250[39m info: [34mGET /v1/api/notifications/unread-count 304 238.363 ms - -[39m
+[32m2026-08-09 23:25:30:2530[39m info: [34mGET /v1/api/notifications/unread-count 304 276.905 ms - -[39m
+[32m2026-08-09 23:28:30:2830[39m info: [34mGET /v1/api/notifications/unread-count 304 239.017 ms - -[39m
+[32m2026-08-09 23:29:00:290[39m info: [34mGET /v1/api/notifications/unread-count 304 238.952 ms - -[39m
+[32m2026-08-09 23:29:31:2931[39m info: [34mGET /v1/api/notifications/unread-count 304 238.890 ms - -[39m
+[32m2026-08-09 23:30:01:301[39m info: [34mGET /v1/api/notifications/unread-count 304 237.650 ms - -[39m
+[32m2026-08-09 23:30:31:3031[39m info: [34mGET /v1/api/notifications/unread-count 304 239.129 ms - -[39m
+[32m2026-08-09 23:31:01:311[39m info: [34mGET /v1/api/notifications/unread-count 304 242.488 ms - -[39m
+[32m2026-08-09 23:31:32:3132[39m info: [34mGET /v1/api/notifications/unread-count 304 238.758 ms - -[39m
+[32m2026-08-09 23:32:02:322[39m info: [34mGET /v1/api/notifications/unread-count 304 239.333 ms - -[39m
+[32m2026-08-09 23:32:32:3232[39m info: [34mGET /v1/api/notifications/unread-count 304 238.755 ms - -[39m
+[32m2026-08-09 23:33:02:332[39m info: [34mGET /v1/api/notifications/unread-count 304 237.688 ms - -[39m
+[32m2026-08-09 23:33:33:3333[39m info: [34mGET /v1/api/notifications/unread-count 304 238.699 ms - -[39m
+[32m2026-08-09 23:34:03:343[39m info: [34mGET /v1/api/notifications/unread-count 304 237.540 ms - -[39m
+[32m2026-08-09 23:34:33:3433[39m info: [34mGET /v1/api/notifications/unread-count 304 238.491 ms - -[39m
+[32m2026-08-09 23:35:03:353[39m info: [34mGET /v1/api/notifications/unread-count 304 238.767 ms - -[39m
+[32m2026-08-09 23:35:34:3534[39m info: [34mGET /v1/api/notifications/unread-count 304 247.034 ms - -[39m
+[32m2026-08-09 23:36:04:364[39m info: [34mGET /v1/api/notifications/unread-count 304 240.796 ms - -[39m
+[32m2026-08-09 23:43:18:4318[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-09 23:54:07:547[39m info: [34mGET /v1/api/notifications/unread-count 304 3720.767 ms - -[39m
+[32m2026-08-09 23:54:08:548[39m info: [34mGET /v1/api/notifications/unread-count 304 1729.839 ms - -[39m
+[32m2026-08-09 23:54:08:548[39m info: [34mGET /v1/api/projects/6a77ae4270811ff56624f49f 304 1973.149 ms - -[39m
+[32m2026-08-09 23:54:08:548[39m info: [34mGET /v1/api/collaboration-requests/projects/6a77ae4270811ff56624f49f/requests 304 2038.309 ms - -[39m
+[32m2026-08-09 23:54:08:548[39m info: [34mGET /v1/api/feed/trending 304 4726.456 ms - -[39m
+[32m2026-08-09 23:54:08:548[39m info: [34mGET /v1/api/feed?limit=20 304 4779.429 ms - -[39m
+[32m2026-08-09 23:54:09:549[39m info: [34mGET /v1/api/user/me 304 4889.434 ms - -[39m
+[32m2026-08-09 23:54:09:549[39m info: [34mGET /v1/api/user/me 304 2589.510 ms - -[39m
+[32m2026-08-10 09:52:27:5227[39m info: [34mGET /v1/api/notifications/unread-count 304 1047.391 ms - -[39m
+[32m2026-08-10 09:52:28:5228[39m info: [34mGET /v1/api/user/me 304 1868.702 ms - -[39m
+[32m2026-08-10 09:52:28:5228[39m info: [34mGET /v1/api/projects/6a77ae4270811ff56624f49f 304 1677.738 ms - -[39m
+[32m2026-08-10 09:52:28:5228[39m info: [34mGET /v1/api/notifications/unread-count 304 2139.635 ms - -[39m
+[32m2026-08-10 09:52:27:5227[39m info: [34mGET /v1/api/user/me 304 3506.019 ms - -[39m
+[32m2026-08-10 09:52:53:5253[39m info: [34mGET /v1/api/collaboration-requests/projects/6a77ae4270811ff56624f49f/requests 304 719.726 ms - -[39m
+[32m2026-08-10 09:53:07:537[39m info: [34mGET /v1/api/feed?limit=20 304 509.166 ms - -[39m
+[32m2026-08-10 09:53:09:539[39m info: [34mGET /v1/api/feed/trending 304 532.841 ms - -[39m
+[32m2026-08-10 10:07:10:710[39m info: [34mGET /v1/api/notifications/unread-count 304 1335.577 ms - -[39m
+[32m2026-08-10 10:11:24:1124[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-10 10:11:30:1130[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-10 10:14:19:1419[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-10 10:14:26:1426[39m info: [34mGET /v1/api/notifications/unread-count 304 270.783 ms - -[39m
+[32m2026-08-10 10:16:48:1648[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-10 10:58:41:5841[39m info: [34mGET /v1/api/notifications/unread-count 304 377.674 ms - -[39m
+[32m2026-08-10 11:18:13:1813[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-10 11:19:12:1912[39m info: [34mGET /v1/api/notifications/unread-count 304 253.342 ms - -[39m
+[32m2026-08-10 14:39:02:392[39m info: [34mGET /v1/api/notifications/unread-count 304 3618.117 ms - -[39m
+[32m2026-08-10 14:39:02:392[39m info: [34mGET /v1/api/notifications/unread-count 304 3814.595 ms - -[39m
+[32m2026-08-10 14:39:02:392[39m info: [34mGET /v1/api/user/me 304 3989.769 ms - -[39m
+[32m2026-08-10 14:39:03:393[39m info: [34mGET /v1/api/collaboration-requests/projects/6a77ae4270811ff56624f49f/requests 304 4394.779 ms - -[39m
+[32m2026-08-10 14:39:03:393[39m info: [34mGET /v1/api/user/me 304 4687.273 ms - -[39m
+[32m2026-08-10 14:39:03:393[39m info: [34mGET /v1/api/projects/6a77ae4270811ff56624f49f 304 4806.191 ms - -[39m
+[32m2026-08-12 00:16:41:1641[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:17:18:1718[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:17:35:1735[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:18:18:1818[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:18:43:1843[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:18:59:1859[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:19:09:199[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:19:26:1926[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:19:40:1940[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:24:01:241[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:24:22:2422[39m info: [34mGET /v1/api/user/me 401 15.044 ms - 136[39m
+[32m2026-08-12 00:24:30:2430[39m info: [34mPOST /v1/api/auth/sign-in 200 962.407 ms - 524[39m
+[32m2026-08-12 00:24:31:2431[39m info: [34mGET /v1/api/user/me 200 354.549 ms - 705[39m
+[32m2026-08-12 00:24:33:2433[39m info: [34mGET /v1/api/notifications/unread-count 200 248.101 ms - 29[39m
+[32m2026-08-12 00:24:34:2434[39m info: [34mGET /v1/api/feed?limit=20 200 530.502 ms - 3445[39m
+[32m2026-08-12 00:24:34:2434[39m info: [34mGET /v1/api/feed/trending 200 539.611 ms - 2589[39m
+[32m2026-08-12 00:26:52:2652[39m info: [34mGET /v1/api/notifications/unread-count 304 241.963 ms - -[39m
+[32m2026-08-12 00:26:52:2652[39m info: [34mGET /v1/api/user/me 304 375.873 ms - -[39m
+[32m2026-08-12 00:26:53:2653[39m info: [34mGET /v1/api/feed?limit=20 304 511.284 ms - -[39m
+[32m2026-08-12 00:26:53:2653[39m info: [34mGET /v1/api/feed/trending 304 509.932 ms - -[39m
+[32m2026-08-12 00:27:05:275[39m info: [34mGET /v1/api/notifications/unread-count 304 241.026 ms - -[39m
+[32m2026-08-12 00:27:05:275[39m info: [34mGET /v1/api/user/me 304 354.206 ms - -[39m
+[32m2026-08-12 00:27:05:275[39m info: [34mGET /v1/api/feed/trending 304 502.602 ms - -[39m
+[32m2026-08-12 00:27:05:275[39m info: [34mGET /v1/api/feed?limit=20 304 511.701 ms - -[39m
+[32m2026-08-12 00:27:35:2735[39m info: [34mGET /v1/api/notifications/unread-count 304 254.009 ms - -[39m
+[32m2026-08-12 00:28:43:2843[39m info: [34mGET /v1/api/notifications/unread-count 304 238.166 ms - -[39m
+[32m2026-08-12 00:28:43:2843[39m info: [34mGET /v1/api/user/me 304 360.042 ms - -[39m
+[32m2026-08-12 00:28:43:2843[39m info: [34mGET /v1/api/feed/trending 304 498.055 ms - -[39m
+[32m2026-08-12 00:28:43:2843[39m info: [34mGET /v1/api/feed?limit=20 304 509.533 ms - -[39m
+[32m2026-08-12 00:28:48:2848[39m info: [34mGET /v1/api/notifications/unread-count 304 241.274 ms - -[39m
+[32m2026-08-12 00:28:48:2848[39m info: [34mGET /v1/api/user/me 304 354.938 ms - -[39m
+[32m2026-08-12 00:28:48:2848[39m info: [34mGET /v1/api/feed?limit=20 304 513.945 ms - -[39m
+[32m2026-08-12 00:28:48:2848[39m info: [34mGET /v1/api/feed/trending 304 852.717 ms - -[39m
+[32m2026-08-12 00:29:00:290[39m info: [34mPOST /v1/api/auth/sign-out 200 1.026 ms - 42[39m
+[32m2026-08-12 00:29:07:297[39m info: [34mPOST /v1/api/auth/sign-in 200 452.783 ms - 524[39m
+[32m2026-08-12 00:29:19:2919[39m info: [34mGET /v1/api/notifications/unread-count 304 252.788 ms - -[39m
+[32m2026-08-12 00:29:19:2919[39m info: [34mGET /v1/api/user/me 304 376.765 ms - -[39m
+[32m2026-08-12 00:29:19:2919[39m info: [34mGET /v1/api/feed/trending 304 520.534 ms - -[39m
+[32m2026-08-12 00:29:19:2919[39m info: [34mGET /v1/api/feed?limit=20 304 530.389 ms - -[39m
+[32m2026-08-12 00:29:49:2949[39m info: [34mGET /v1/api/notifications/unread-count 304 255.492 ms - -[39m
+[32m2026-08-12 00:30:20:3020[39m info: [34mGET /v1/api/notifications/unread-count 304 252.856 ms - -[39m
+[32m2026-08-12 00:30:50:3050[39m info: [34mGET /v1/api/notifications/unread-count 304 257.295 ms - -[39m
+[32m2026-08-12 00:31:41:3141[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:31:48:3148[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:33:59:3359[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:34:53:3453[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:35:33:3533[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:36:15:3615[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:36:23:3623[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:36:34:3634[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:37:09:379[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:40:09:409[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:40:34:4034[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:41:03:413[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:41:08:418[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:42:03:423[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:44:42:4442[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:46:12:4612[39m info: [34mGET /v1/api/notifications/unread-count 304 270.258 ms - -[39m
+[32m2026-08-12 00:48:12:4812[39m info: [34mGET /v1/api/notifications/unread-count 304 248.356 ms - -[39m
+[32m2026-08-12 00:49:11:4911[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:49:25:4925[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:49:40:4940[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:49:53:4953[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:50:05:505[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:50:18:5018[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:50:25:5025[39m info: [34mGET /v1/api/chat/conversations?page=1&limit=15 200 271.883 ms - 3143[39m
+[32m2026-08-12 00:52:24:5224[39m info: [34mGET /v1/api/chat/conversations/6a78733e42eb56b0895aae6a 200 267.943 ms - 785[39m
+[32m2026-08-12 00:52:32:5232[39m info: [34mPOST /v1/api/chat/conversations/6a78733e42eb56b0895aae6a 201 514.364 ms - 26[39m
+[32m2026-08-12 00:54:43:5443[39m info: [34mPOST /v1/api/chat/conversations/6a78733e42eb56b0895aae6a 500 247.739 ms - 1847[39m
+[32m2026-08-12 00:54:52:5452[39m info: [34mPOST /v1/api/chat/conversations/6a78733e42eb56b0895aae6a 500 243.018 ms - 1847[39m
+[32m2026-08-12 00:56:21:5621[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 00:56:31:5631[39m info: [34mPOST /v1/api/chat/conversations/6a78733e42eb56b0895aae6a 201 558.308 ms - 726[39m
+[32m2026-08-12 00:56:58:5658[39m info: [34mGET /v1/api/notifications/unread-count 304 252.182 ms - -[39m
+[32m2026-08-12 00:57:39:5739[39m info: [34mPOST /v1/api/auth/sign-in 200 493.126 ms - 534[39m
+[32m2026-08-12 00:57:40:5740[39m info: [34mGET /v1/api/user/me 200 387.442 ms - 787[39m
+[32m2026-08-12 00:57:40:5740[39m info: [34mGET /v1/api/notifications/unread-count 200 255.503 ms - 29[39m
+[32m2026-08-12 00:57:42:5742[39m info: [34mGET /v1/api/feed?limit=20 200 2063.425 ms - 3445[39m
+[32m2026-08-12 00:57:42:5742[39m info: [34mGET /v1/api/feed/trending 200 2070.524 ms - 2589[39m
+[32m2026-08-12 00:58:29:5829[39m info: [34mPOST /v1/api/chat/conversations/6a78733e42eb56b0895aae6a 201 523.286 ms - 722[39m
+[32m2026-08-12 01:02:50:250[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 01:03:02:32[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 01:05:51:551[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 01:06:04:64[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 01:06:32:632[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 01:08:33:833[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 01:09:07:97[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 01:09:35:935[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 01:10:38:1038[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 01:11:04:114[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 01:11:50:1150[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 01:12:02:122[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 01:12:10:1210[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 01:12:25:1225[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 01:14:20:1420[39m info: [34mGET /v1/api/chat/conversations?page=1&limit=15 200 286.106 ms - 3264[39m
+[32m2026-08-12 01:14:49:1449[39m info: [34mGET /v1/api/chat/conversations/6a78733e42eb56b0895aae6a?page=1&limit=15 200 255.363 ms - 906[39m
+[32m2026-08-12 01:15:06:156[39m info: [34mGET /v1/api/chat/conversations/6a78733e42eb56b0895aae6a/messages?page=1&limit=15 404 127.768 ms - 198[39m
+[32m2026-08-12 01:15:20:1520[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 01:15:27:1527[39m info: [34mGET /v1/api/chat/conversations/6a78733e42eb56b0895aae6a/messages?page=1&limit=15 200 6354.810 ms - 1865[39m
+[32m2026-08-12 01:17:20:1720[39m info: [34mGET /v1/api/notifications/unread-count 304 239.618 ms - -[39m
+[32m2026-08-12 01:19:42:1942[39m info: [34mGET /v1/api/chat/conversations?page=1&limit=30 200 258.376 ms - 3264[39m
+[32m2026-08-12 01:19:51:1951[39m info: [34mGET /v1/api/notifications/unread-count 304 237.794 ms - -[39m
+[32m2026-08-12 01:20:05:205[39m info: [34mGET /v1/api/notifications/unread-count 304 238.911 ms - -[39m
+[32m2026-08-12 01:20:51:2051[39m info: [34mGET /v1/api/notifications/unread-count 304 239.413 ms - -[39m
+[32m2026-08-12 01:21:21:2121[39m info: [34mGET /v1/api/notifications/unread-count 304 238.366 ms - -[39m
+[32m2026-08-12 01:21:29:2129[39m info: [34mGET /v1/api/chat/conversations/6a7871fa42eb56b0895aae5f/messages?page=1&limit=50 200 359.068 ms - 97[39m
+[32m2026-08-12 01:21:33:2133[39m info: [34mGET /v1/api/chat/conversations/6a78733e42eb56b0895aae6a/messages?page=1&limit=50 200 359.604 ms - 1865[39m
+[32m2026-08-12 01:21:51:2151[39m info: [34mGET /v1/api/chat/conversations/6a7872c042eb56b0895aae64/messages?page=1&limit=50 200 356.883 ms - 97[39m
+[32m2026-08-12 01:21:51:2151[39m info: [34mGET /v1/api/notifications/unread-count 304 237.194 ms - -[39m
+[32m2026-08-12 01:22:41:2241[39m info: [34mGET /v1/api/chat/conversations/6a78704770811ff56624f67a/messages?page=1&limit=50 200 389.245 ms - 97[39m
+[32m2026-08-12 01:23:22:2322[39m info: [34mGET /v1/api/notifications/unread-count 304 239.135 ms - -[39m
+[32m2026-08-12 01:24:04:244[39m info: [34mApp running on port 4000.....[39m
+[32m2026-08-12 01:24:22:2422[39m info: [34mGET /v1/api/notifications/unread-count 304 268.408 ms - -[39m
+[32m2026-08-12 01:24:31:2431[39m info: [34mGET /v1/api/chat/conversations?page=1&limit=30 304 267.332 ms - -[39m
+[32m2026-08-12 01:24:31:2431[39m info: [34mGET /v1/api/notifications/unread-count 304 263.140 ms - -[39m
+[32m2026-08-12 01:24:31:2431[39m info: [34mGET /v1/api/user/me 304 366.866 ms - -[39m
+[32m2026-08-12 01:24:32:2432[39m info: [34mGET /v1/api/chat/conversations/6a78733e42eb56b0895aae6a/messages?page=1&limit=50 304 398.160 ms - -[39m
+[32m2026-08-12 01:24:33:2433[39m info: [34mGET /v1/api/notifications/unread-count 304 235.490 ms - -[39m
+[32m2026-08-12 01:24:33:2433[39m info: [34mGET /v1/api/chat/conversations?page=1&limit=30 304 256.806 ms - -[39m
+[32m2026-08-12 01:24:33:2433[39m info: [34mGET /v1/api/user/me 304 383.234 ms - -[39m
+[32m2026-08-12 01:24:37:2437[39m info: [34mGET /v1/api/chat/conversations/6a78733e42eb56b0895aae6a/messages?page=1&limit=50 304 382.326 ms - -[39m
+[32m2026-08-12 01:24:39:2439[39m info: [34mPOST /v1/api/chat/conversations/6a78733e42eb56b0895aae6a/messages 201 544.633 ms - 400[39m
+[32m2026-08-12 01:24:40:2440[39m info: [34mGET /v1/api/chat/conversations?page=1&limit=30 200 258.785 ms - 3244[39m
+[32m2026-08-12 01:24:40:2440[39m info: [34mGET /v1/api/chat/conversations/6a78733e42eb56b0895aae6a/messages?page=1&limit=50 200 381.087 ms - 2232[39m
+[32m2026-08-12 01:24:43:2443[39m info: [34mGET /v1/api/notifications/unread-count 304 254.852 ms - -[39m
+[32m2026-08-12 01:25:03:253[39m info: [34mGET /v1/api/notifications/unread-count 304 257.510 ms - -[39m
+[32m2026-08-12 01:26:03:263[39m info: [34mGET /v1/api/notifications/unread-count 304 438.931 ms - -[39m
+[32m2026-08-12 01:26:05:265[39m info: [34mPOST /v1/api/chat/conversations/6a78733e42eb56b0895aae6a/messages 201 518.295 ms - 402[39m
+[32m2026-08-12 01:26:05:265[39m info: [34mGET /v1/api/chat/conversations?page=1&limit=30 200 254.888 ms - 3246[39m
+[32m2026-08-12 01:26:19:2619[39m info: [34mPOST /v1/api/chat/conversations/6a78733e42eb56b0895aae6a/messages 201 516.831 ms - 415[39m
+[32m2026-08-12 01:26:19:2619[39m info: [34mGET /v1/api/chat/conversations?page=1&limit=30 200 253.686 ms - 3259[39m
+[32m2026-08-12 01:26:34:2634[39m info: [34mGET /v1/api/notifications/unread-count 304 233.139 ms - -[39m
+[32m2026-08-12 01:26:34:2634[39m info: [34mGET /v1/api/chat/conversations/6a7872c042eb56b0895aae64/messages?page=1&limit=50 304 381.054 ms - -[39m
+[32m2026-08-12 01:26:36:2636[39m info: [34mGET /v1/api/chat/conversations/6a7871fa42eb56b0895aae5f/messages?page=1&limit=50 304 404.802 ms - -[39m
+[32m2026-08-12 01:26:38:2638[39m info: [34mGET /v1/api/chat/conversations/6a78704770811ff56624f67a/messages?page=1&limit=50 304 381.550 ms - -[39m
+[32m2026-08-12 01:26:49:2649[39m info: [34mGET /v1/api/projects?page=1&limit=10&scope=all 200 534.232 ms - 3452[39m
+[32m2026-08-12 01:26:54:2654[39m info: [34mGET /v1/api/projects/6a77ae4270811ff56624f49f 200 768.513 ms - 1363[39m
+[32m2026-08-12 01:26:58:2658[39m info: [34mGET /v1/api/projects/6a77af2870811ff56624f52e 200 1077.798 ms - 1167[39m
+[32m2026-08-12 01:26:59:2659[39m info: [34mGET /v1/api/collaboration-requests/projects/6a77af2870811ff56624f52e/requests 200 1018.296 ms - 975[39m
+[32m2026-08-12 01:27:34:2734[39m info: [34mGET /v1/api/notifications/unread-count 304 253.564 ms - -[39m
+[32m2026-08-12 01:28:04:284[39m info: [34mGET /v1/api/notifications/unread-count 304 254.473 ms - -[39m
+[32m2026-08-12 01:28:34:2834[39m info: [34mGET /v1/api/notifications/unread-count 304 259.619 ms - -[39m
+[32m2026-08-12 01:28:37:2837[39m info: [34mPOST /v1/api/chat/conversations/6a78733e42eb56b0895aae6a/messages 201 522.293 ms - 402[39m
+[32m2026-08-12 01:28:40:2840[39m info: [34mGET /v1/api/chat/conversations?page=1&limit=30 200 255.789 ms - 3246[39m
+[32m2026-08-12 01:29:01:291[39m info: [34mGET /v1/api/projects?page=1&limit=10&scope=authored 200 522.776 ms - 2139[39m
+[32m2026-08-12 01:29:04:294[39m info: [34mGET /v1/api/feed?limit=20 304 2732.561 ms - -[39m
+[32m2026-08-12 01:29:04:294[39m info: [34mGET /v1/api/feed/trending 304 2731.203 ms - -[39m
+[32m2026-08-12 01:29:05:295[39m info: [34mGET /v1/api/notifications/unread-count 304 412.178 ms - -[39m
+[32m2026-08-12 01:29:35:2935[39m info: [34mGET /v1/api/notifications/unread-count 304 252.467 ms - -[39m
+[32m2026-08-12 01:30:35:3035[39m info: [34mGET /v1/api/notifications/unread-count 304 254.976 ms - -[39m
+[32m2026-08-12 01:30:43:3043[39m info: [34mGET /v1/api/notifications/unread-count 304 253.086 ms - -[39m
+[32m2026-08-12 01:30:49:3049[39m info: [34mGET /v1/api/chat/conversations?page=1&limit=30 200 261.846 ms - 3246[39m
+[32m2026-08-12 01:30:53:3053[39m info: [34mGET /v1/api/chat/conversations/6a78733e42eb56b0895aae6a/messages?page=1&limit=50 200 701.852 ms - 3352[39m

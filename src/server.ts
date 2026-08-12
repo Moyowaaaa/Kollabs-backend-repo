@@ -22,6 +22,9 @@ import { projectsRoutes } from "./modules/projects";
 import { collaborationRequestsRoutes } from "./modules/collaboration-requests";
 import { feedRoutes } from "./modules/feed";
 import { notificationsRoutes } from "./modules/notifications";
+import { chatRoutes } from "./modules/chat";
+
+
 
 const app: Express = express();
 
@@ -74,6 +77,8 @@ app.use("/v1/api/projects", projectsRoutes);
 app.use("/v1/api/collaboration-requests", collaborationRequestsRoutes);
 app.use("/v1/api/feed", feedRoutes);
 app.use("/v1/api/notifications", notificationsRoutes);
+app.use("/v1/api/chat", chatRoutes);
+
 
 
 // Swagger API Documentation

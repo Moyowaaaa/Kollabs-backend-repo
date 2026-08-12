@@ -148,6 +148,17 @@ export const uploadImage = multer({
 export const singleImageUpload = uploadImage.single("image");
 
 /**
+ * Middleware for uploading a SINGLE group chat avatar.
+ * The field name in your form/request MUST be "avatar".
+ *
+ * Example usage in routes:
+ *   router.post("/group-conversations", groupAvatarUpload, createGroupConversation);
+ *
+ * Then in your controller, access it via: req.file
+ */
+export const groupAvatarUpload = uploadImage.single("avatar");
+
+/**
  * Middleware for uploading MULTIPLE images (up to 10).
  * The field name in your form/request MUST be "images".
  *
