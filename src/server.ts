@@ -87,7 +87,6 @@ app.use("/v1/api/search", searchRoutes);
 // Swagger API Documentation
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-// Email template preview (development only)
 app.get("/preview/email", async (req: Request, res: Response) => {
   try {
     const ejs = await import("ejs");

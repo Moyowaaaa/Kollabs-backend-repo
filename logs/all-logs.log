@@ -1943,3 +1943,27 @@
 [32m2026-08-19 23:37:53:3753[39m info: [34mApp running on port 4000.....[39m
 [32m2026-08-19 23:37:56:3756[39m info: [34mSocket connected wmDIDAwvAl1EWLo2AAAC[39m
 [32m2026-08-19 23:37:58:3758[39m info: [34mSocket connected X09ID98kyRDZrbDCAAAD[39m
+[32m2026-08-19 23:42:14:4214[39m info: [34mGET /v1/api/chat/conversations?page=1&limit=30 304 880.047 ms - -[39m
+[32m2026-08-19 23:42:14:4214[39m info: [34mGET /v1/api/chat/conversations?page=1&limit=30 304 846.997 ms - -[39m
+[32m2026-08-19 23:45:08:458[39m info: [34mGET /v1/api/notifications/unread-count 304 413.191 ms - -[39m
+[32m2026-08-19 23:45:10:4510[39m info: [34mGET /v1/api/chat/conversations/6a78704770811ff56624f67a/messages?page=1&limit=50 304 641.961 ms - -[39m
+[32m2026-08-19 23:45:11:4511[39m info: [34mPATCH /v1/api/chat/conversations/6a78704770811ff56624f67a/read 200 842.729 ms - 141[39m
+[32m2026-08-19 23:45:11:4511[39m info: [34mPATCH /v1/api/chat/conversations/6a78704770811ff56624f67a/read 200 856.268 ms - 141[39m
+[32m2026-08-19 23:45:11:4511[39m info: [34mGET /v1/api/chat/conversations/6a78704770811ff56624f67a/messages?page=1&limit=50 304 611.997 ms - -[39m
+[32m2026-08-19 23:45:11:4511[39m info: [34mGET /v1/api/chat/conversations?page=1&limit=30 200 840.064 ms - 7648[39m
+[32m2026-08-19 23:45:12:4512[39m info: [34mGET /v1/api/chat/conversations/6a78704770811ff56624f67a/messages?page=1&limit=50 304 618.284 ms - -[39m
+[32m2026-08-19 23:45:12:4512[39m info: [34mGET /v1/api/chat/conversations?page=1&limit=30 304 981.929 ms - -[39m
+[32m2026-08-19 23:45:13:4513[39m info: [34mPATCH /v1/api/chat/conversations/6a860ae595ff76b5d387a9c6/read 200 888.963 ms - 141[39m
+[32m2026-08-19 23:45:13:4513[39m info: [34mGET /v1/api/chat/conversations/6a78733e42eb56b0895aae6a/messages?page=1&limit=50 304 755.863 ms - -[39m
+[32m2026-08-19 23:45:13:4513[39m info: [34mPATCH /v1/api/chat/conversations/6a78733e42eb56b0895aae6a/read 200 813.028 ms - 141[39m
+[32m2026-08-19 23:45:14:4514[39m info: [34mGET /v1/api/chat/conversations?page=1&limit=30 200 884.364 ms - 7648[39m
+[32m2026-08-19 23:45:14:4514[39m info: [34mGET /v1/api/chat/conversations/6a7872c042eb56b0895aae64/messages?page=1&limit=50 304 701.197 ms - -[39m
+[32m2026-08-19 23:45:14:4514[39m info: [34mPATCH /v1/api/chat/conversations/6a7872c042eb56b0895aae64/read 200 910.712 ms - 141[39m
+[32m2026-08-19 23:45:15:4515[39m info: [34mGET /v1/api/chat/conversations?page=1&limit=30 200 1018.942 ms - 7648[39m
+[32m2026-08-19 23:45:15:4515[39m info: [34mPATCH /v1/api/chat/conversations/6a7871fa42eb56b0895aae5f/read 200 858.472 ms - 141[39m
+[32m2026-08-19 23:45:15:4515[39m info: [34mGET /v1/api/chat/conversations/6a860ae595ff76b5d387a9c6/messages?page=1&limit=50 304 3597.146 ms - -[39m
+[32m2026-08-19 23:45:16:4516[39m info: [34mGET /v1/api/chat/conversations?page=1&limit=30 200 982.627 ms - 7670[39m
+[32m2026-08-19 23:45:16:4516[39m info: [34mGET /v1/api/chat/conversations/6a7871fa42eb56b0895aae5f/messages?page=1&limit=50 200 2027.035 ms - 97[39m
+[32m2026-08-19 23:45:16:4516[39m info: [34mGET /v1/api/chat/conversations?page=1&limit=30 304 832.864 ms - -[39m
+[32m2026-08-19 23:51:01:511[39m info: [34mGET /v1/api/notifications/unread-count 304 2103.064 ms - -[39m
+[32m2026-08-19 23:59:55:5955[39m info: [34mGET /v1/api/notifications/unread-count 304 2119.987 ms - -[39m
