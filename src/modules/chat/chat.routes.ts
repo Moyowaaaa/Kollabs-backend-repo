@@ -9,6 +9,7 @@ import {
   getRecentMessages,
   getUserConversation,
   getUserConversations,
+  markConversationAsRead,
   SendMessage,
   votePoll,
 } from "./chat.controller";
@@ -28,6 +29,12 @@ router.get("/messages/recent", getRecentMessages as RequestHandler);
 router.get(
   "/conversations/:conversationId",
   getUserConversation as RequestHandler,
+);
+
+// PATCH /v1/api/chat/conversations/:conversationId/read - Mark conversation as read
+router.patch(
+  "/conversations/:conversationId/read",
+  markConversationAsRead as RequestHandler,
 );
 
 //GET /v1/api/chat/conversations/:conversationId/messages

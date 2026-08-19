@@ -24,11 +24,11 @@ import { feedRoutes } from "./modules/feed";
 import { notificationsRoutes } from "./modules/notifications";
 import { chatRoutes } from "./modules/chat";
 import { searchRoutes } from "./modules/search";
-
-
-
+import { initSocket } from "./lib/socket";
+import http from "http";
 
 const app: Express = express();
+const httpServer = http.createServer(app);
 
 const allowedOrigins: string[] = [
   "http://localhost:3000",
@@ -53,6 +53,8 @@ app.use(
     credentials: true,
   }),
 );
+
+initSocket(httpServer);
 
 app.use(httpLogger);
 app.use(express.json());
@@ -82,8 +84,6 @@ app.use("/v1/api/notifications", notificationsRoutes);
 app.use("/v1/api/chat", chatRoutes);
 app.use("/v1/api/search", searchRoutes);
 
-
-
 // Swagger API Documentation
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
@@ -109,7 +109,7 @@ app.get("/preview/email", async (req: Request, res: Response) => {
 
 const port = process.env.PORT || 8081;
 
-app.listen(port, () => {
+httpServer.listen(port, () => {
   logger.info(`App running on port ${port}.....`);
   void connectDB().catch((error: unknown) => {
     console.error("Database connection failed. Exiting...", error);

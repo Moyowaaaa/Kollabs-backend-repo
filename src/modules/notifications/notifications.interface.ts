@@ -23,6 +23,8 @@ export interface INotification {
   meta: {
     projectId?: string;
     collabRequestId?: string;
+    conversationId?: string;
+    conversationType?: string;
   };
   readAt: Date | null;
   deletedAt?: Date | null;

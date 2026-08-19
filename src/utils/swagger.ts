@@ -7,7 +7,7 @@ const options: swaggerJsdoc.Options = {
       title: "Koneticus API",
       version: "1.0.0",
       description:
-        "API documentation for koneticus - A collaborative platform for creators",
+        "API documentation for Koneticus — a collaborative platform for creators. REST under `/v1/api`. Chat also uses Socket.IO on the same origin (`/socket.io`) for realtime `chat:message` events after a message is persisted.",
       contact: {
         name: "koneticus Team",
       },
@@ -108,6 +108,8 @@ const options: swaggerJsdoc.Options = {
                 "collab_request_received",
                 "collab_request_accepted",
                 "collab_request_rejected",
+                "collaboration_started",
+                "new_message",
               ],
             },
             title: { type: "string", example: "New request" },
@@ -122,6 +124,8 @@ const options: swaggerJsdoc.Options = {
               properties: {
                 projectId: { type: "string" },
                 collabRequestId: { type: "string" },
+                conversationId: { type: "string" },
+                conversationType: { type: "string" },
               },
             },
             readAt: { type: "string", format: "date-time", nullable: true },
@@ -172,6 +176,8 @@ const options: swaggerJsdoc.Options = {
                 "collab_request_received",
                 "collab_request_accepted",
                 "collab_request_rejected",
+                "collaboration_started",
+                "new_message",
               ],
             },
             title: { type: "string", example: "New request" },
@@ -182,6 +188,8 @@ const options: swaggerJsdoc.Options = {
               properties: {
                 projectId: { type: "string" },
                 collabRequestId: { type: "string" },
+                conversationId: { type: "string" },
+                conversationType: { type: "string" },
               },
             },
             readAt: { type: "string", format: "date-time", nullable: true },
@@ -309,7 +317,12 @@ const options: swaggerJsdoc.Options = {
       },
       {
         name: "Chat",
-        description: "Direct messages, group chats, and project Kollaboration conversations",
+        description:
+          "Direct messages, group chats, and project Kollaboration conversations. Sending a message also emits Socket.IO event `chat:message` to room `conversation:{id}` after persist. Clients must authenticate (cookie `authToken` or handshake auth.token) and emit `conversation:join`.",
+      },
+      {
+        name: "Search",
+        description: "Federated search across projects and people",
       },
     ],
   },

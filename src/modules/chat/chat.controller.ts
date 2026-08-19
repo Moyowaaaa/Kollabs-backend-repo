@@ -24,6 +24,7 @@ import {
 } from "../../utils/cloudinary";
 import { createNotification } from "../notifications";
 import MessageModel from "./message.model";
+import { getIO } from "../../lib/socket";
 
 const resolveAttachmentKind = (mimeType: string): AttachmentKind => {
   if (mimeType.startsWith("image/")) return "photo";
@@ -557,6 +558,90 @@ export const getUserConversation = async (
   }
 };
 
+// Mark conversation as read for the current user
+export const markConversationAsRead = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const currentUserId = String(req.user._id);
+    const conversationId = req.params.conversationId;
+
+    if (!conversationId || !Types.ObjectId.isValid(conversationId)) {
+      res.status(400).json({
+        message: "A valid conversationId is required",
+      });
+      return;
+    }
+
+    const conversation = await ConversationModel.findOne({
+      _id: conversationId,
+      participantIds: currentUserId,
+      members: {
+        $elemMatch: {
+          userId: currentUserId,
+          leftAt: null,
+        },
+      },
+    });
+
+    if (!conversation) {
+      res.status(404).json({
+        message: "Conversation not found",
+      });
+      return;
+    }
+
+    const now = new Date();
+    const member = conversation.members.find(
+      (m) => m.userId === currentUserId && m.leftAt == null,
+    );
+
+    if (!member) {
+      res.status(403).json({
+        message: "You are not a member of this conversation",
+      });
+      return;
+    }
+
+    member.unreadCount = 0;
+    member.lastReadAt = now;
+    await conversation.save();
+
+    // Stamp read receipts on messages the caller hadn't marked yet
+    await MessageModel.updateMany(
+      {
+        conversationId,
+        senderId: { $ne: currentUserId },
+        $or: [{ deletedAt: null }, { deletedAt: { $exists: false } }],
+        "readBy.userId": { $ne: currentUserId },
+      },
+      {
+        $push: {
+          readBy: {
+            userId: currentUserId,
+            readAt: now,
+          },
+        },
+      },
+    );
+
+    res.status(200).json({
+      message: "Conversation marked as read",
+      conversationId,
+      unreadCount: 0,
+      lastReadAt: now,
+    });
+  } catch (err) {
+    const error = err as IError;
+    error.status = 500;
+    error.message =
+      error.message || "An error occurred while marking conversation as read";
+    return next(error);
+  }
+};
+
 // Send a message
 export const SendMessage = async (
   req: AuthenticatedRequest,
@@ -728,6 +813,13 @@ const actorName =
           }),
         ),
       );
+
+    getIO()
+      ?.to(`conversation:${conversationId}`)
+      .emit("chat:message", {
+        conversationId: String(conversation._id),
+        message: message.toJSON(),
+      });
 
     res.status(201).json({
       message: "Message sent",
