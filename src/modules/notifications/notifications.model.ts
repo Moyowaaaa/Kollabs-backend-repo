@@ -27,7 +27,8 @@ export const NotificationsSchema = new Schema<INotification>(
         "collab_request_received",
         "collab_request_accepted",
         "collab_request_rejected",
-        "collaboration_started"
+        "collaboration_started",
+        "new_message",
       ],
       required: true,
     },

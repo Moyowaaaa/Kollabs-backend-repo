@@ -23,6 +23,8 @@ import { collaborationRequestsRoutes } from "./modules/collaboration-requests";
 import { feedRoutes } from "./modules/feed";
 import { notificationsRoutes } from "./modules/notifications";
 import { chatRoutes } from "./modules/chat";
+import { searchRoutes } from "./modules/search";
+
 
 
 
@@ -78,6 +80,7 @@ app.use("/v1/api/collaboration-requests", collaborationRequestsRoutes);
 app.use("/v1/api/feed", feedRoutes);
 app.use("/v1/api/notifications", notificationsRoutes);
 app.use("/v1/api/chat", chatRoutes);
+app.use("/v1/api/search", searchRoutes);
 
 
 

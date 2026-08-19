@@ -14,7 +14,8 @@ export interface INotification {
     | "collab_request_received"
     | "collab_request_accepted"
     | "collab_request_rejected"
-    | "collaboration_started";
+    | "collaboration_started"
+    | "new_message";
 
   title: string;
   body: string;
@@ -40,6 +41,7 @@ export interface ICreateNotificationPayload {
     projectId?: string;
     collabRequestId?: string;
     conversationId?:string
+    conversationType?:string
   };
   isRead?: boolean;
   readAt?: Date;

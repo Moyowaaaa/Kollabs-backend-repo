@@ -14,11 +14,23 @@ import {
   ConversationType,
   ISendMessagePayload,
   IVotePollPayload,
+  AttachmentKind,
+  IMessageAttachment,
 } from "./chat.interface";
 import ProjectsModel from "../projects/projects.model";
-import { uploadSingleToCloudinary } from "../../utils/cloudinary";
+import {
+  uploadMultipleToCloudinary,
+  uploadSingleToCloudinary,
+} from "../../utils/cloudinary";
 import { createNotification } from "../notifications";
 import MessageModel from "./message.model";
+
+const resolveAttachmentKind = (mimeType: string): AttachmentKind => {
+  if (mimeType.startsWith("image/")) return "photo";
+  if (mimeType.startsWith("video/")) return "video";
+  if (mimeType.startsWith("audio/")) return "audio";
+  return "document";
+};
 
 const buildDmKey = (userA: string, userB: string) =>
   [userA, userB].sort().join("_");
@@ -456,6 +468,14 @@ export const getUserConversations = async (
 
     const [conversations, totalConversations] = await Promise.all([
       ConversationModel.find(filter)
+        .populate({
+          path: "participantIds",
+          select: "email userProfile",
+          populate: {
+            path: "userProfile",
+            select: "firstname lastname profilePicture",
+          },
+        })
         .sort({ updatedAt: -1 })
         .skip(skip)
         .limit(limit),
@@ -508,6 +528,13 @@ export const getUserConversation = async (
           leftAt: null,
         },
       },
+    }).populate({
+      path: "participantIds",
+      select: "email userProfile",
+      populate: {
+        path: "userProfile",
+        select: "firstname lastname profilePicture",
+      },
     });
 
     if (!conversation) {
@@ -541,13 +568,46 @@ export const SendMessage = async (
     const { conversationId } = req.params;
     const { attachments, content, poll, type } =
       req.body as ISendMessagePayload;
+    const uploadedFiles = Array.isArray(req.files)
+      ? req.files
+      : [];
 
     if (!conversationId) {
       res.status(400).json({ message: "Conversation Id is required" });
       return;
     }
 
-    const messageType = type ?? "text";
+    let messageAttachments: IMessageAttachment[] = Array.isArray(attachments)
+      ? attachments
+      : [];
+
+    if (uploadedFiles.length > 0) {
+      const uploadResults = await uploadMultipleToCloudinary(
+        uploadedFiles,
+        "chat_attachments",
+      );
+
+      messageAttachments = uploadResults.map((result, index) => {
+        const file = uploadedFiles[index];
+        return {
+          url: result.secure_url,
+          id: result.public_id,
+          name: file.originalname || `attachment-${index + 1}`,
+          mimeType: file.mimetype,
+          size: file.size,
+          kind: resolveAttachmentKind(file.mimetype),
+        };
+      });
+    }
+
+    const messageType =
+      type ??
+      (messageAttachments.length > 0
+        ? "attachment"
+        : poll
+          ? "poll"
+          : "text");
+
     if (messageType === "text" && !content?.trim()) {
       res
         .status(400)
@@ -566,10 +626,7 @@ export const SendMessage = async (
         return;
       }
     }
-    if (
-      messageType === "attachment" &&
-      (!attachments || attachments.length === 0)
-    ) {
+    if (messageType === "attachment" && messageAttachments.length === 0) {
       res.status(400).json({ message: "At least one attachment is required" });
       return;
     }
@@ -605,7 +662,8 @@ export const SendMessage = async (
 
     const message = await MessageModel.create({
       senderId: currentUserId,
-      attachments: messageType === "attachment" ? attachments : [],
+      attachments:
+        messageType === "attachment" ? messageAttachments : [],
       poll: pollPayload,
       content: content?.trim() || undefined,
       conversationId,
@@ -614,7 +672,10 @@ export const SendMessage = async (
     });
 
     conversation.lastMessage = {
-      text: content?.trim() || poll?.question?.trim(),
+      text:
+        content?.trim() ||
+        poll?.question?.trim() ||
+        (messageType === "attachment" ? "Sent an attachment" : undefined),
       senderId: currentUserId,
       type: messageType,
       createdAt: message.createdAt,
@@ -625,6 +686,48 @@ export const SendMessage = async (
       }
     });
     await conversation.save();
+    
+    const recipients = conversation.members
+    .filter((m) => m.userId !== currentUserId && !m.leftAt)
+    .map((m) => m.userId);
+
+    const actorProfile = await userAuthModel
+  .findById(currentUserId)
+  .populate<{ userProfile?: { firstname?: string; lastname?: string } }>(
+    "userProfile",
+    "firstname lastname",
+  )
+  .lean();
+
+  const profile = actorProfile?.userProfile;
+const actorName =
+  profile?.firstname || profile?.lastname
+    ? `${profile?.firstname ?? ""} ${profile?.lastname ?? ""}`.trim()
+    : actorProfile?.email || "Someone";
+ 
+
+    const body =
+  messageType === "attachment"
+    ? "Sent an attachment"
+    : messageType === "poll"
+      ? pollPayload?.question || "Started a poll"
+      : content?.trim() || "Sent a message";
+
+      await Promise.all(
+        recipients.map((recipientId) =>
+          createNotification({
+            title: `New message from ${actorName}`,
+            body,
+            type: "new_message",
+            recipientId,
+            actorId: currentUserId,
+            meta: {
+              conversationId: String(conversation._id),
+              conversationType: conversation.type,
+            },
+          }),
+        ),
+      );
 
     res.status(201).json({
       message: "Message sent",
@@ -633,12 +736,123 @@ export const SendMessage = async (
   } catch (err) {
     const error = err as IError;
     error.status = 500;
-    error.message =
-      error.message || "An error occurred while sending message";
+    error.message = error.message || "An error occurred while sending message";
     return next(error);
   }
 };
 
+
+// Get spotlighted / recent messages for the dashboard (default 5)
+export const getRecentMessages = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const currentUserId = String(req.user._id);
+    const limit = Math.min(Math.max(Number(req.query.limit) || 5, 1), 10);
+
+    const conversations = await ConversationModel.find({
+      participantIds: currentUserId,
+      members: {
+        $elemMatch: {
+          userId: currentUserId,
+          leftAt: null,
+        },
+      },
+    })
+      .select("_id name type avatar participantIds")
+      .populate({
+        path: "participantIds",
+        select: "email userProfile",
+        populate: {
+          path: "userProfile",
+          select: "firstname lastname profilePicture",
+        },
+      })
+      .lean();
+
+    const conversationIds = conversations.map((conversation) =>
+      String(conversation._id),
+    );
+
+    if (conversationIds.length === 0) {
+      res.status(200).json({ messages: [] });
+      return;
+    }
+
+    const messages = await MessageModel.find({
+      conversationId: { $in: conversationIds },
+      deletedAt: null,
+      type: { $ne: "system" },
+    })
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .populate({
+        path: "senderId",
+        select: "email userProfile",
+        populate: {
+          path: "userProfile",
+          select: "firstname lastname profilePicture",
+        },
+      })
+      .lean();
+
+    const conversationById = new Map(
+      conversations.map((conversation) => [
+        String(conversation._id),
+        conversation,
+      ]),
+    );
+
+    type PopulatedSender = {
+      _id: unknown;
+      email?: string;
+      userProfile?: {
+        firstname?: string;
+        lastname?: string;
+        profilePicture?: { url?: string; id?: string };
+      } | null;
+    };
+
+    const enrichedMessages = messages.map((message) => {
+      const populatedSender =
+        typeof message.senderId === "object" && message.senderId !== null
+          ? (message.senderId as PopulatedSender)
+          : null;
+
+      return {
+        _id: String(message._id),
+        conversationId: String(message.conversationId),
+        type: message.type,
+        content: message.content,
+        createdAt: message.createdAt,
+        senderId: populatedSender
+          ? String(populatedSender._id)
+          : String(message.senderId),
+        sender: populatedSender
+          ? {
+              _id: String(populatedSender._id),
+              email: populatedSender.email,
+              userProfile: populatedSender.userProfile ?? null,
+            }
+          : null,
+        conversation:
+          conversationById.get(String(message.conversationId)) ?? null,
+      };
+    });
+
+    res.status(200).json({
+      messages: enrichedMessages,
+    });
+  } catch (error) {
+    const err = error as IError;
+    err.status = 500;
+    err.message =
+      err.message || "An error occurred while fetching recent messages";
+    return next(err);
+  }
+};
 
 //Get chat messages in a conversation
 export const getConversationMessages = async (
@@ -653,7 +867,6 @@ export const getConversationMessages = async (
     const limit = Number(req.query.limit) || 30;
     const page = Number(req.query.page) || 1;
     const skip = (Number(page) - 1) * Number(limit);
-
 
     if (!conversationId) {
       res.status(400).json({ message: "A valid conversation Id is required" });
@@ -678,26 +891,21 @@ export const getConversationMessages = async (
       deletedAt: null,
     };
     const [messages, totalMessages] = await Promise.all([
-      MessageModel.find(filter)
-        .sort({ createdAt: -1 })
-        .skip(skip)
-        .limit(limit),
+      MessageModel.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit),
       MessageModel.countDocuments(filter),
     ]);
 
-  const totalPages = Math.ceil(totalMessages / limit);
+    const totalPages = Math.ceil(totalMessages / limit);
 
-  res.status(200).json({
-   messages,
-    pagination: {
-      totalMessages,
-      totalPages,
-      currentPage: page,
-      itemsPerPage: limit,
-    },
-  });
-
-
+    res.status(200).json({
+      messages,
+      pagination: {
+        totalMessages,
+        totalPages,
+        currentPage: page,
+        itemsPerPage: limit,
+      },
+    });
   } catch (error) {
     const err = error as IError;
     err.status = 500;
@@ -806,8 +1014,7 @@ export const votePoll = async (
   } catch (err) {
     const error = err as IError;
     error.status = 500;
-    error.message =
-      error.message || "An error occurred while voting on poll";
+    error.message = error.message || "An error occurred while voting on poll";
     return next(error);
   }
 };

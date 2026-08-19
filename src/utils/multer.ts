@@ -180,6 +180,12 @@ export const multipleImageUpload = uploadImage.array("images", 10);
  */
 export const projectMediaUpload = uploadImage.array("media", 10);
 
+/**
+ * Middleware for uploading chat message attachments (up to 4 images).
+ * The field name in your form/request MUST be "attachments".
+ */
+export const chatAttachmentsUpload = uploadImage.array("attachments", 4);
+
 // -----------------------------------------------------------------------------
 // DOCUMENT UPLOAD: For CVs/Resumes (PDF, DOC, DOCX)
 // -----------------------------------------------------------------------------

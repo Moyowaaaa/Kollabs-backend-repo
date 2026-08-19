@@ -6,12 +6,13 @@ import {
   createGroupConversation,
   createKollaboration,
   getConversationMessages,
+  getRecentMessages,
   getUserConversation,
   getUserConversations,
   SendMessage,
   votePoll,
 } from "./chat.controller";
-import { groupAvatarUpload } from "../../utils/multer";
+import { chatAttachmentsUpload, groupAvatarUpload } from "../../utils/multer";
 
 const router = express.Router() as Router;
 
@@ -19,6 +20,9 @@ router.use(verifyAuthentication as express.RequestHandler);
 
 // GET /v1/api/chat/conversations?type=dm|group|kollaboration&page=1&limit=15
 router.get("/conversations", getUserConversations as RequestHandler);
+
+// GET /v1/api/chat/messages/recent?limit=5 - Dashboard recent messages
+router.get("/messages/recent", getRecentMessages as RequestHandler);
 
 //GET /v1/api/chat/conversations/:conversationId - Get a single user conversation
 router.get(
@@ -36,8 +40,10 @@ router.get(
 router.post("/dms", createDMConversation as RequestHandler);
 
 //POST /v1/api/chat/conversations/:conversationId/messages
+// Supports JSON body or multipart with up to 4 `attachments` files
 router.post(
   "/conversations/:conversationId/messages",
+  chatAttachmentsUpload as unknown as RequestHandler,
   SendMessage as RequestHandler,
 );
 
