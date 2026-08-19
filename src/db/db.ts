@@ -5,9 +5,9 @@ dotenv.config();
 
 const connectDB = async (): Promise<void> => {
   const Db =
-    process.env.NODE_ENV === "development"
-      ? process.env.MONGO_URI
-      : process.env.MONGO_URI_PROD;
+    process.env.NODE_ENV === "production"
+      ? process.env.MONGO_URI_PROD
+      : process.env.MONGO_URI;
 
   if (!Db) {
     throw new Error(

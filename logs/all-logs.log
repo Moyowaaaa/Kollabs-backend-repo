@@ -1970,3 +1970,23 @@
 [32m2026-08-20 00:13:54:1354[39m info: [34mApp running on port 4000.....[39m
 [32m2026-08-20 00:13:57:1357[39m info: [34mSocket connected 3OOKeLsvscL4baTUAAAB[39m
 [32m2026-08-20 00:13:59:1359[39m info: [34mSocket connected lXvUp1SBL7S_aMxeAAAD[39m
+[32m2026-08-20 00:26:36:2636[39m info: [34mGET /v1/api/notifications/unread-count 304 2832.730 ms - -[39m
+[32m2026-08-20 00:26:36:2636[39m info: [34mGET /v1/api/notifications/unread-count 304 2865.985 ms - -[39m
+[32m2026-08-20 00:26:37:2637[39m info: [34mGET /v1/api/chat/conversations?page=1&limit=30 304 3476.455 ms - -[39m
+[32m2026-08-20 00:26:37:2637[39m info: [34mGET /v1/api/chat/conversations?page=1&limit=30 200 3683.202 ms - 7670[39m
+[32m2026-08-20 00:26:38:2638[39m info: [34mPATCH /v1/api/chat/conversations/6a7871fa42eb56b0895aae5f/read 200 4349.456 ms - 141[39m
+[32m2026-08-20 00:26:38:2638[39m info: [34mGET /v1/api/chat/conversations/6a7871fa42eb56b0895aae5f/messages?page=1&limit=50 304 4639.424 ms - -[39m
+[32m2026-08-20 00:26:39:2639[39m info: [34mGET /v1/api/chat/conversations?page=1&limit=30 200 902.557 ms - 7670[39m
+[32m2026-08-20 00:26:39:2639[39m info: [34mGET /v1/api/chat/conversations/6a7871fa42eb56b0895aae5f/messages?page=1&limit=50 304 648.466 ms - -[39m
+[32m2026-08-20 00:27:40:2740[39m info: [34mSocket disconnected lXvUp1SBL7S_aMxeAAAD[39m
+[32m2026-08-20 00:27:41:2741[39m info: [34mSocket connected KONutEIbu_XxffZ1AAAF[39m
+[32m2026-08-20 00:27:41:2741[39m info: [34mGET /v1/api/notifications/unread-count 304 418.950 ms - -[39m
+[32m2026-08-20 00:27:41:2741[39m info: [34mGET /v1/api/user/me 304 622.857 ms - -[39m
+[32m2026-08-20 00:27:44:2744[39m info: [34mGET /v1/api/chat/conversations?page=1&limit=30 304 3085.473 ms - -[39m
+[32m2026-08-20 00:28:01:281[39m info: [34mSocket disconnected KONutEIbu_XxffZ1AAAF[39m
+[32m2026-08-20 00:28:01:281[39m info: [34mSocket disconnected 3OOKeLsvscL4baTUAAAB[39m
+[32m2026-08-20 00:28:02:282[39m info: [34mSocket connected gVqT7dGPmwFh7h18AAAH[39m
+[32m2026-08-20 00:28:03:283[39m info: [34mSocket connected pud6L7VkBraOhpiaAAAJ[39m
+[32m2026-08-20 00:28:04:284[39m info: [34mSocket disconnected gVqT7dGPmwFh7h18AAAH[39m
+[32m2026-08-20 00:28:04:284[39m info: [34mSocket disconnected pud6L7VkBraOhpiaAAAJ[39m
+[32m2026-08-20 00:35:07:357[39m info: [34mApp running on port 4000.....[39m
