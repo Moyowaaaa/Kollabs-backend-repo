@@ -1,0 +1,166 @@
+{
+  "info": {
+    "_postman_id": "a8c2f1d4-9e3b-4c7a-b2d1-collaboration-requests",
+    "name": "Kollabs — Collaboration Requests",
+    "description": "Collaboration request endpoints for Koneticus/Kollabs API.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:4000/v1/api"
+    },
+    {
+      "key": "authToken",
+      "value": ""
+    },
+    {
+      "key": "projectId",
+      "value": ""
+    },
+    {
+      "key": "requestId",
+      "value": ""
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{authToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "Create collaboration request",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "proposal",
+              "value": "I have experience in React and would love to contribute to the frontend.",
+              "type": "text"
+            },
+            {
+              "key": "media",
+              "type": "file",
+              "src": [],
+              "disabled": true
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/collaboration-requests/projects/{{projectId}}/requests",
+          "host": ["{{baseUrl}}"],
+          "path": [
+            "collaboration-requests",
+            "projects",
+            "{{projectId}}",
+            "requests"
+          ]
+        },
+        "description": "Submit a collaboration request on an ongoing project."
+      },
+      "response": []
+    },
+    {
+      "name": "Get requests for project",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/collaboration-requests/projects/{{projectId}}/requests",
+          "host": ["{{baseUrl}}"],
+          "path": [
+            "collaboration-requests",
+            "projects",
+            "{{projectId}}",
+            "requests"
+          ]
+        },
+        "description": "Author only — list all collaboration requests for a project."
+      },
+      "response": []
+    },
+    {
+      "name": "Get my sent requests",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/collaboration-requests/my-requests?page=1&limit=10",
+          "host": ["{{baseUrl}}"],
+          "path": ["collaboration-requests", "my-requests"],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "limit",
+              "value": "10"
+            }
+          ]
+        },
+        "description": "Paginated list of collaboration requests sent by the authenticated user."
+      },
+      "response": []
+    },
+    {
+      "name": "Get single collaboration request",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/collaboration-requests/{{requestId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["collaboration-requests", "{{requestId}}"]
+        },
+        "description": "Get details of a single collaboration request. Accessible by the project author or the requester. Populates requester profile and project summary."
+      },
+      "response": []
+    },
+    {
+      "name": "Accept collaboration request",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/collaboration-requests/{{requestId}}/accept",
+          "host": ["{{baseUrl}}"],
+          "path": [
+            "collaboration-requests",
+            "{{requestId}}",
+            "accept"
+          ]
+        },
+        "description": "Author only — accept a pending collaboration request."
+      },
+      "response": []
+    },
+    {
+      "name": "Reject collaboration request",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/collaboration-requests/{{requestId}}/reject",
+          "host": ["{{baseUrl}}"],
+          "path": [
+            "collaboration-requests",
+            "{{requestId}}",
+            "reject"
+          ]
+        },
+        "description": "Author only — reject a pending collaboration request."
+      },
+      "response": []
+    }
+  ]
+}

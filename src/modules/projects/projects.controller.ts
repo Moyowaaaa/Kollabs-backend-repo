@@ -6,12 +6,36 @@ import ProjectsModel from "./projects.model";
 import { uploadMultipleToCloudinary } from "../../utils/cloudinary";
 import { invalidateFeedCache } from "../feed/feed.controller";
 import { Types } from "mongoose";
+// Ensure referenced models are registered for populate()
+import userAuthModel from "../auth/auth.model";
+import "../user/user.model";
 
-const getAuthorId = (author: Types.ObjectId | IAuthorPopulated): string => {
+const getAuthorId = (author: Types.ObjectId | IAuthorPopulated | string): string => {
   if (typeof author === "object" && author !== null && "_id" in author) {
     return String(author._id);
   }
   return String(author);
+};
+
+const isAuthorPopulated = (
+  author: unknown,
+): author is IAuthorPopulated => {
+  return (
+    typeof author === "object" &&
+    author !== null &&
+    "_id" in author &&
+    "email" in author
+  );
+};
+
+const populateAuthorUser = async (authorId: string) => {
+  return userAuthModel
+    .findById(authorId)
+    .select("email userProfile")
+    .populate({
+      path: "userProfile",
+      select: "firstname lastname profilePicture roles bio",
+    });
 };
 
 //Create Project
@@ -179,7 +203,7 @@ export const searchProjects = async (
   }
 };
 
-//get user's project
+//get user's project (authored + collaborating)
 export const getUsersProjects = async (
   req: AuthenticatedRequest,
   res: Response,
@@ -190,18 +214,53 @@ export const getUsersProjects = async (
 
     const limit = Number(req.query.limit) || 10;
     const page = Number(req.query.page) || 1;
-    // Filter heroes by the current user's _id
-
+    const scope = (req.query.scope as string) || "all";
+    // scope: "authored" | "collaborating" | "all"
     const skip = (Number(page) - 1) * Number(limit);
-    const filter = { author: _id, status: { $nin: ["deleted", "archived"] } };
-    const projects = await ProjectsModel.find(filter).skip(skip).limit(limit);
 
-    const totalProjects = await ProjectsModel.countDocuments(filter);
+    const notDeleted = { status: { $nin: ["deleted", "archived"] } };
+    let filter: Record<string, unknown>;
+
+    if (scope === "authored") {
+      filter = { author: _id, ...notDeleted };
+    } else if (scope === "collaborating") {
+      filter = { collaborators: _id, ...notDeleted };
+    } else {
+      // all: projects the user owns or collaborates on
+      filter = {
+        ...notDeleted,
+        $or: [{ author: _id }, { collaborators: _id }],
+      };
+    }
+
+    const [projects, totalProjects] = await Promise.all([
+      ProjectsModel.find(filter)
+        .sort({ updatedAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .populate({
+          path: "author",
+          select: "email userProfile",
+          populate: {
+            path: "userProfile",
+            select: "firstname lastname profilePicture roles bio",
+          },
+        })
+        .populate({
+          path: "collaborators",
+          select: "email userProfile",
+          populate: {
+            path: "userProfile",
+            select: "firstname lastname profilePicture",
+          },
+        }),
+      ProjectsModel.countDocuments(filter),
+    ]);
+
     const totalPages = Math.ceil(totalProjects / limit);
 
     res.status(200).json({
       projects,
-
       pagination: {
         totalProjects,
         totalPages,
@@ -212,7 +271,7 @@ export const getUsersProjects = async (
   } catch (error) {
     const err = error as IError;
     err.status = 500;
-    err.message = "An error occurred while updating project";
+    err.message = "An error occurred while fetching projects";
     return next(err);
   }
 };
@@ -266,19 +325,42 @@ export const getProjectById = async (
     const project = await ProjectsModel.findOne({
       _id: projectId,
       status: { $nin: ["deleted", "archived"] },
-    }).populate({
-      path: "collaborators",
-      select: "email userProfile",
-      populate: {
-        path: "userProfile",
-        select: "firstname lastname profilePicture",
-      },
-    });
+    })
+      .populate({
+        path: "author",
+        select: "email userProfile",
+        populate: {
+          path: "userProfile",
+          select: "firstname lastname profilePicture roles bio",
+        },
+      })
+      .populate({
+        path: "collaborators",
+        select: "email userProfile",
+        populate: {
+          path: "userProfile",
+          select: "firstname lastname profilePicture roles bio",
+        },
+      });
+
     if (!project) {
       res.status(404).json({ message: "Project not found" });
       return;
     }
-    res.status(200).json({ project });
+
+    const projectPayload = project.toObject();
+
+    // Fallback if author populate silently failed (left as ObjectId)
+    if (!isAuthorPopulated(projectPayload.author)) {
+      const author = await populateAuthorUser(
+        getAuthorId(projectPayload.author),
+      );
+      if (author) {
+        projectPayload.author = author.toObject() as IAuthorPopulated;
+      }
+    }
+
+    res.status(200).json({ project: projectPayload });
   } catch (error) {
     const err = error as IError;
     err.status = 500;
@@ -493,6 +575,8 @@ export const deleteProject = async (
 
     await ProjectsModel.findByIdAndUpdate(projectId, { status: "deleted" });
 
+    await invalidateFeedCache();
+
     res.status(200).json({ message: "Project deleted successfully" });
   } catch (err) {
     const error = err as IError;
@@ -522,6 +606,8 @@ export const archiveProject = async (
     }
 
     await ProjectsModel.findByIdAndUpdate(projectId, { status: "archived" });
+
+    await invalidateFeedCache();
 
     res.status(200).json({ message: "Project archived successfully" });
   } catch (err) {
@@ -575,6 +661,8 @@ export const updateProjectStatus = async (
       { status },
       { new: true },
     );
+
+    await invalidateFeedCache();
 
     res.status(200).json({
       message: `Project status updated to ${status}`,

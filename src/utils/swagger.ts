@@ -7,7 +7,7 @@ const options: swaggerJsdoc.Options = {
       title: "Koneticus API",
       version: "1.0.0",
       description:
-        "API documentation for koneticus - A collaborative platform for creators",
+        "API documentation for Koneticus — a collaborative platform for creators. REST under `/v1/api`. Chat also uses Socket.IO on the same origin (`/socket.io`) for realtime `chat:message` events after a message is persisted.",
       contact: {
         name: "koneticus Team",
       },
@@ -108,6 +108,8 @@ const options: swaggerJsdoc.Options = {
                 "collab_request_received",
                 "collab_request_accepted",
                 "collab_request_rejected",
+                "collaboration_started",
+                "new_message",
               ],
             },
             title: { type: "string", example: "New request" },
@@ -122,6 +124,8 @@ const options: swaggerJsdoc.Options = {
               properties: {
                 projectId: { type: "string" },
                 collabRequestId: { type: "string" },
+                conversationId: { type: "string" },
+                conversationType: { type: "string" },
               },
             },
             readAt: { type: "string", format: "date-time", nullable: true },
@@ -172,6 +176,8 @@ const options: swaggerJsdoc.Options = {
                 "collab_request_received",
                 "collab_request_accepted",
                 "collab_request_rejected",
+                "collaboration_started",
+                "new_message",
               ],
             },
             title: { type: "string", example: "New request" },
@@ -182,11 +188,98 @@ const options: swaggerJsdoc.Options = {
               properties: {
                 projectId: { type: "string" },
                 collabRequestId: { type: "string" },
+                conversationId: { type: "string" },
+                conversationType: { type: "string" },
               },
             },
             readAt: { type: "string", format: "date-time", nullable: true },
             deletedAt: { type: "string", format: "date-time", nullable: true },
             purgeAt: { type: "string", format: "date-time", nullable: true },
+            createdAt: { type: "string", format: "date-time" },
+            updatedAt: { type: "string", format: "date-time" },
+          },
+        },
+        ConversationMember: {
+          type: "object",
+          properties: {
+            userId: { type: "string", example: "507f1f77bcf86cd799439011" },
+            role: {
+              type: "string",
+              enum: ["owner", "admin", "member"],
+              example: "member",
+            },
+            joinedAt: { type: "string", format: "date-time" },
+            unreadCount: { type: "integer", example: 0 },
+            lastReadAt: { type: "string", format: "date-time", nullable: true },
+            isMuted: { type: "boolean", example: false },
+            isArchived: { type: "boolean", example: false },
+            leftAt: { type: "string", format: "date-time", nullable: true },
+          },
+        },
+        ConversationAvatar: {
+          type: "object",
+          properties: {
+            url: {
+              type: "string",
+              example: "https://res.cloudinary.com/demo/image/upload/v1/chat_group_avatars/abc.png",
+            },
+            id: { type: "string", example: "chat_group_avatars/abc" },
+          },
+        },
+        ConversationLastMessage: {
+          type: "object",
+          nullable: true,
+          properties: {
+            text: { type: "string", example: "Hey, are you free to collab?" },
+            senderId: { type: "string" },
+            type: {
+              type: "string",
+              enum: ["text", "attachment", "poll", "system"],
+            },
+            createdAt: { type: "string", format: "date-time" },
+          },
+        },
+        Conversation: {
+          type: "object",
+          properties: {
+            _id: { type: "string", example: "507f1f77bcf86cd799439011" },
+            type: {
+              type: "string",
+              enum: ["dm", "group", "kollaboration"],
+              example: "dm",
+            },
+            participantIds: {
+              type: "array",
+              items: { type: "string" },
+              example: ["507f1f77bcf86cd799439011", "507f1f77bcf86cd799439012"],
+            },
+            members: {
+              type: "array",
+              items: { $ref: "#/components/schemas/ConversationMember" },
+            },
+            name: {
+              type: "string",
+              nullable: true,
+              example: "Design crew",
+            },
+            avatar: {
+              allOf: [{ $ref: "#/components/schemas/ConversationAvatar" }],
+              nullable: true,
+            },
+            createdBy: { type: "string" },
+            projectId: {
+              type: "string",
+              nullable: true,
+              description: "Set when type is kollaboration",
+            },
+            dmKey: {
+              type: "string",
+              nullable: true,
+              description: "Sorted userA_userB key for DM uniqueness",
+            },
+            lastMessage: {
+              $ref: "#/components/schemas/ConversationLastMessage",
+            },
             createdAt: { type: "string", format: "date-time" },
             updatedAt: { type: "string", format: "date-time" },
           },
@@ -221,6 +314,15 @@ const options: swaggerJsdoc.Options = {
       {
         name: "Notifications",
         description: "In-app notification inbox, unread count, and read/delete actions",
+      },
+      {
+        name: "Chat",
+        description:
+          "Direct messages, group chats, and project Kollaboration conversations. Sending a message also emits Socket.IO event `chat:message` to room `conversation:{id}` after persist. Clients must authenticate (cookie `authToken` or handshake auth.token) and emit `conversation:join`.",
+      },
+      {
+        name: "Search",
+        description: "Federated search across projects and people",
       },
     ],
   },

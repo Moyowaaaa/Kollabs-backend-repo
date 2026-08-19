@@ -63,6 +63,12 @@ const userProfileSchema = new Schema<IUserInterface>(
   { timestamps: true },
 );
 
+userProfileSchema.index({ firstname: "text", lastname: "text", roles: "text", bio: "text" },
+  {
+    weights: { firstname: 10, lastname: 10, roles: 6, bio: 3 },
+    name: "user_profiles_text_search",
+  },)
+
 const UserProfileModel: Model<IUserInterface> =
   (mongoose.models.UserProfile as Model<IUserInterface>) ||
   mongoose.model<IUserInterface>("UserProfile", userProfileSchema);

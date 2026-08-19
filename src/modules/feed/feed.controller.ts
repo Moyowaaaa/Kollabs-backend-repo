@@ -1,4 +1,5 @@
 import type { NextFunction, Response } from "express";
+import { Types } from "mongoose";
 import { IError } from "../../interfaces/error.interface";
 import ProjectsModel from "../projects/projects.model";
 import { CacheService } from "../../utils/cache.service";
@@ -7,9 +8,89 @@ import { AuthenticatedRequest } from "../auth/auth.interface";
 // Cache TTL in seconds (5 minutes)
 const FEED_CACHE_TTL = 300;
 
+const PUBLIC_FEED_STATUSES = [
+  "draft",
+  "pending",
+  "ongoing",
+  "completed",
+] as const;
+
+const TRENDING_FEED_STATUSES = ["pending", "ongoing", "completed"] as const;
+
+type ParsedFeedCursor = {
+  createdAt?: Date;
+  id: string;
+};
+
+/**
+ * Encode a stable compound cursor from the last item in a page.
+ * Format: `${createdAtMs}_${objectId}`
+ */
+export const encodeFeedCursor = (
+  createdAt: Date | string,
+  id: string,
+): string => {
+  const ms =
+    createdAt instanceof Date
+      ? createdAt.getTime()
+      : new Date(createdAt).getTime();
+  return `${ms}_${id}`;
+};
+
+/**
+ * Parse compound cursors, with a fallback for legacy ObjectId-only cursors.
+ */
+export const parseFeedCursor = (
+  cursor?: string,
+): ParsedFeedCursor | null => {
+  if (!cursor) return null;
+
+  const separator = cursor.lastIndexOf("_");
+  if (separator > 0) {
+    const timestampPart = cursor.slice(0, separator);
+    const id = cursor.slice(separator + 1);
+    const createdAt = new Date(Number(timestampPart));
+
+    if (
+      !Number.isNaN(createdAt.getTime()) &&
+      Types.ObjectId.isValid(id)
+    ) {
+      return { createdAt, id };
+    }
+  }
+
+  if (Types.ObjectId.isValid(cursor)) {
+    return { id: cursor };
+  }
+
+  return null;
+};
+
+const buildVisibilityFilter = () => ({
+  status: { $in: [...PUBLIC_FEED_STATUSES] },
+});
+
+const buildCursorFilter = (parsed: ParsedFeedCursor): Record<string, unknown> => {
+  if (parsed.createdAt) {
+    const objectId = new Types.ObjectId(parsed.id);
+    return {
+      $or: [
+        { createdAt: { $lt: parsed.createdAt } },
+        {
+          createdAt: parsed.createdAt,
+          _id: { $lt: objectId },
+        },
+      ],
+    };
+  }
+
+  // Legacy ObjectId-only cursor
+  return { _id: { $lt: new Types.ObjectId(parsed.id) } };
+};
+
 /**
  * Get paginated feed of Ideas/Projects
- * Uses cursor-based pagination for infinite scroll
+ * Uses compound cursor pagination for infinite scroll
  * Results are cached in Redis for performance
  */
 export const getFeed = async (
@@ -24,9 +105,9 @@ export const getFeed = async (
     };
 
     const limitNum = Math.min(50, Math.max(1, parseInt(limit, 10)));
-    const cacheKey = `feed:${cursor || "initial"}:${limitNum}`;
+    // v3: drafts are public (with UI flags); compound cursor
+    const cacheKey = `feed:v3:${cursor || "initial"}:${limitNum}`;
 
-    // Try cache first
     const cached = await CacheService.get(cacheKey);
     if (cached) {
       return res.status(200).json({
@@ -35,20 +116,19 @@ export const getFeed = async (
       });
     }
 
-    // Build query filter
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const filter: Record<string, any> = {
-      status: { $nin: ["deleted", "archived"] },
+    const filter: Record<string, unknown> = {
+      $and: [buildVisibilityFilter()],
     };
 
-    // Cursor-based pagination: get items older than cursor
-    if (cursor) {
-      filter._id = { $lt: cursor };
+    const parsedCursor = parseFeedCursor(cursor);
+    if (parsedCursor) {
+      (filter.$and as Record<string, unknown>[]).push(
+        buildCursorFilter(parsedCursor),
+      );
     }
 
-    // Query with population (limit + 1 to check if more exist)
     const projects = await ProjectsModel.find(filter)
-      .sort({ createdAt: -1 })
+      .sort({ createdAt: -1, _id: -1 })
       .limit(limitNum + 1)
       .populate({
         path: "author",
@@ -68,10 +148,15 @@ export const getFeed = async (
       })
       .lean();
 
-    // Check if there are more items
     const hasMore = projects.length > limitNum;
     const items = hasMore ? projects.slice(0, -1) : projects;
-    const nextCursor = hasMore ? String(items[items.length - 1]._id) : null;
+    const lastItem = items[items.length - 1] as
+      | { _id: Types.ObjectId; createdAt: Date }
+      | undefined;
+    const nextCursor =
+      hasMore && lastItem
+        ? encodeFeedCursor(lastItem.createdAt, String(lastItem._id))
+        : null;
 
     const response = {
       items,
@@ -82,7 +167,6 @@ export const getFeed = async (
       },
     };
 
-    // Cache the response
     await CacheService.set(cacheKey, response, FEED_CACHE_TTL);
 
     return res.status(200).json({
@@ -108,9 +192,8 @@ export const getTrendingFeed = async (
   try {
     const { limit = "20" } = req.query as { limit?: string };
     const limitNum = Math.min(50, Math.max(1, parseInt(limit, 10)));
-    const cacheKey = `feed:trending:${limitNum}`;
+    const cacheKey = `feed:trending:v2:${limitNum}`;
 
-    // Try cache first
     const cached = await CacheService.get(cacheKey);
     if (cached) {
       return res.status(200).json({
@@ -119,9 +202,12 @@ export const getTrendingFeed = async (
       });
     }
 
-    // Aggregate to count collaboration requests and sort by team activity
     const projects = await ProjectsModel.aggregate([
-      { $match: { status: { $nin: ["deleted", "archived"] } } },
+      {
+        $match: {
+          status: { $in: [...TRENDING_FEED_STATUSES] },
+        },
+      },
       {
         $lookup: {
           from: "collaborationrequests",
@@ -132,7 +218,6 @@ export const getTrendingFeed = async (
       },
       {
         $addFields: {
-          // Count only accepted requests for better trending signal
           acceptedRequestCount: {
             $size: {
               $filter: {
@@ -146,7 +231,6 @@ export const getTrendingFeed = async (
           collaboratorCount: { $size: "$collaborators" },
         },
       },
-      // Sort by: collaborators first (actual team), then accepted requests, then total interest
       {
         $sort: {
           collaboratorCount: -1,
@@ -159,7 +243,6 @@ export const getTrendingFeed = async (
       { $project: { requests: 0 } },
     ]);
 
-    // Populate author and collaborators
     await ProjectsModel.populate(projects, [
       {
         path: "author",
@@ -181,7 +264,6 @@ export const getTrendingFeed = async (
 
     const response = { items: projects, type: "trending" };
 
-    // Cache trending (shorter TTL - 3 minutes)
     await CacheService.set(cacheKey, response, 180);
 
     return res.status(200).json({
