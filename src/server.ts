@@ -25,19 +25,11 @@ import { notificationsRoutes } from "./modules/notifications";
 import { chatRoutes } from "./modules/chat";
 import { searchRoutes } from "./modules/search";
 import { initSocket } from "./lib/socket";
+import { isAllowedOrigin } from "./lib/allowedOrigins";
 import http from "http";
 
 const app: Express = express();
 const httpServer = http.createServer(app);
-
-const allowedOrigins: string[] = [
-  "http://localhost:3000",
-  "http://localhost:3001",
-  "https://www.koneticus.com/",
-  "https://www.koneticus.com",
-  "https://area-52.netlify.app/",
-  "",
-];
 
 app.use(
   cors({
@@ -45,7 +37,7 @@ app.use(
       origin: string | undefined,
       callback: (err: Error | null, allow?: boolean) => void,
     ) => {
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (isAllowedOrigin(origin)) {
         callback(null, true);
       } else {
         callback(new Error("Not allowed by CORS"));

@@ -2034,3 +2034,4 @@
 [32m2026-08-20 11:57:20:5720[39m info: [34mGET /v1/api/chat/conversations?page=1&limit=30 304 1365.290 ms - -[39m
 [32m2026-08-20 12:07:10:710[39m info: [34mGET /v1/api/notifications/unread-count 304 263.852 ms - -[39m
 [32m2026-08-20 12:07:11:711[39m info: [34mSocket disconnected eDN7bfd7eBfZYKFaAAAF[39m
+[32m2026-08-20 12:30:37:3037[39m info: [34mApp running on port 4000.....[39m
