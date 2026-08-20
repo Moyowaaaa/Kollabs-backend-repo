@@ -6,6 +6,7 @@ import userAuthModel from "../modules/auth/auth.model";
 import ConversationModel from "../modules/chat/conversation.model";
 import type { jwtToken } from "../middleware/authMiddleware";
 import logger from "./log/winston.log";
+import { allowedOrigins } from "./allowedOrigins";
 
 type ChatSocketData = {
   userId: string;
@@ -41,13 +42,6 @@ type ChatServer = Server<
 >;
 
 let io: ChatServer | null = null;
-
-const allowedOrigins: string[] = [
-  "http://localhost:3000",
-  "http://localhost:3001",
-  "https://www.koneticus.com/",
-  "https://www.koneticus.com",
-];
 
 export const getIO = () => io;
 
