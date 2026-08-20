@@ -2025,3 +2025,12 @@
 [32m2026-08-20 11:56:23:5623[39m info: [34mGET /v1/api/user/me 304 395.346 ms - -[39m
 [32m2026-08-20 11:56:23:5623[39m info: [34mGET /v1/api/chat/conversations?page=1&limit=30 304 508.777 ms - -[39m
 [32m2026-08-20 11:56:23:5623[39m info: [34mGET /v1/api/chat/messages/recent?limit=5 304 934.492 ms - -[39m
+[32m2026-08-20 11:57:19:5719[39m info: [34mSocket connected eDN7bfd7eBfZYKFaAAAF[39m
+[32m2026-08-20 11:57:19:5719[39m info: [34mGET /v1/api/notifications/unread-count 304 266.979 ms - -[39m
+[32m2026-08-20 11:57:19:5719[39m info: [34mGET /v1/api/feed/trending 304 322.360 ms - -[39m
+[32m2026-08-20 11:57:19:5719[39m info: [34mGET /v1/api/feed?limit=20 304 332.542 ms - -[39m
+[32m2026-08-20 11:57:19:5719[39m info: [34mGET /v1/api/user/me 304 403.795 ms - -[39m
+[32m2026-08-20 11:57:20:5720[39m info: [34mGET /v1/api/chat/messages/recent?limit=5 304 936.173 ms - -[39m
+[32m2026-08-20 11:57:20:5720[39m info: [34mGET /v1/api/chat/conversations?page=1&limit=30 304 1365.290 ms - -[39m
+[32m2026-08-20 12:07:10:710[39m info: [34mGET /v1/api/notifications/unread-count 304 263.852 ms - -[39m
+[32m2026-08-20 12:07:11:711[39m info: [34mSocket disconnected eDN7bfd7eBfZYKFaAAAF[39m

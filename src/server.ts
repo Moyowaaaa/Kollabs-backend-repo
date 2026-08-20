@@ -35,6 +35,7 @@ const allowedOrigins: string[] = [
   "http://localhost:3001",
   "https://www.koneticus.com/",
   "https://www.koneticus.com",
+  "https://area-52.netlify.app/",
   "",
 ];
 
