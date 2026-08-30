@@ -46,8 +46,8 @@ const verifyAuthentication = async (
       return;
     }
 
-    // Type assertion since we know the structure after verification
-    req.user = user as IUserAuth;
+    // Normalize to string so author checks never fail ObjectId !== string
+    req.user = { ...user.toObject(), _id: String(user._id) } as IUserAuth;
     next();
   } catch (error) {
     res.status(401).json({ message: "Request not authorized", error });

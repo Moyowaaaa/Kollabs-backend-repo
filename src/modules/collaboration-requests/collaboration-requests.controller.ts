@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { jwtToken } from "../../middleware/authMiddleware";
 import CollaborationRequestModel from "./collaboration-requests.model";
 import ProjectsModel from "../projects/projects.model";
+import { isCollabRequestableStatus } from "../projects/project-status";
 import { uploadMultipleToCloudinary } from "../../utils/cloudinary";
 import { invalidateFeedCache } from "../feed/feed.controller";
 import { Types } from "mongoose";
@@ -51,9 +52,10 @@ export const createRequest = async (
       return;
     }
 
-    if (project.status !== "ongoing") {
+    if (!isCollabRequestableStatus(project.status)) {
       res.status(400).json({
-        message: "Can only request collaboration on ongoing projects",
+        message:
+          "Can only request collaboration on projects that are seeking collaborators",
       });
       return;
     }

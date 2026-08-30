@@ -5,7 +5,7 @@
  *     summary: Get main feed
  *     description: |
  *       Get paginated feed of Ideas/Projects with compound cursor pagination for infinite scroll.
- *       Public statuses (draft/pending/ongoing/completed) are visible to everyone.
+ *       Public statuses (draft/seeking_collaborators/ongoing/completed) are visible to everyone.
  *       Draft ideas appear with a draft / not-active flag on the client; interest actions stay disabled until activated.
  *       Results are cached in Redis for performance. Deleted and archived projects are excluded.
  *     tags: [Feed]
@@ -154,7 +154,7 @@
  *             $ref: '#/components/schemas/ProjectMedia'
  *         status:
  *           type: string
- *           enum: [draft, pending, ongoing, completed]
+ *           enum: [draft, seeking_collaborators, ongoing, completed]
  *           example: ongoing
  *         teamSize:
  *           type: integer

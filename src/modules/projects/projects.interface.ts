@@ -25,7 +25,7 @@ export interface IProjects {
   collaborators: Types.ObjectId[] | ICollaboratorPopulated[];
   status:
     | "draft"
-    | "pending"
+    | "seeking_collaborators"
     | "ongoing"
     | "completed"
     | "deleted"

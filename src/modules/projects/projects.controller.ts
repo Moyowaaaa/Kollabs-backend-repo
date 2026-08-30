@@ -3,6 +3,11 @@ import { ICreateProject, IAuthorPopulated } from "./projects.interface";
 import { IError } from "../../interfaces/error.interface";
 import { AuthenticatedRequest } from "../auth/auth.interface";
 import ProjectsModel from "./projects.model";
+import {
+  PROJECT_PIPELINE_STATUSES,
+  canTransitionProjectStatus,
+  normalizeProjectStatus,
+} from "./project-status";
 import { uploadMultipleToCloudinary } from "../../utils/cloudinary";
 import { invalidateFeedCache } from "../feed/feed.controller";
 import { Types } from "mongoose";
@@ -10,23 +15,39 @@ import { Types } from "mongoose";
 import userAuthModel from "../auth/auth.model";
 import "../user/user.model";
 
-const getAuthorId = (author: Types.ObjectId | IAuthorPopulated | string): string => {
-  if (typeof author === "object" && author !== null && "_id" in author) {
-    return String(author._id);
+function getAuthorId(
+  author: Types.ObjectId | IAuthorPopulated | string,
+): string {
+  if (typeof author === "string") {
+    return author;
   }
-  return String(author);
-};
+  if (author instanceof Types.ObjectId) {
+    return String(author);
+  }
+  return String(author._id);
+}
 
-const isAuthorPopulated = (
+function getUserId(userId: string | Types.ObjectId): string {
+  return String(userId);
+}
+
+function isProjectAuthor(
+  author: Types.ObjectId | IAuthorPopulated | string,
+  userId: string | Types.ObjectId,
+): boolean {
+  return getAuthorId(author) === getUserId(userId);
+}
+
+function isAuthorPopulated(
   author: unknown,
-): author is IAuthorPopulated => {
+): author is IAuthorPopulated {
   return (
     typeof author === "object" &&
     author !== null &&
     "_id" in author &&
     "email" in author
   );
-};
+}
 
 const populateAuthorUser = async (authorId: string) => {
   return userAuthModel
@@ -131,9 +152,11 @@ export const searchProjects = async (
     // Filter by specific status if provided
     if (
       status &&
-      ["draft", "pending", "ongoing", "completed"].includes(status)
+      (PROJECT_PIPELINE_STATUSES as readonly string[]).includes(
+        normalizeProjectStatus(status),
+      )
     ) {
-      filter.status = status;
+      filter.status = normalizeProjectStatus(status);
     }
 
     // Build sort object
@@ -385,7 +408,7 @@ export const updateProject = async (
       return;
     }
 
-    if (getAuthorId(project.author) !== _id) {
+    if (!isProjectAuthor(project.author, _id)) {
       res.status(401).json({ message: "Unauthorized" });
       return;
     }
@@ -452,7 +475,7 @@ export const patchProject = async (
       return;
     }
 
-    if (getAuthorId(project.author) !== _id) {
+    if (!isProjectAuthor(project.author, _id)) {
       res.status(401).json({ message: "Unauthorized" });
       return;
     }
@@ -627,13 +650,16 @@ export const updateProjectStatus = async (
   try {
     const { _id } = req.user; // User is already authenticated by middleware
     const { projectId } = req.params;
-    const { status } = req.body as { status: string };
+    const { status: rawStatus } = req.body as { status: string };
+    const status = normalizeProjectStatus(rawStatus || "");
 
     // Validate status
-    const allowedStatuses = ["draft", "pending", "ongoing", "completed"];
-    if (!status || !allowedStatuses.includes(status)) {
+    if (
+      !status ||
+      !(PROJECT_PIPELINE_STATUSES as readonly string[]).includes(status)
+    ) {
       res.status(400).json({
-        message: `Invalid status. Allowed values: ${allowedStatuses.join(", ")}`,
+        message: `Invalid status. Allowed values: ${PROJECT_PIPELINE_STATUSES.join(", ")}`,
       });
       return;
     }
@@ -652,6 +678,13 @@ export const updateProjectStatus = async (
     if (project.status === "deleted" || project.status === "archived") {
       res.status(400).json({
         message: `Cannot change status of ${project.status} project. Restore it first.`,
+      });
+      return;
+    }
+
+    if (!canTransitionProjectStatus(project.status, status)) {
+      res.status(400).json({
+        message: `Cannot change status from ${normalizeProjectStatus(project.status)} to ${status}`,
       });
       return;
     }
