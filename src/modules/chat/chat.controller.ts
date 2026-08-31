@@ -19,6 +19,11 @@ import {
 } from "./chat.interface";
 import ProjectsModel from "../projects/projects.model";
 import {
+  canTransitionProjectStatus,
+  normalizeProjectStatus,
+} from "../projects/project-status";
+import { invalidateFeedCache } from "../feed/feed.controller";
+import {
   uploadMultipleToCloudinary,
   uploadSingleToCloudinary,
 } from "../../utils/cloudinary";
@@ -299,10 +304,17 @@ export const createKollaboration = async (
       return;
     }
 
-    if (existingProject.status !== "ongoing") {
-      res
-        .status(400)
-        .json({ message: "Project must be ongoing to start a Kollaboration" });
+    const currentStatus = normalizeProjectStatus(existingProject.status);
+    const canStartFromStatus =
+      currentStatus === "ongoing" ||
+      currentStatus === "seeking_collaborators" ||
+      canTransitionProjectStatus(existingProject.status, "ongoing");
+
+    if (!canStartFromStatus) {
+      res.status(400).json({
+        message:
+          "Project must be seeking collaborators (or already ongoing) to start a Kollaboration",
+      });
       return;
     }
 
@@ -315,6 +327,12 @@ export const createKollaboration = async (
         message: "Only the author of a project can start a Kollaboration",
       });
       return;
+    }
+
+    // Starting kollaboration moves the project into ongoing
+    const statusChanged = currentStatus !== "ongoing";
+    if (statusChanged) {
+      existingProject.status = "ongoing";
     }
 
     const collaboratorIds = existingProject.collaborators.map((c) =>
@@ -338,11 +356,21 @@ export const createKollaboration = async (
 
     if (existingKollaboration) {
       // Repair stale / missing link on the project
+      let projectDirty = false;
       if (
         existingProject.conversationId !== String(existingKollaboration._id)
       ) {
         existingProject.conversationId = String(existingKollaboration._id);
+        projectDirty = true;
+      }
+      if (statusChanged) {
+        projectDirty = true;
+      }
+      if (projectDirty) {
         await existingProject.save();
+        if (statusChanged) {
+          await invalidateFeedCache();
+        }
       }
 
       res.status(200).json({
@@ -370,6 +398,7 @@ export const createKollaboration = async (
 
       existingProject.conversationId = String(kollaboration._id);
       await existingProject.save();
+      await invalidateFeedCache();
 
       await Promise.all(
         collaboratorIds.map((recipientId) =>

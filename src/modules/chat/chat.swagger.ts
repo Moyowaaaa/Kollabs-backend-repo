@@ -622,9 +622,10 @@
  *     summary: Send a message
  *     description: >
  *       Sends a text, attachment, or poll message. Attachments use multipart
- *       field `attachments` (max 4 images). After persist, the server emits
- *       Socket.IO `chat:message` to `conversation:{conversationId}` and creates
- *       `new_message` notifications for other members.
+ *       field `attachments` (max 4 files: images and/or PDF, DOC, DOCX).
+ *       Non-image files are stored as Cloudinary raw assets. After persist,
+ *       the server emits Socket.IO `chat:message` to `conversation:{conversationId}`
+ *       and creates `new_message` notifications for other members.
  *     tags: [Chat]
  *     security:
  *       - bearerAuth: []
@@ -682,7 +683,7 @@
  *                 items:
  *                   type: string
  *                   format: binary
- *                 description: Up to 4 image files
+ *                 description: Up to 4 files (images and/or PDF, DOC, DOCX)
  *     responses:
  *       201:
  *         description: Message sent

@@ -2,20 +2,15 @@ import type { NextFunction, Response } from "express";
 import { Types } from "mongoose";
 import { IError } from "../../interfaces/error.interface";
 import ProjectsModel from "../projects/projects.model";
+import {
+  PUBLIC_FEED_STATUSES,
+  TRENDING_FEED_STATUSES,
+} from "../projects/project-status";
 import { CacheService } from "../../utils/cache.service";
 import { AuthenticatedRequest } from "../auth/auth.interface";
 
 // Cache TTL in seconds (5 minutes)
 const FEED_CACHE_TTL = 300;
-
-const PUBLIC_FEED_STATUSES = [
-  "draft",
-  "pending",
-  "ongoing",
-  "completed",
-] as const;
-
-const TRENDING_FEED_STATUSES = ["pending", "ongoing", "completed"] as const;
 
 type ParsedFeedCursor = {
   createdAt?: Date;
@@ -105,8 +100,8 @@ export const getFeed = async (
     };
 
     const limitNum = Math.min(50, Math.max(1, parseInt(limit, 10)));
-    // v3: drafts are public (with UI flags); compound cursor
-    const cacheKey = `feed:v3:${cursor || "initial"}:${limitNum}`;
+    // v4: seeking_collaborators pipeline; drafts public; compound cursor
+    const cacheKey = `feed:v4:${cursor || "initial"}:${limitNum}`;
 
     const cached = await CacheService.get(cacheKey);
     if (cached) {

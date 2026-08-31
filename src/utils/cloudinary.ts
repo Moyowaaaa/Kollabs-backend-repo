@@ -37,8 +37,15 @@ export const uploadSingleToCloudinary = async (
   folder = "test_uploads"
 ): Promise<UploadApiResponse> =>
   new Promise((resolve, reject) => {
+    const isImage = file.mimetype.startsWith("image/");
     const uploadStream = cloudinary.uploader.upload_stream(
-      { folder },
+      {
+        folder,
+        resource_type: isImage ? "image" : "raw",
+        use_filename: true,
+        unique_filename: true,
+        filename_override: file.originalname,
+      },
       (error?: UploadApiErrorResponse, result?: UploadApiResponse) => {
         if (error) {
           return reject(

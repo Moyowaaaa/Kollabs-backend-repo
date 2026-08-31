@@ -53,7 +53,7 @@
  *                         type: string
  *                       status:
  *                         type: string
- *                         enum: [draft, pending, ongoing, completed]
+ *                         enum: [draft, seeking_collaborators, ongoing, completed]
  *                       requiredRoles:
  *                         type: array
  *                         items:

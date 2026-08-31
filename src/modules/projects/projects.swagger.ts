@@ -485,7 +485,7 @@
  *             properties:
  *               status:
  *                 type: string
- *                 enum: [draft, pending, ongoing, completed]
+ *                 enum: [draft, seeking_collaborators, ongoing, completed]
  *                 description: New status for the project
  *                 example: ongoing
  *     responses:
@@ -531,7 +531,7 @@
  *         name: status
  *         schema:
  *           type: string
- *           enum: [draft, pending, ongoing, completed]
+ *           enum: [draft, seeking_collaborators, ongoing, completed]
  *         description: Filter by project status
  *       - in: query
  *         name: page
@@ -606,7 +606,7 @@
  *           example: []
  *         status:
  *           type: string
- *           enum: [draft, pending, ongoing, completed, deleted, archived]
+ *           enum: [draft, seeking_collaborators, ongoing, completed, deleted, archived]
  *           description: Current status of the project
  *           example: draft
  *         teamSize:

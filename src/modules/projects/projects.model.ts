@@ -22,7 +22,14 @@ export const projectsSchema = new Schema<IProjects>(
     },
     status: {
       type: String,
-      enum: ["draft", "pending", "ongoing", "completed", "deleted"],
+      enum: [
+        "draft",
+        "seeking_collaborators",
+        "ongoing",
+        "completed",
+        "deleted",
+        "archived",
+      ],
       default: "draft",
     },
     teamSize: {
