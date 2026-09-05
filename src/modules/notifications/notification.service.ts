@@ -1,5 +1,6 @@
 import logger from "../../lib/log/winston.log";
-import { ICreateNotificationPayload } from "./notifications.interface";
+import { getIO } from "../../lib/socket";
+import { ICreateNotificationPayload, INotification } from "./notifications.interface";
 import NotificationsModel from "./notifications.model";
 
 /**
@@ -15,7 +16,9 @@ export const createNotification = async ({
   meta = {},
 }: ICreateNotificationPayload) => {
   try {
-    return await NotificationsModel.create({
+    const io = getIO()
+    
+    const notification =  await NotificationsModel.create({
       title,
       body,
       type,
@@ -23,6 +26,12 @@ export const createNotification = async ({
       recipientId,
       meta,
     });
+
+    io?.to(`user:${String(recipientId)}`).emit("notification:new", {
+      notification: notification.toJSON() as INotification,
+    });
+
+    return notification;
   } catch (error) {
     logger.error("Failed to create notification", {
       type,

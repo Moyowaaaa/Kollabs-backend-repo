@@ -7,7 +7,7 @@ const router = express.Router() as Router;
 
 router.use(verifyAuthentication as express.RequestHandler);
 
-// GET /v1/api/search?q=&limit=
+// GET /v1/api/search?q=&role=&skill=&status=&limit=
 router.get("/", globalSearch as RequestHandler);
 
 export default router;

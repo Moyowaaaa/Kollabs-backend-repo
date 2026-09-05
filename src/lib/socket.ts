@@ -7,6 +7,7 @@ import ConversationModel from "../modules/chat/conversation.model";
 import type { jwtToken } from "../middleware/authMiddleware";
 import logger from "./log/winston.log";
 import { allowedOrigins } from "./allowedOrigins";
+import { INotification } from "../modules/notifications";
 
 type ChatSocketData = {
   userId: string;
@@ -24,6 +25,9 @@ type ServerToClientEvents = {
   "chat:message": (payload: {
     conversationId: string;
     message: unknown;
+  }) => void;
+  "notification:new": (payload: {
+    notification:INotification
   }) => void;
 };
 
