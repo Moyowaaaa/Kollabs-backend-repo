@@ -4,10 +4,14 @@
  *   get:
  *     summary: Global search (projects + people)
  *     description: >
- *       Federated MongoDB `$text` search across projects and user profiles.
- *       Returns empty arrays when `q` is shorter than 2 characters.
- *       Projects exclude `deleted` and `archived`. Users are ranked by text score
- *       (name, roles, bio). Use `authUserId` as `recipientId` when starting a DM.
+ *       Federated search across projects and user profiles from a single `q`.
+ *       It matches names, bios, titles, descriptions, user `roles`, and project
+ *       `requiredRoles`. Status phrases in `q` also match projects
+ *       (`draft`, `ongoing`, `completed`, `seeking collaborators`, `recruiting`).
+ *       Optional `role` / `skill` / `status` query params still AND-filter if sent.
+ *       Results require `q` of at least 2 characters or at least one filter.
+ *       Projects exclude `deleted` and `archived` unless a pipeline status is
+ *       requested. Use `authUserId` as `recipientId` when starting a DM.
  *     tags: [Search]
  *     security:
  *       - bearerAuth: []
@@ -15,12 +19,30 @@
  *     parameters:
  *       - in: query
  *         name: q
- *         required: true
  *         schema:
  *           type: string
  *           minLength: 2
- *         description: Search query (minimum 2 characters for results)
+ *         description: Name, role, skill, keyword, or status phrase (minimum 2 characters). Optional when filters are set.
  *         example: design
+ *       - in: query
+ *         name: role
+ *         schema:
+ *           type: string
+ *         description: Filter people by `roles` and projects by `requiredRoles`
+ *         example: UI/UX Designer
+ *       - in: query
+ *         name: skill
+ *         schema:
+ *           type: string
+ *         description: Extra tag filter on the same role arrays (AND with `role` if both are set)
+ *         example: Writer
+ *       - in: query
+ *         name: status
+ *         schema:
+ *           type: string
+ *           enum: [draft, seeking_collaborators, ongoing, completed]
+ *         description: Filter projects by pipeline status
+ *         example: ongoing
  *       - in: query
  *         name: limit
  *         schema:
@@ -40,6 +62,18 @@
  *                 query:
  *                   type: string
  *                   example: design
+ *                 filters:
+ *                   type: object
+ *                   properties:
+ *                     role:
+ *                       type: string
+ *                       nullable: true
+ *                     skill:
+ *                       type: string
+ *                       nullable: true
+ *                     status:
+ *                       type: string
+ *                       nullable: true
  *                 projects:
  *                   type: array
  *                   items:
